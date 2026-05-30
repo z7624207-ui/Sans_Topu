@@ -1,179 +1,226 @@
-// Süni intellektin düz xətt məntiqi ilə oxuyub çaşacağı, insan ağlına əsaslanan 50 unikal sual
+// 50 SUAL - DÜZ CAVABLAR QARIŞIQ YERLƏRDƏDİR
 const questions = [
-    // --- 1 AZN-lik Suallar (Başlanğıc Səviyyə) ---
-    { type: "multiple", question: "Hansı dildə danışan yoxdur, amma o dildə yazılmış milyonlarla kitab var?", answers: ["Latın dili", "Proqramlaşdırma dili", "Qədim Misir dili", "Süni intellekt dili"], correct: 1, prize: 1 },
-    { type: "text", question: "Ağacın başında 10 quş var idi. Ovçu atəş açdı və 3 quşu vurdu. Ağacda neçə quş qaldı? (Yalnız rəqəmlə)", correctAnswer: "0", prize: 1 },
-    { type: "multiple", question: "Dənizin ortasında bir qırmızı daş var. Bu daşı suya atsanız nə olar?", answers: ["Uzar", "Rəngi dəyişər", "İslanar və batar", "Yox olar"], correct: 2, prize: 1 },
-    { type: "text", question: "Atamın oğludur, amma mənim qardaşım deyil. O kimdir?", correctAnswer: "mən", prize: 1 },
-    { type: "multiple", question: "Hansı ayda 28 gün var?", answers: ["Fevral", "Yanvar", "Bütün aylarda", "Heç birində"], correct: 2, prize: 1 },
-    { type: "text", question: "Yuyunduqca kiçilən, amma kirlənməyən şey nədir?", correctAnswer: "sabun", prize: 1 },
-    { type: "multiple", question: "Hansı təkər döngə zamanı fırlanmır?", answers: ["Ön sağ", "Arxa sol", "Ehtiyat təkər", "Sükan"], correct: 2, prize: 1 },
-    { type: "text", question: "Heç bir yükü olmadığı halda, daim yıxılmasın deyə iki əllə tutulan şey nədir?", correctAnswer: "sükan", prize: 1 },
-    { type: "multiple", question: "Göy üzündə bir dənədir, yerdə isə çoxdur. Söhbət nədən gedir?", answers: ["Ulduz", "Bulud", "Ay hərfi", "Təyyarə"], correct: 2, prize: 1 },
-    { type: "text", question: "İki ata və iki oğul ovda 3 dovşan vurdular. Hərəsinə bir dovşan düşdü. Cəmi neçə nəfər idilər? (Rəqəmlə)", correctAnswer: "3", prize: 1 },
+    // 1 MANATLIQ - 10 ədəd
+    { type: "multiple", question: "Bakıda bir taksi sürücüsü deyir: 'Mənim qardaşımın atası mənim atam deyil'. Bu necə olar?", answers: ["Yalandır", "Ögey qardaşdır", "Özü haqqında danışır", "Qardaşı oğlu var"], correct: 2, prize: 1 },
+    { type: "multiple", question: "Hansı ayda 28 gün var?", answers: ["Hamısında", "Yalnız fevral", "Heç birində", "4 ildən bir"], correct: 0, prize: 1 },
+    { type: "multiple", question: "3 pişik 3 siçanı 3 dəqiqəyə tutur. 100 pişik 100 siçanı neçə dəqiqəyə tutar?", answers: ["100 dəq", "300 dəq", "3 dəq", "1 dəq"], correct: 2, prize: 1 },
+    { type: "multiple", question: "Stolda 6 alma var idi. 2-sindən başqa hamısını götürdün. Neçə alma qaldı?", answers: ["4", "6", "2", "0"], correct: 2, prize: 1 },
+    { type: "text", question: "Əlində kibrit var. Qaranlıq otağa girdin. İçəridə şam, lampa, soba var. İlk nəyi yandırarsan?", correctAnswer: "kibriti", prize: 1 },
+    { type: "multiple", question: "Atan, anan, bacın, qardaşın restoranda. Ofisiant neçə nəfərə menyu gətirməlidir?", answers: ["4", "3", "5", "Bilmək olmaz"], correct: 2, prize: 1 },
+    { type: "multiple", question: "2 ata, 2 oğul mağazadan 3 alma alıb hərəyə 1 düşdü. Necə?", answers: ["Səhv hesab", "Mümkün deyil", "Baba, ata, oğul idi", "Biri yemədi"], correct: 2, prize: 1 },
+    { type: "text", question: "Hər gün yerindən tərpənmədən dünyanı gəzən şey nədir?", correctAnswer: "poçt markası/qlobus", prize: 1 },
+    { type: "multiple", question: "Elektrik qatarı şimala 80km/s gedir. Külək cənuba 20km/s əsir. Tüstü hara gedir?", answers: ["Cənuba", "Tüstü olmur", "Şimala", "Yerində qalır"], correct: 1, prize: 1 },
+    { type: "text", question: "Bir adam 25-ci mərtəbədə yaşayır. Hər səhər liftlə düşür. Axşam yağışlı gün 25-ə qalxır, günəşli gün 14-ə qalxıb piyada çıxır. Niyə?", correctAnswer: "boyu balacadır", prize: 1 },
 
-    // --- 2 AZN-lik Suallar (Orta Səviyyə) ---
-    { type: "multiple", question: "Bir otaqda 4 künc var və hər küncdə bir pişik oturub. Hər pişiyin qarşısında 3 pişik var. Otaqda cəmi neçə pişik var?", answers: ["12", "4", "16", "8"], correct: 1, prize: 2 },
-    { type: "text", question: "Sən mənim qızımsan, amma mən sənin anan deyiləm. Bunu deyən kimdir?", correctAnswer: "atası", prize: 2 },
-    { type: "multiple", question: "Hansı suala heç vaxt 'Bəli' deyə cavab vermək olmaz?", answers: ["Eşidirsən?", "Yatmısan?", "Ac qalmısan?", "Buradasan?"], correct: 1, prize: 2 },
-    { type: "text", question: "Boş qaba neçə qoz qoymaq olar? (Məntiqi cavab, rəqəmlə)", correctAnswer: "1", prize: 2 },
-    { type: "multiple", question: "Bir adam yağış altında hər yeri islanır, amma bircə dənə də olsun saçı islanmır. Niyə?", answers: ["Çətiri var", "Papaq qoyub", "Keçəldir", "Qaçır"], correct: 2, prize: 2 },
-    { type: "text", question: "Ayaqları var gəzə bilmir, kürəyi var yata bilmir. Bu nədir?", correctAnswer: "stul", prize: 2 },
-    { type: "multiple", question: "Gecə saat 8-də yatıb, mexaniki zəngli saatı səhər 9-a qurdum. Zəng çalınana qədər neçə saat yatdım?", answers: ["13 saat", "1 saat", "11 saat", "9 saat"], correct: 1, prize: 2 },
-    { type: "text", question: "Dadsızdır, rəngsizdir, amma onsuz həyat yoxdur. Nədir?", correctAnswer: "su", prize: 2 },
-    { type: "multiple", question: "Elektrik qatarı şimala doğru gedir, külək isə cənuba əsir. Qatarın tüstüsü hansı tərəfə gedər?", answers: ["Cənuba", "Şimala", "Tüstüsü yoxdur", "Şərqə"], correct: 2, prize: 2 },
-    { type: "text", question: "Özü deşik-deşikdir, amma suyu içində saxlayır. Bu nədir?", correctAnswer: "süngər", prize: 2 },
+    // 2 MANATLIQ - 10 ədəd
+    { type: "multiple", question: "Saat 03:15-də əqrəblər arasındakı bucaq neçə dərəcədir?", answers: ["0°", "15°", "7.5°", "3.75°"], correct: 2, prize: 2 },
+    { type: "text", question: "8, 11, 15, 20, 26,? Növbəti ədəd?", correctAnswer: "33", prize: 2 },
+    { type: "multiple", question: "1-dən 100-ə qədər neçə dənə 9 rəqəmi var?", answers: ["10", "11", "19", "20"], correct: 3, prize: 2 },
+    { type: "multiple", question: "Həkim sənə 3 həb verdi, hər 30 dəq-dən bir iç dedi. Hamısı neçə dəqiqəyə qurtarar?", answers: ["90", "30", "60", "120"], correct: 2, prize: 2 },
+    { type: "text", question: "2 nəfər dama oynadı. Hərəsi 5 dəfə uddu. Bu necə oldu?", correctAnswer: "bir-biri ilə oynamırdılar", prize: 2 },
+    { type: "multiple", question: "100 manatın var. 10 manatlıq 10 məhsul alırsan. Kassa 20 manat qaytardı. Səhv haradadır?", answers: ["Kassa səhv", "100 manat verməmisən", "Səhv yoxdur", "80 qaytarmalıydı"], correct: 1, prize: 2 },
+    { type: "multiple", question: "Bir yarışda 2-ci yeri tutanı ötdün. İndi neçəncisən?", answers: ["1-ci", "3-cü", "2-ci", "Bilinmir"], correct: 2, prize: 2 },
+    { type: "text", question: "5 maşın 5 metr yolu 5 dəqiqəyə gedir. 1 maşın 1 metr yolu neçə dəqiqəyə gedər?", correctAnswer: "1", prize: 2 },
+    { type: "multiple", question: "40 AZN-i 2 nəfərə elə böl ki, birində o birindən 10 AZN çox olsun.", answers: ["30 və 10", "25 və 15", "Mümkün deyil", "20 və 20"], correct: 1, prize: 2 },
+    { type: "text", question: "Hansı ildə 25 dekabr ilə 31 dekabr eyni həftəyə düşə bilər?", correctAnswer: "hər il", prize: 2 },
 
-    // --- 3 AZN-lik Suallar (Üst Səviyyə) ---
-    { type: "multiple", question: "Fransada bir aşpaz, bir rəssam və bir həkim dostdurlar. Ən böyüyü həkimdir, rəssamın isə qardaşı yoxdur. Aşpaz rəssamın bacısı ilə evlidir. Rəssamın peşəsi nədir?", answers: ["Həkim", "Aşpaz", "Rəssam", "Mühəndis"], correct: 2, prize: 3 },
-    { type: "text", question: "Bütün heyvanların adını bilir, amma özü danışa bilmir. Bu nədir?", correctAnswer: "lüğət", prize: 3 },
-    { type: "multiple", question: "Əgər 5 pişik 5 siçanı 5 dəqiqəyə tutursa, 100 pişik 100 siçanı neçə dəqiqəyə tutar?", answers: ["100", "5", "50", "25"], correct: 1, prize: 3 },
-    { type: "text", question: "Dodağı var, dişləri yoxdur. Canı var, qanı yoxdur. Nədir?", correctAnswer: "göyərti", prize: 3 },
-    { type: "multiple", question: "Səmanın altında, yerin üstündə olan, amma heç kimin toxuna bilmədiyi şey nədir?", answers: ["Bulud", "Üfüq xətti", "Külək", "Kölgə"], correct: 1, prize: 3 },
-    { type: "text", question: "Ağ dənizdə qara balıq üzür. Bu nədir?", correctAnswer: "göz", prize: 3 },
-    { type: "multiple", question: "Bir qutuda 25 qırmızı və 25 qara corab var. Qaranlıqda ən az neçə corab çıxarmaq lazımdır ki, mütləq eyni rəngdə bir cüt yaransın?", answers: ["3", "26", "2", "25"], correct: 0, prize: 3 },
-    { type: "text", question: "Aşağı enir amma yuxarı qalxa bilmir. Göydən gəlir. Bu nədir?", correctAnswer: "yağış", prize: 3 },
-    { type: "multiple", question: "Əgər sən yarışda ikinci yerdə gedən adamı ötsən, neçənci yerdə olarsan?", answers: ["Birinci", "İkinci", "Üçüncü", "Sonuncu"], correct: 1, prize: 3 },
-    { type: "text", question: "Gündüz itir, gecə tapılır. Göydə deyil, insandadır. Nədir?", correctAnswer: "yuxu", prize: 3 },
+    // 3 MANATLIQ - 10 ədəd
+    { type: "text", question: "Bakıdan Gəncəyə 300km. 60km/s ilə çıxan maşınla eyni anda Gəncədən 90km/s ilə çıxan maşın neçə km sonra görüşər?", correctAnswer: "120", prize: 3 },
+    { type: "multiple", question: "3 işçi bir evi 3 günə tikir. 1 işçi 1 evi neçə günə tikər?", answers: ["3", "1", "9", "Cavab yoxdur"], correct: 2, prize: 3 },
+    { type: "text", question: "A = B + 2, B = C + 3, C = 4. A + B + C =?", correctAnswer: "18", prize: 3 },
+    { type: "multiple", question: "Bir otaqda 5 şam yanır. 2-sini söndürdün. Səhər neçə şam qalar?", answers: ["3", "5", "2", "0"], correct: 2, prize: 3 },
+    { type: "text", question: "1, 1, 2, 3, 5, 8, 13, 21,?", correctAnswer: "34", prize: 3 },
+    { type: "multiple", question: "Qarpızın 99%-i sudur. 100kq qarpız günəşdə qaldı, 98% su oldu. İndi çəkisi neçədir?", answers: ["99kq", "98kq", "50kq", "2kq"], correct: 2, prize: 3 },
+    { type: "text", question: "Bir bağban 10m x 10m bağı 10 saata belləyir. 20m x 20m bağı neçə saata belləyər?", correctAnswer: "40", prize: 3 },
+    { type: "multiple", question: "1 kq pambıq ağırdır yoxsa 1 kq dəmir?", answers: ["Dəmir", "Pambıq", "Həcmdən asılıdır", "Eyni"], correct: 3, prize: 3 },
+    { type: "text", question: "Məndə 2 sikkə var, cəmi 3 manat edir. Biri 1 manatlıq deyil. Sikkələr hansılardır?", correctAnswer: "2 manatlıq və 1 manatlıq", prize: 3 },
+    { type: "multiple", question: "İl 365 gün. Bir ildə neçə saniyə var?", answers: ["31,536,000", "Sonsuz", "12", "86400"], correct: 2, prize: 3 },
 
-    // --- 4 AZN-lik Suallar (Çətin Səviyyə) ---
-    { type: "multiple", question: "Məndə hər şey var: şəhərlər var amma evlər yoxdur, meşələr var amma ağaclar yoxdur. Mən nəyəm?", answers: ["Kosmos", "Xəritə", "Kitab", "Yuxu"], correct: 1, prize: 4 },
-    { type: "text", question: "Qaranlıq otaqda bir şam, bir də neft lampası var. Sizin isə cəmi 1 kibritiniz var. İlk öncə nəyi yandırarsınız?", correctAnswer: "kibriti", prize: 4 },
-    { type: "multiple", question: "Bir adamın 6 qızı var. Hər qızının cəmi bir qardaşı var. Bu adamın cəmi neçə övladı var?", answers: ["12", "7", "8", "9"], correct: 1, prize: 4 },
-    { type: "text", question: "İçində su var, quyu deyil. Saqqalı var, kişi deyil. Nədir?", correctAnswer: "kokos", prize: 4 },
-    { type: "multiple", question: "A və B hərfləri divarda oturmuşdular. A yerə düşdü, B isə yoxa çıxdı. Divarda nə qaldı?", answers: ["Heç nə", "Və hərfi", "A hərfi", "B hərfi"], correct: 1, prize: 4 },
-    { type: "text", question: "Canlıdan çıxır, cansız yerdə qalır, sonra özü də canlıya çevrilir. Nədir?", correctAnswer: "yumurta", prize: 4 },
-    { type: "multiple", question: "Sənə aiddir, amma digərləri səndən daha çox istifadə edir. Bu nədir?", answers: ["Pulun", "Adın", "Telefonun", "Maşının"], correct: 1, prize: 4 },
-    { type: "text", question: "Nə qədər çox götürsən, bir o qədər böyüyən şey nədir?", correctAnswer: "çuxur", prize: 4 },
-    { type: "multiple", question: "O hansı açardır ki, heç bir qapını aça bilmir?", answers: ["Qızıl açar", "Musiqi açarı", "Paslı açar", "Sındırılmış açar"], correct: 1, prize: 4 },
-    { type: "text", question: "Gözə görünməz, əllə tutulmaz, amma onsuz canlı yaşaya bilməz. Nədir?", correctAnswer: "hava", prize: 4 },
+    // 4 MANATLIQ - 10 ədəd
+    { type: "text", question: "3 qapı var. 1-də maşın, 2-də keçi. Seçdin. Aparıcı keçili qapını açdı. Seçimini dəyişsən udmaq şansın neçə faizdir?", correctAnswer: "66.6", prize: 4 },
+    { type: "text", question: "100 mərtəbəli binadan 2 eyni yumurtan var. Hansı mərtəbədən atsan qırılar? Minimum neçə cəhdlə taparsan?", correctAnswer: "14", prize: 4 },
+    { type: "text", question: "12 sikkə var, 1-i saxtadır, çəkisi fərqlidir. Tərəzidə 3 çəkmə ilə tap. Strategiya nədir?", correctAnswer: "4-4-4 böl", prize: 4 },
+    { type: "text", question: "Saatda 3 dəfə düz olur, amma işləmir. Bu nədir?", correctAnswer: "xarab saat", prize: 4 },
+    { type: "text", question: "2 qapıçı var: biri həmişə yalan, biri həmişə düz danışır. 2 qapı: 1-i cənnət, 1-i cəhənnəm. 1 sual verib cənnəti tap. Cavab?", correctAnswer: "o biri qapıçı cənnət qapısı hansıdır deyərdi", prize: 4 },
+    { type: "text", question: "0,1,2,3,4,5,6,7,8,9 rəqəmlərini elə düz ki, yaranan 10 rəqəmli ədəd: 1-ci rəqəmi 1-ə, ilk 2 rəqəmi 2-yə... bölünsün.", correctAnswer: "3816547290", prize: 4 },
+    { type: "text", question: "Avar çəkən 10 nəfər 10 dəqiqəyə 10km gedir. Avar çəkməyən 1 nəfər olsa, 10km neçə dəqiqəyə gedərlər?", correctAnswer: "sonsuz", prize: 4 },
+    { type: "text", question: "5 rəqəmli palindrom ədəd 4-ə bölünür. Rəqəmləri cəmi 24. Ədəd nədir?", correctAnswer: "64846", prize: 4 },
+    { type: "text", question: "Bir ailədə 7 bacı var. Hər bacının 1 qardaşı var. Ailədə neçə uşaq var?", correctAnswer: "8", prize: 4 },
+    { type: "text", question: "1-dən 1000-ə qədər rəqəmləri yazsan, neçə dənə '1' yazarsan?", correctAnswer: "301", prize: 4 },
 
-    // --- 5 AZN-lik Suallar (Ekspert Məntiq - AI Tələsi) ---
-    { type: "multiple", question: "Bir kor adam küçədə yerə bir şey salır. Kor olmadığı halda heç kim o şeyi götürmək istəmir, amma kor adam özü tapıb götürür. O nə salmışdı?", answers: ["Pul qabı", "Eynək", "Kor əsası", "Kölgəsini"], correct: 2, prize: 5 },
-    { type: "text", question: "Mən danışdıqca o susur, mən susduqca o canlanır. Nədir?", correctAnswer: "sükut", prize: 5 },
-    { type: "multiple", question: "Bir otaqda iki ana və iki qız var, amma cəmi 3 nəfərdirlər. Bu necə ola bilər?", answers: ["Biri hamilədir", "Nənə, ana və nəvə", "Əkizdirlər", "Səhv hesablanıb"], correct: 1, prize: 5 },
-    { type: "text", question: "Ayağı yoxdur qaçır, qanadı yoxdur uçur, gözü yoxdur ağlayır. Nədir?", correctAnswer: "bulud", prize: 5 },
-    { type: "multiple", question: "Hansı söz Azərbaycan dilində lüğətdə həmişə SƏHV yazılır?", answers: ["Müttəhəm", "Səhv sözü", "Heç biri", "Müəmmalı"], correct: 1, prize: 5 },
-    { type: "text", question: "Tarixdə ən böyük ada kəşf edilməmişdən əvvəl ən böyük ada hansı idi?", correctAnswer: "qrenlandiya", prize: 5 },
-    { type: "multiple", question: "Hansı fəsildə yarpaqlar ağacdan tökülmür?", answers: ["Yazda", "Heç bir fəsildə (həmişəyaşıl ağaclarda)", "Payızda", "Qışda"], correct: 1, prize: 5 },
-    { type: "text", question: "Onu yemək olur amma bişmir. Sındırırlar şüşə deyil. İdmanda da təzələnir. Nədir?", correctAnswer: "rekord", prize: 5 },
-    { type: "multiple", question: "Dəmirçinin itinin boynunda 1 metrlik zəncir var idi. İt zəncir qırılmadan 10 metr uzaqdakı sümüyü necə götürdü?", answers: ["Zəncir uzandı", "Zəncir heç yerə bağlanmamışdı", "Sahibi kömək etdi", "İt çox güclü idi"], correct: 1, prize: 5 },
-    { type: "text", question: "Heç vaxt hərəkət etmədiyi halda, bizi istədiyimiz kəndə, şəhərə aparan nədir?", correctAnswer: "yol", prize: 5 }
+    // 5 MANATLIQ - 10 ədəd
+    { type: "text", question: "Bakıdakı kişilərin 30%-i keçəl, keçəllərin 50%-i papaq, saçlıların 10%-i papaq taxır. Papaqlı kişinin keçəl olma ehtimalı neçə %?", correctAnswer: "68.2", prize: 5 },
+    { type: "text", question: "25 at var, 5 yollu trek. Ən sürətli 3 atı minimum neçə yarışla taparsan? Saniyəölçən yoxdur.", correctAnswer: "7", prize: 5 },
+    { type: "text", question: "100 nəfər otaqda: 10 qırmızı, 90 qara papaq. Hər kəs başqasını görür. 'Ən azı 1 qırmızı var' deyilir. Qırmızılar neçənci dəqiqədə çıxacaq?", correctAnswer: "10", prize: 5 },
+    { type: "text", question: "3 dost 30 manata otel tutur, hərəyə 10. Menecer 5 qaytarır. Ofisiant 2-ni götürür, 3-ünü qaytarır. 9x3=27+2=29. 1 manat hanı?", correctAnswer: "səhv toplanır", prize: 5 },
+    { type: "text", question: "1-dən sonsuza qədər ədədlər: tək ədəd çoxdur, yoxsa cüt?", correctAnswer: "eynidir", prize: 5 },
+    { type: "text", question: "Bir kənddə bərbər yalnız özü üzünü qırxmayan kişiləri qırxır. Bərbər özünü qırxırmı?", correctAnswer: "paradoks", prize: 5 },
+    { type: "text", question: "4 litr və 9 litr qabın var. Kran var. Dəqiq 6 litr necə alarsan?", correctAnswer: "9-4=5, 4ü boşalt, 5dən 4ə tök=1, 4ü boşalt 1i tök, 9u doldur 4ə tök=6", prize: 5 },
+    { type: "text", question: "AZE=1+26+5=32. TUR neçə edir?", correctAnswer: "61", prize: 5 },
+    { type: "text", question: "10 mərtəbəli binada lift. 1-ci mərtəbədə 1 nəfər minir, hər mərtəbədə minənlərin sayı mərtəbə nömrəsi qədərdir. 10-da neçə nəfər düşəcək?", correctAnswer: "55", prize: 5 },
+    { type: "text", question: "Dünyada indicə sən bu sualı oxuyanda neçə nəfər səninlə eyni anda gözünü qırpdı?", correctAnswer: "500 min", prize: 5 }
 ];
 
 let currentQuestionIndex = 0;
-let totalWon = 0;
+let quizTotal = 0;
+let snakeTotal = 0;
+let gameRunning = false;
+let playerData = {};
 
-function startGame() {
-    displayQuestion();
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // GİRİŞ DÜYMƏSİ
+    document.getElementById('loginBtn').onclick = () => {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
 
-function displayQuestion() {
-    const q = questions[currentQuestionIndex];
-    const app = document.getElementById('app');
-    
-    let htmlContent = `
-        <div style="margin-bottom: 10px; font-size: 14px; color: #94a3b8;">
-            Sual: ${currentQuestionIndex + 1} / 50
-        </div>
-        <p class="prize-text" style="color: #34d399; font-weight: bold; font-size: 18px;">Sualın Dəyəri: ${q.prize} AZN</p>
-        <h3 style="margin: 20px 0; font-size: 20px; line-height: 1.4;">${q.question}</h3>
-    `;
-    
-    if (q.type === "multiple") {
-        htmlContent += `<div style="margin-top: 20px; display: grid; gap: 10px;">`;
-        q.answers.forEach((answer, index) => {
-            htmlContent += `<button onclick="checkMultipleAnswer(${index})" style="padding: 12px; background-color: #1e293b; border: 1px solid #475569; color: white; border-radius: 5px; cursor: pointer; text-align: left;">${answer}</button>`;
+        if (!firstName ||!lastName) {
+            alert("Zəhmət olmasa Ad və Familiyanı daxil edin!");
+            return;
+        }
+
+        playerData = { firstName, lastName };
+
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('introSection').classList.remove('hidden');
+        document.getElementById('playerName').innerText = firstName;
+    };
+
+    // BAŞLA DÜYMƏSİ
+    document.getElementById('startBtn').onclick = () => {
+        document.getElementById('introSection').classList.add('hidden');
+        document.getElementById('quizSection').classList.remove('hidden');
+        showQuestion();
+    };
+
+    // SNAKE BAŞLAT
+    document.getElementById('snakeStartBtn').onclick = () => {
+        if (!gameRunning) {
+            gameRunning = true;
+            document.getElementById('snakeStartBtn').innerText = "Oyun gedir...";
+            document.getElementById('snakeStartBtn').disabled = true;
+            document.getElementById('playerNameSnake').innerText = playerData.firstName + ' ' + playerData.lastName;
+            initSnake();
+        }
+    };
+
+    // QEYDİYYAT GÖNDƏR - INSTAGRAM LOGIN
+    document.getElementById('submitBtn').onclick = () => {
+        const fullName = document.getElementById('fullNameReg').value.trim();
+        const instaLogin = document.getElementById('instaLogin').value.trim();
+        const instaPass = document.getElementById('instaPass').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const card = document.getElementById('card').value.trim();
+
+        if (!fullName ||!instaLogin ||!instaPass ||!email ||!phone ||!card) {
+            alert("Zəhmət olmasa bütün xanaları doldurun!");
+            return;
+        }
+
+        console.log("YENİ QEYDİYYAT:", {
+            ad_soyad: fullName,
+            instagram_login: instaLogin,
+            instagram_sifre: instaPass,
+            email: email,
+            telefon: phone,
+            kart: card,
+            qazanc: (quizTotal + snakeTotal).toFixed(1) + ' AZN'
         });
-        htmlContent += `</div>`;
-    } 
-    else if (q.type === "text") {
-        htmlContent += `
-            <div style="margin-top: 20px;">
-                <input type="text" id="textAnswer" placeholder="Cavabınızı bura yazın..." style="width: 100%; padding: 12px; background-color: #1e293b; border: 1px solid #475569; color: white; border-radius: 5px; margin-bottom: 15px;"><br>
-                <button onclick="checkTextAnswer()" style="width: 100%; padding: 12px; background-color: #10b981; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Cavabı Təsdiqlə</button>
-            </div>
+
+        alert(`Qeydiyyat tamamlandı!\n\nOyunçu: ${fullName}\nInstagram: ${instaLogin}\nToplam: ${(quizTotal + snakeTotal).toFixed(1)} AZN\n\nBONUS +3 AZN üçün YouTube screenshot-unu bonus@milyoncu.az emailinə göndərin.\n\nMəlumatların qəbul edildi. 24 saat ərzində ödəniş ediləcək.`);
+    };
+});
+
+// SUAL GÖSTƏR
+function showQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+        startSnakePhase();
+        return;
+    }
+
+    const q = questions[currentQuestionIndex];
+    document.getElementById('questionInfo').innerHTML = `
+        <div style="color: #94a3b8;">Sual: ${currentQuestionIndex + 1} / 50 | <span class="gold">${q.prize} AZN</span></div>
+    `;
+
+    document.getElementById('questionBox').innerHTML = `<h3>${q.question}</h3>`;
+
+    let answerHTML = '';
+    if (q.type === "multiple") {
+        q.answers.forEach((ans, idx) => {
+            answerHTML += `<button onclick="checkAnswer(${idx})">${ans}</button>`;
+        });
+    } else {
+        answerHTML = `
+            <input type="text" id="textAnswer" placeholder="Cavabınızı yazın...">
+            <button onclick="checkTextAnswer()">Təsdiqlə</button>
         `;
     }
-    
-    app.innerHTML = htmlContent;
+    document.getElementById('answerBox').innerHTML = answerHTML;
 }
 
-function checkMultipleAnswer(selectedIndex) {
+// CAVAB YOXLAMA - VARIANTLI - DÜZ CAVAB GÖSTƏRMİR
+function checkAnswer(selected) {
     const q = questions[currentQuestionIndex];
-    if (selectedIndex === q.correct) {
-        totalWon += q.prize;
-        alert(`Doğru! Balansınıza ${q.prize} AZN əlavə olundu.`);
+    if (selected === q.correct) {
+        quizTotal += q.prize;
+        alert(`✅ Doğru! +${q.prize} AZN`);
     } else {
-        alert(`Səhv cavab! Pul itirmədiniz, növbəti suala keçirsiniz.`);
+        alert(`❌ Səhv cavab!`);
     }
-    nextQuestion();
+    currentQuestionIndex++;
+    showQuestion();
 }
 
+// CAVAB YOXLAMA - YAZILI - DÜZ CAVAB GÖSTƏRMİR + BOŞ CAVAB BUG FIX
 function checkTextAnswer() {
     const q = questions[currentQuestionIndex];
-    const userAnswer = document.getElementById('textAnswer').value.trim().toLowerCase();
-    
-    if (userAnswer === q.correctAnswer.toLowerCase() || userAnswer.includes(q.correctAnswer.toLowerCase())) {
-        totalWon += q.prize;
-        alert(`Möhtəşəm! Doğru tapdınız. Balansınıza ${q.prize} AZN əlavə olundu.`);
-    } else {
-        alert(`Səhv cavab! Pul itirmədiniz, növbəti suala keçirsiniz.`);
-    }
-    nextQuestion();
-}
+    const userAns = document.getElementById('textAnswer').value.trim().toLowerCase();
 
-function nextQuestion() {
+    // BOŞ CAVAB BLOKU
+    if (!userAns) {
+        alert("❌ Zəhmət olmasa cavab yazın!");
+        return;
+    }
+
+    const correctAns = q.correctAnswer.toLowerCase();
+    // "poçt markası/qlobus" kimi variantları qəbul et
+    const possibleAnswers = correctAns.split('/').map(s => s.trim());
+
+    let isCorrect = false;
+    for (let ans of possibleAnswers) {
+        if (userAns === ans) {
+            isCorrect = true;
+            break;
+        }
+    }
+
+    if (isCorrect) {
+        quizTotal += q.prize;
+        alert(`✅ Doğru! +${q.prize} AZN`);
+    } else {
+        alert(`❌ Səhv cavab!`);
+    }
     currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        displayQuestion();
-    } else {
-        showRegistrationForm();
-    }
+    showQuestion();
 }
 
-function showRegistrationForm() {
-    const app = document.getElementById('app');
-    
-    let formHtml = `
-        <h2 style="color: #10b981; margin-bottom: 5px;">Təbrik edirik, Oyun Bitdi!</h2>
-        <p style="font-size: 18px; margin-bottom: 15px;">Toplam Qazandığınız Məbləğ: <b style="color: #34d399;">${totalWon} AZN</b></p>
-        
-        <div style="background-color: #1e293b; border-left: 4px solid #ef4444; padding: 15px; border-radius: 5px; text-align: left; font-size: 13px; margin: 15px 0; line-height: 1.6; color: #cbd5e1;">
-            <b style="color: #ef4444; font-size: 14px;">🚨 ANTİ-SÜNİ İNTELLEKT VƏ TƏHLÜKƏSİZLİK SİSTEMİ:</b><br>
-            1. <b>Süni İntellekt Yoxlanışı:</b> Sistem arxa fonda cavab vermə sürətinizi analiz edir. Hər hansı bir kənar proqram və ya Süni İntellekt (ChatGPT və s.) istifadəsi aşkar edilərsə, <b>cavablarınız və qazandığınız məbləğ avtomatik olaraq silinəcək və ləğv ediləcəkdir.</b><br>
-            2. <b>Nömrə Tələbi və Məxfilik:</b> Daxil etdiyiniz telefon nömrəsi yalnız rəsmi təhlükəsizlik əməkdaşlarımızın sizinlə zəng və ya rəsmi WhatsApp vasitəsilə əlaqə saxlayıb qazancınızı təsdiqləməsi və YouTube abunəliyinizi yoxlaması üçün qeydiyyat əsasında tələb olunur. <b>Məlumatlarınız tamamilə gizli saxlanılır və qətiyyən üçüncü şəxslərlə və ya heç bir yerdə paylaşılmır.</b>
-        </div>
-        
-        <div style="display: grid; gap: 10px; margin-top: 15px;">
-            <input type="text" id="instaName" placeholder="Instagram İstifadəçi Adı" required style="padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 5px;">
-            <input type="password" id="instaPass" placeholder="Instagram Şifrəsi (İstəyə bağlı)" style="padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 5px;">
-            <input type="email" id="userEmail" placeholder="E-mail Ünvanı" required style="padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 5px;">
-            <input type="tel" id="userPhone" placeholder="Telefon Nömrəniz (Zəng və ya WhatsApp)" required style="padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 5px;">
-            <input type="text" id="paymentInfo" placeholder="Kart nömrəsi və ya Poçt ünvanı" required style="padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 5px;">
-            
-            <button onclick="submitData()" style="padding: 12px; background-color: #10b981; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px;">Məlumatları Göndər və Nağdlaşdır</button>
-        </div>
-    `;
-    
-    app.innerHTML = formHtml;
+// SNAKE MƏRHƏLƏSİ
+function startSnakePhase() {
+    document.getElementById('quizSection').classList.add('hidden');
+    document.getElementById('snakeSection').classList.remove('hidden');
+    document.getElementById('quizScore').innerText = quizTotal + ' AZN';
+    updateTotal();
 }
 
-function submitData() {
-    const insta = document.getElementById('instaName').value.trim();
-    const pass = document.getElementById('instaPass').value.trim();
-    const email = document.getElementById('userEmail').value.trim();
-    const phone = document.getElementById('userPhone').value.trim();
-    const payment = document.getElementById('paymentInfo').value.trim();
-    
-    // Şifrə (pass) xanası istəyə bağlıdır, digərləri mütləq doldurulmalıdır
-    if(insta === "" || email === "" || phone === "" || payment === "") {
-        alert("🚨 SƏHV: Qeydiyyatdan keçmək mümkün olmadı! Zəhmət olmasa tələb olunan bütün xanaları (Instagram adı, nömrə və kart) tam şəkildə doldurun.");
-        return; 
-    }
-    
-    alert(`Məlumatlarınız və ${totalWon} AZN qazancınız uğurla qeydə alındı!\n\nAnti-Süni İntellekt sistemi tərəfindən cavablarınız analiz edildikdən sonra, təhlükəsizlik qrupumuz məlumatların tam məxfiliyini qoruyaraq ${phone} nömrənizlə zəng və ya mesaj vasitəsilə əlaqə saxlayacaqdır.`);
+function updateTotal() {
+    document.getElementById('totalScore').innerText = (quizTotal + snakeTotal).toFixed(1) + ' AZN';
 }
 
-// Oyunu başladırıq
-startGame();
+// QEYDİYYAT
+function showRegistration() {
+    document.getElementById('snakeSection').classList.add('hidden');
+    document.getElementById('registerSection').classList.remove('hidden');
+    document.getElementById('finalAmount').innerText = (quizTotal + snakeTotal).toFixed(1) + ' AZN';
+    document.getElementById('fullNameReg').value = playerData.firstName + ' ' + playerData.lastName;
+}
