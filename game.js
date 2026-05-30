@@ -1,153 +1,121 @@
-// ========== OYUNÇU MƏLUMATLARI ==========
-let playerName = "";
-let score = 0;
-let currentQuestionIndex = 0;
-let gameRunning = false;
+// Göndərdiyiniz bütün 50 sual, variantlar və doğru cavablar siyahısı
+const quizQuestions = [
+    // 1 MANATLIQ SUALLAR (1-10)
+    { q: "Bakıda bir taksi sürücüsü deyir: \"Mənim qardaşımın atası mənim atam deyil\". Bu necə olar?", o: ["Yalandır", "Ögey qardaşdır", "Özü haqqında danışır", "Qardaşı oğlu var"], c: "Özü haqqında danışır" },
+    { q: "Hansı ayda 28 gün var?", o: ["Yalnız fevral", "Hamısında", "Heç birində", "4 ildən bir"], c: "Hamısında" },
+    { q: "3 pişik 3 siçanı 3 dəqiqəyə tutur. 100 pişik 100 siçanı neçə dəqiqəyə tutar?", o: ["100 dəq", "3 dəq", "1 dəq", "300 dəq"], c: "3 dəq" },
+    { q: "Stolda 6 alma var idi. 2-sindən başqa hamısını götürdün. Neçə alma qaldı?", o: ["4", "2", "6", "0"], c: "2" },
+    { q: "Əlində kibrit var. Qaranlıq otağa girdin. İçəridə şam, lampa, soba var. İlk nəyi yandırarsan?", o: ["Kibriti", "Şamı", "Lampanı", "Sobanı"], c: "Kibriti" },
+    { q: "Atan, anan, bacın, qardaşın restoranda. Ofisiant neçə nəfərə menyu gətirməlidir?", o: ["4", "5", "3", "Bilmək olmaz"], c: "5" },
+    { q: "2 ata, 2 oğul mağazadan 3 alma alib hərəyə 1 düşdü. Necə?", o: ["Səhv hesab", "Baba, ata, oğul idi", "Biri yemədi", "Mümkün deyil"], c: "Baba, ata, oğul idi" },
+    { q: "Hər gün yerindən tərpənmədən dünyanı gəzən şey nədir?", o: ["Poçt markası / Qlobus", "Təyyarə", "Külək", "Gəmi"], c: "Poçt markası / Qlobus" },
+    { q: "Elektrik qatarı şimala 80km/s gedir. Külək cənuba 20km/s əsir. Tüstü hara gedir?", o: ["Cənuba", "Şimala", "Yerində qalır", "Tüstü olmur"], c: "Tüstü olmur" },
+    { q: "Bir adam 25-ci mərtəbədə yaşayır. Hər səhər liftlə düşür. Axşam qayıdanda yağışlı günlər 25-ə qalxır, günəşli gün 14-ə qalxıb piyada çıxır. Niyə?", o: ["Boyu balacadır, düyməyə çətirlə çatır", "Lift xarab olur", "İdman edir", "Qonşuya baş çəkir"], c: "Boyu balacadır, düyməyə çətirlə çatır" },
 
-// ========== 50 SUAL ==========
-const questions = [
-    { q: "Azərbaycanın paytaxtı haradır?", a: ["Gəncə", "Bakı", "Sumqayıt", "Naxçıvan"], correct: 1 },
-    { q: "5 + 7 neçə edir?", a: ["10", "11", "12", "13"], correct: 2 },
-    { q: "Dünyanın ən böyük okeanı hansıdır?", a: ["Atlantik", "Hind", "Sakit", "Şimal Buzlu"], correct: 2 },
-    { q: "İlin neçə fəsli var?", a: ["2", "3", "4", "5"], correct: 2 },
-    { q: "Qar hansı rəngdədir?", a: ["Qara", "Ağ", "Mavi", "Qırmızı"], correct: 1 },
-    { q: "10 - 4 neçə edir?", a: ["5", "6", "7", "8"], correct: 1 },
-    { q: "Azərbaycanın pul vahidi nədir?", a: ["Dollar", "Avro", "Manat", "Rubl"], correct: 2 },
-    { q: "Həftədə neçə gün var?", a: ["5", "6", "7", "8"], correct: 2 },
-    { q: "Yer kürəsi hansı formadadır?", a: ["Kvadrat", "Üçbucaq", "Dairə", "Yastı"], correct: 2 },
-    { q: "3 x 3 neçə edir?", a: ["6", "8", "9", "12"], correct: 2 },
-    { q: "Xəzər dənizi hansı ölkənin sahilindədir?", a: ["Türkiyə", "Azərbaycan", "Gürcüstan", "Ermənistan"], correct: 1 },
-    { q: "İnsanda neçə barmaq var?", a: ["8", "10", "12", "20"], correct: 3 },
-    { q: "Göy qurşağı neçə rəngdən ibarətdir?", a: ["5", "6", "7", "8"], correct: 2 },
-    { q: "20 / 4 neçə edir?", a: ["4", "5", "6", "8"], correct: 1 },
-    { q: "Qız Qalası harada yerləşir?", a: ["Gəncədə", "Bakıda", "Şəkidə", "Qubada"], correct: 1 },
-    { q: "Su neçə dərəcədə donur?", a: ["0", "10", "50", "100"], correct: 0 },
-    { q: "Azərbaycan neçənci ildə müstəqillik qazanıb?", a: ["1990", "1991", "1992", "1993"], correct: 1 },
-    { q: "12 + 8 neçə edir?", a: ["18", "19", "20", "21"], correct: 2 },
-    { q: "Pişiklər hansı səsi çıxarır?", a: ["Hav", "Miyov", "Moo", "Cik"], correct: 1 },
-    { q: "Bir saatda neçə dəqiqə var?", a: ["30", "45", "60", "90"], correct: 2 },
-    { q: "Novruz bayramı hansı ayda qeyd olunur?", a: ["Fevral", "Mart", "Aprel", "May"], correct: 1 },
-    { q: "15 - 7 neçə edir?", a: ["6", "7", "8", "9"], correct: 2 },
-    { q: "Ən böyük planet hansıdır?", a: ["Mars", "Yer", "Yupiter", "Saturn"], correct: 2 },
-    { q: "Qarabağ hansı bölgədə yerləşir?", a: ["Şimalda", "Cənubda", "Qərbdə", "Azərbaycanda"], correct: 3 },
-    { q: "6 x 4 neçə edir?", a: ["20", "22", "24", "26"], correct: 2 },
-    { q: "Kitabları harada saxlayırlar?", a: ["Marketdə", "Kitabxanada", "Aptekdə", "Stadionda"], correct: 1 },
-    { q: "Şəkidə nəyi ilə məşhurdur?", a: ["Paxlava", "Xalça", "Piti", "Kabab"], correct: 2 },
-    { q: "100 / 10 neçə edir?", a: ["5", "10", "15", "20"], correct: 1 },
-    { q: "İnsan neçə gözə sahibdir?", a: ["1", "2", "3", "4"], correct: 1 },
-    { q: "Yay fəsli hansı aylardır?", a: ["Mart-May", "İyun-Avqust", "Sent-Noy", "Dek-Fev"], correct: 1 },
-    { q: "50 + 25 neçə edir?", a: ["65", "70", "75", "80"], correct: 2 },
-    { q: "Nizami Gəncəvi kimdir?", a: ["Həkim", "Şair", "Rəssam", "Musiqiçi"], correct: 1 },
-    { q: "Kompüteri kim icad edib?", a: ["Tomas Edison", "Çarlz Bebic", "Albert Eynşteyn", "İsaak Nyuton"], correct: 1 },
-    { q: "9 x 5 neçə edir?", a: ["40", "45", "50", "55"], correct: 1 },
-    { q: "Dəniz suyu necədir?", a: ["Şirin", "Turş", "Duzlu", "Acı"], correct: 2 },
-    { q: "Azərbaycan bayrağında neçə rəng var?", a: ["2", "3", "4", "5"], correct: 1 },
-    { q: "30 - 12 neçə edir?", a: ["16", "17", "18", "19"], correct: 2 },
-    { q: "At neçə ayaqlıdır?", a: ["2", "3", "4", "6"], correct: 2 },
-    { q: "Günəş sistemində neçə planet var?", a: ["7", "8", "9", "10"], correct: 1 },
-    { q: "7 + 6 neçə edir?", a: ["11", "12", "13", "14"], correct: 2 },
-    { q: "Muğam nədir?", a: ["Rəqs", "Musiqi janrı", "Yemək", "Geyim"], correct: 1 },
-    { q: "11 x 11 neçə edir?", a: ["111", "121", "131", "141"], correct: 1 },
-    { q: "Qar yağanda hava necə olur?", a: ["İsti", "Soyuq", "Küləkli", "Yağışlı"], correct: 1 },
-    { q: "Bir ildə neçə ay var?", a: ["10", "11", "12", "13"], correct: 2 },
-    { q: "25 + 25 neçə edir?", a: ["40", "45", "50", "55"], correct: 2 },
-    { q: "Heydər Əliyev hansı ildə doğulub?", a: ["1921", "1923", "1925", "1927"], correct: 1 },
-    { q: "80 / 8 neçə edir?", a: ["8", "9", "10", "12"], correct: 2 },
-    { q: "Bal arıları nə düzəldir?", a: ["Süd", "Bal", "Yağ", "Pendir"], correct: 1 },
-    { q: "Telefonu kim icad edib?", a: ["Qrem Bell", "Tesla", "Edison", "Marconi"], correct: 0 },
-    { q: "Son sual: 100 x 0 neçə edir?", a: ["0", "1", "100", "1000"], correct: 0 }
+    // 2 MANATLIQ SUALLAR (11-20)
+    { q: "Saat 03:15-də əqrəblər arasındakı bucaq neçə dərəcədir?", o: ["0°", "7.5°", "15°", "3.75°"], c: "7.5°" },
+    { q: "8, 11, 15, 20, 26, ? Növbəti ədəd hansıdır?", o: ["31", "32", "33", "34"], c: "33" },
+    { q: "1-dən 100-ə qədər neçə dənə 9 rəqəmi var?", o: ["10", "11", "19", "20"], c: "20" },
+    { q: "Həkim sənə 3 həb verdi, hər 30 dəq-dən bir iç dedi. Hamısı neçə dəqiqəyə qurtarar?", o: ["90", "60", "30", "120"], c: "60" },
+    { q: "2 nəfər dama oynadı. Hərəsi 5 dəfə uddu. Bu necə oldu?", o: ["Heç-heçə bitdi", "Bir-biri ilə oynamırdılar", "Oyun səhv qurulub", "Hile etdilər"], c: "Bir-biri ilə oynamırdılar" },
+    { q: "100 manatın var. 10 manatlıq 10 məhsul alırsan. Kassa 20 manat qaytardı. Səhv haradadır?", o: ["Səhv yoxdur", "100 manat verməmisən (120 vermisən)", "Kassa səhv edib", "80 qaytarmalıydı"], c: "100 manat verməmisən (120 vermisən)" },
+    { q: "Bir yarışda 2-ci yeri tutanı ötdün. İndi neçəncisən?", o: ["1-ci", "2-ci", "3-cü", "Dibinədək"], c: "2-ci" },
+    { q: "5 maşın 5 metr yolu 5 dəqiqəyə gedir. 1 maşın 1 metr yolu neçə dəqiqəyə gedər?", o: ["5 dəqiqə", "1 dəqiqə", "2.5 dəqiqə", "25 dəqiqə"], c: "1 dəqiqə" },
+    { q: "40 AZN-i 2 nəfərə elə böl ki, birində o birindən 10 AZN çox olsun.", o: ["25 və 15", "30 və 10", "Mümkün deyil", "20 və 20"], c: "25 və 15" },
+    { q: "Hansı ildə 25 dekabr ilə 31 dekabr eyni həftəyə düşə bilər?", o: ["Yalnız uzun illərdə", "Heç bir ildə", "Hər il", "4 ildən bir"], c: "Hər il" },
+
+    // 3 MANATLIQ SUALLAR (21-30)
+    { q: "Bakıdan Gəncəyə 300km. 60km/s ilə çıxan maşınla eyni anda Gəncədən 90km/s ilə çıxan maşın neçə km sonra görüşər? (İlk maşına görə)", o: ["150km", "120km", "180km", "200km"], c: "120km" },
+    { q: "3 işçi bir evi 3 günə tikir. 1 işçi 1 evi neçə günə tikər?", o: ["3", "9", "1", "6"], c: "9" },
+    { q: "A = B + 2, B = C + 3, C = 4 olarsa, A + B + C = ?", o: ["15", "18", "16", "20"], c: "18" },
+    { q: "Bir otaqda 5 şam yanır. 2-sini söndürdün. Səhər neçə şam qalar?", o: ["3", "2", "5", "0"], c: "2" },
+    { q: "1, 1, 2, 3, 5, 8, 13, 21, ? Növbəti ədəd?", o: ["34", "28", "30", "42"], c: "34" },
+    { q: "Qarpızın 99%-i sudur. 100kq qarpız günəşdə qaldı, 98% su oldu. İndi çəkisi neçədir?", o: ["99kq", "50kq", "98kq", "2kq"], c: "50kq" },
+    { q: "Bir bağban 10m x 10m bağı 10 saata belləyir. 20m x 20m bağı neçə saata belləyər?", o: ["20 saat", "40 saat", "30 saat", "50 saat"], c: "40 saat" },
+    { q: "1 kq pambıq ağırdır yoxsa 1 kq dəmir?", o: ["Dəmir", "Pambıq", "Eyni", "Həcmdən asılıdır"], c: "Eyni" },
+    { q: "Məndə 2 sikkə var, cəmi 3 manat edir. Biri 1 manatlıq deyil. Sikkələr hansılardır?", o: ["2 manatlıq və 1 manatlıq", "İki dənə 1.5 manatlıq", "Mümkün deyil", "3 dənə 1 manatlıq"], c: "2 manatlıq və 1 manatlıq" },
+    { q: "İl 365 gün. Bir ildə neçə saniyə var?", o: ["31,536,000", "12", "86400", "Sonsuz"], c: "12" },
+
+    // 4 MANATLIQ SUALLAR (31-40)
+    { q: "3 qapı var. 1-də maşın, 2-də keçi. Seçdiniz, aparıcı keçili qapını açdı. Seçimi dəyişsəniz udmaq şansınız neçə faizdir?", o: ["33.3%", "50%", "66.6%", "100%"], c: "66.6%" },
+    { q: "100 mərtəbəli binadan 2 eyni yumurtanız var. Qırılma mərtəbəsini minimum neçə cəhdlə dəqiq tapmaq olar?", o: ["50 cəhd", "14 cəhd", "10 cəhd", "25 cəhd"], c: "14 cəhd" },
+    { q: "12 sikkə var, 1-i saxtadır (çəkisi fərqlidir). Mexaniki tərəzidə minimum neçə çəkimlə tapmaq olar?", o: ["2", "3", "4", "5"], c: "3" },
+    { q: "Saatda 3 dəfə düz olur, amma işləmir. Bu nədir?", o: ["Divar saatı", "Xarab / Dayanmış saat", "Qol saatı", "Elektron saat"], c: "Xarab / Dayanmış saat" },
+    { q: "2 qapıçı var (biri həmişə yalan, biri düz danışır). Cənnət qapısını tapmaq üçün hansı sual verilməlidir?", o: ["\"O biri qapıçı cənnət qapısı hansıdır deyərdi?\" soruşub əksini seçmək", "Cənnət haradır?", "Sən düz danışırsan?", "Heç biri"], c: "\"O biri qapıçı cənnət qapısı hansıdır deyərdi?\" soruşub əksini seçmək" },
+    { q: "0-9 rəqəmləri ilə düzələn, ilk 1 rəqəmi 1-ə, ilk 2 rəqəmi 2-yə... ilk 10 rəqəmi 10-a bölünən ədəd hansıdır?", o: ["1234567890", "3816547290", "9876543210", "3456712890"], c: "3816547290" },
+    { q: "Avar çəkən 10 nəfər 10 dəqiqəyə 10km gedir. Avar çəkməyən 1 nəfər olsa, 10km-i neçə dəqiqəyə gedərlər?", o: ["10 dəqiqə", "100 dəqiqə", "Sonsuz (qayıq tərpənməz)", "1 dəqiqə"], c: "Sonsuz (qayıq tərpənməz)" },
+    { q: "5 rəqəmli palindrom ədəd 4-ə bölünür. Rəqəmləri cəmi 24-dür. Ədəd hansıdır?", o: ["56865", "64846", "58685", "46864"], c: "64846" },
+    { q: "Bir ailədə 7 bacı var. Hər bacının 1 qardaşı var. Ailədə neçə uşaq var?", o: ["14", "8", "7", "9"], c: "8" },
+    { q: "1-dən 1000-ə qədər bütün ədədləri yazsanız, neçə dənə \"1\" rəqəmindən istifadə edərsiniz?", o: ["300", "301", "100", "299"], c: "301" },
+
+    // 5 MANATLIQ SUALLAR (41-50)
+    { q: "Kişilərin 30%-i keçəldir. Keçəllərin 50%-i, saçlıların 10%-i papaq taxır. Papaqlı birinin keçəl olma ehtimalı?", o: ["50%", "68.2%", "30%", "45%"], c: "68.2%" },
+    { q: "25 at var, 5 yollu trek. Ən sürətli 3 atı tapmaq üçün saniyəölçənsiz minimum neçə yarış lazımdır?", o: ["5", "6", "7", "8"], c: "7" },
+    { q: "100 nəfərdən 10-u qırmızı, 90-ı qara papaqdadır. Hər kəs başqasını görür. Ən az 1 qırmızı var. Qırmızılar neçənci dəqiqədə çıxacaq?", o: ["1-ci", "10-cu", "90-cı", "Heç vaxt"], c: "10-cu" },
+    { q: "3 dost 30 manat ödəyir. Menecer 5 manat qaytarır, ofisiant 2-ni götürüb 3-ünü dostlara verir. 9x3=27 + 2 = 29 manat edir. 1 manat haradadır?", o: ["Ofisiantda qalıb", "Səhv toplanır (27-2=25 otel haqqıdır)", "İtib", "Menecerdədir"], c: "Səhv toplanır (27-2=25 otel haqqıdır)" },
+    { q: "1-dən sonsuza qədər olan ədədlər çoxluğunda tək ədədlər çoxdur, yoxsa cüt ədədlər?", o: ["Tək ədədlər", "Cüt ədədlər", "Eynidir (sonsuzluqlar bərabərdir)", "Təyin etmək olmur"], c: "Eynidir (sonsuzluqlar bərabərdir)" },
+    { q: "Bərbər yalnız özü üzünü qırxmayanları qırxır. Bərbər öz üzünü qırxırmı?", o: ["Bəli, qırxır", "Xeyr, qırxmır", "Paradoksdur (qaydanı pozur)", "Başqa bərbərə gedir"], c: "Paradoksdur (qaydanı pozur)" },
+    { q: "4 litrlik və 9 litrlik qablarla dəqiq 6 litr suyu necə alarsınız?", o: ["Almaq mümkün deyil", "9-u doldurub 4-ə boşaltmaq məntiqi ilə (ardıcıl fərqlərlə)", "Gözəyarı doldurmaqla", "Qabları yarıya qədər doldurmaqla"], c: "9-u doldurub 4-ə boşaltmaq məntiqi ilə (ardıcıl fərqlərlə)" },
+    { q: "AZE=32 (A=1, Z=26, E=5). Ölkə kodları məntiqi ilə TUR neçə edir? (T=20, U=21, R=18)", o: ["59", "61", "60", "55"], c: "61" },
+    { q: "10 mərtəbəli binada 1-cidə 1 nəfər minir, hər mərtəbədə minənlərin sayısı mərtəbə nömrəsi qədərdir. 10-da neçə nəfər düşər?", o: ["45", "55", "50", "65"], c: "55" },
+    { q: "Dünyada indicə siz bu sualı oxuyanda təxminən neçə nəfər sizinlə eyni anda gözünü qırpdı?", o: ["~500 min", "~1 milyon", "~10 min", "~5 milyon"], c: "~500 min" }
 ];
 
-// ========== OYUNU BAŞLAT ==========
+let currentQuestionIndex = 0;
+let userName = "";
+
 function startGame() {
-    playerName = document.getElementById('playerName').value.trim();
+    const nameInput = document.getElementById("user-fullname").value.trim();
+    if (nameInput === "") {
+        alert("Zəhmət olmasa Ad və Soyadınızı daxil edin!");
+        return;
+    }
+    userName = nameInput;
+    
+    // HTML-dəki gizli xanaya oyunçunun adını yazırıq ki, Formspree-yə getsin
+    document.getElementById("form-fullname").value = userName;
+    
+    // Ekranları dəyişdiririk
+    document.getElementById("start-screen").classList.add("hidden");
+    document.getElementById("quiz-screen").classList.remove("hidden");
+    
+    loadQuestion();
+}
 
-    if (playerName === "") {
-        alert("Adını yaz!");
+function loadQuestion() {
+    if (currentQuestionIndex >= quizQuestions.length) {
+        endGame();
         return;
     }
 
-    document.getElementById('startScreen').style.display = 'none';
-    document.getElementById('gameScreen').style.display = 'block';
+    const currentData = quizQuestions[currentQuestionIndex];
+    
+    // Sualın mətnini yeniləyirik
+    document.getElementById("question-text").innerText = `${currentQuestionIndex + 1}. ${currentData.q}`;
+    
+    const optionsContainer = document.getElementById("options-container");
+    optionsContainer.innerHTML = "";
 
-    gameRunning = true;
-    score = 0;
-    currentQuestionIndex = 0;
-    showQuestion();
-}
+    // Sizin istəyinizə əsasən variantların yerini hər dəfə qarışdırırıq
+    let shuffledOptions = [...currentData.o];
+    shuffledOptions.sort(() => Math.random() - 0.5);
 
-// ========== SUALI GÖSTƏR ==========
-function showQuestion() {
-    if (currentQuestionIndex >= questions.length) {
-        endGame(true);
-        return;
-    }
-
-    let q = questions[currentQuestionIndex];
-    document.getElementById('question').innerText = `${currentQuestionIndex + 1}. ${q.q}`;
-    document.getElementById('score').innerText = `Xal: ${score}`;
-
-    let answersDiv = document.getElementById('answers');
-    answersDiv.innerHTML = '';
-
-    q.a.forEach((answer, index) => {
-        let btn = document.createElement('button');
-        btn.innerText = answer;
-        btn.className = 'answer-btn';
-        btn.onclick = () => checkAnswer(index);
-        answersDiv.appendChild(btn);
+    shuffledOptions.forEach(option => {
+        const button = document.createElement("button");
+        button.innerText = option;
+        button.className = "btn option-btn";
+        
+        // Səhv və ya düz cavab olmasından asılı olmayaraq heç nə demir, birbaşa növbəti suala keçir
+        button.onclick = () => {
+            currentQuestionIndex++;
+            loadQuestion();
+        };
+        optionsContainer.appendChild(button);
     });
 }
 
-// ========== CAVABI YOXLA ==========
-function checkAnswer(selected) {
-    let q = questions[currentQuestionIndex];
-
-    if (selected === q.correct) {
-        score += 10;
-        currentQuestionIndex++;
-        showQuestion();
-    } else {
-        endGame(false);
-    }
+function endGame() {
+    // Oyun bitəndə qeydiyyat və youtube səhifəsini açırıq
+    document.getElementById("quiz-screen").classList.add("hidden");
+    document.getElementById("end-screen").classList.remove("hidden");
 }
-
-// ========== OYUN BİTDİ + AVTOMATİK GÖNDƏR ==========
-function endGame(won) {
-    gameRunning = false;
-
-    // NƏTİCƏNİ FORMSPREE-YƏ GÖNDƏR - AVTOMATİK
-    fetch("https://formspree.io/f/mbdbbnwb", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            "Ad Soyad": playerName,
-            "Topladığı Xal": score,
-            "Cavabladığı Sual": currentQuestionIndex,
-            "Status": won? "Qalib - 50/50" : "Uduzdu",
-            "Tarix": new Date().toLocaleString('az-AZ')
-        })
-    }).then(response => {
-        console.log("Göndərildi:", response);
-    }).catch(error => {
-        console.log("Xəta:", error);
-    });
-
-    // EKRANI GÖSTƏR
-    document.getElementById('gameScreen').style.display = 'none';
-    document.getElementById('gameOverScreen').style.display = 'block';
-    document.getElementById('finalScore').innerText = score;
-    document.getElementById('finalMessage').innerText = won?
-        "Təbriklər! 50 sualın hamısını bildin!" :
-        `Oyun bitdi! ${currentQuestionIndex} sual cavabladın.`;
-}
-
-// ========== YENİDƏN BAŞLAT ==========
-function restartGame() {
-    document.getElementById('gameOverScreen').style.display = 'none';
-    document.getElementById('startScreen').style.display = 'block';
-    document.getElementById('playerName').value = '';
-                                                         }
