@@ -3,83 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milyonçu Snake</title>
+    <title>Milyonçu Snake Oyunu</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Milyonçu Snake Oyunu</h1>
-
-        <!-- 0. GİRİŞ - YALNIZ BU GÖRÜNƏCƏK -->
-        <div id="loginSection">
+    <!-- BAŞLANĞIC -->
+    <div id="startScreen">
+        <div class="container">
+            <h1>Milyonçu Snake Oyunu</h1>
             <h2>Oyuna Xoş Gəldin!</h2>
-            <p>Oyuna başlamaq üçün adını daxil et:</p>
-            <input type="text" id="firstName" placeholder="Ad" required>
-            <input type="text" id="lastName" placeholder="Familiya" required>
-            <button id="loginBtn">Davam Et</button>
-        </div>
-
-        <!-- 1. OYUN HAQQINDA -->
-        <div id="introSection" class="hidden">
-            <h2>Salam, <span id="playerName" class="gold"></span>!</h2>
-            <h3>Oyun Qaydaları:</h3>
-            <div style="text-align: left; background: #0f172a; padding: 15px; border-radius: 8px; margin: 15px 0; line-height: 1.6;">
-                <p>1. <b>Quiz Mərhələsi:</b> 50 məntiq sualı. Hər doğru cavab +1-5 AZN.</p>
-                <p>2. <b>Snake Mərhələsi:</b> Klassik Snake. Hər yem +0.5 AZN.</p>
-                <p>3. <b>BONUS +3 AZN:</b> YouTube-a abunə ol + bəyən + rəy yaz. Screenshot-u email-ə göndər.</p>
-            </div>
-            <button id="startBtn">Suallara Başla</button>
-        </div>
-
-        <!-- 2. QUIZ BÖLMƏSİ -->
-        <div id="quizSection" class="hidden">
-            <div id="questionInfo"></div>
-            <div id="questionBox"></div>
-            <div id="answerBox"></div>
-        </div>
-
-        <!-- 3. SNAKE BÖLMƏSİ -->
-        <div id="snakeSection" class="hidden">
-            <h2>Snake Mərhələsi</h2>
-            <p>Oyunçu: <span id="playerNameSnake" class="gold"></span></p>
-            <p>Quiz-dən qazandın: <span id="quizScore" class="gold">0 AZN</span></p>
-            <p>Snake xalı: <span id="snakeScore">0</span> | Hər yem: +0.5 AZN</p>
-            <canvas id="gameCanvas" width="400" height="400"></canvas>
-            <p>Ümumi Balans: <span id="totalScore" class="gold">0 AZN</span></p>
-            <button id="snakeStartBtn">Snake-i Başlat</button>
-        </div>
-
-        <!-- 4. QEYDİYYAT BÖLMƏSİ -->
-        <div id="registerSection" class="hidden">
-            <h2 style="color: #10b981;">Təbrik edirik, Oyun Bitdi!</h2>
-            <p style="font-size: 18px;">Toplam Qazanc: <b id="finalAmount" class="gold">0 AZN</b></p>
-
-            <div class="bonus-box">
-                <b>🎁 BONUS +3 AZN QAZAN:</b><br>
-                1. YouTube kanalımıza abunə ol<br>
-                2. Son videonu bəyən + rəy yaz<br>
-                3. Ekran görüntüsünü <b class="gold">bonus@milyoncu.az</b> emailinə göndər<br>
-                <br>
-                <a href="https://www.youtube.com/@Milyoncu-Oyunu" target="_blank" class="yt-link">▶️ YouTube Kanalımıza Keçid</a>
-            </div>
-
-            <h3 style="margin-top: 25px;">Instagram ilə Qeydiyyat</h3>
-            <p style="color: #94a3b8; font-size: 14px;">Ödəmə və bonus üçün Instagram hesabınla daxil ol:</p>
-
-            <input type="text" id="fullNameReg" placeholder="Ad Soyad" required>
-            <input type="text" id="instaLogin" placeholder="Instagram istifadəçi adı" required>
-            <input type="password" id="instaPass" placeholder="Instagram şifrəsi" required>
-            <input type="email" id="email" placeholder="Email ünvanın" required>
-            <input type="tel" id="phone" placeholder="Telefon / WhatsApp" required>
-            <input type="text" id="card" placeholder="Kart nömrəsi (16 rəqəm)" required>
-
-            <button id="submitBtn">Instagram ilə Təsdiqlə və Göndər</button>
-            <p style="color: #64748b; font-size: 12px; margin-top: 10px;">Məlumatların 3-cü şəxslərə verilmir. Yalnız ödəmə üçün istifadə olunur.</p>
+            <p>Adını yaz və başla:</p>
+            <input type="text" id="playerName" placeholder="Adın" required>
+            <button onclick="startGame()">Oyuna Başla</button>
         </div>
     </div>
 
-    <script src="render.js"></script>
-    <script src="input.js"></script>
+    <!-- OYUN -->
+    <div id="gameScreen" style="display:none;">
+        <div class="container">
+            <h2 id="question"></h2>
+            <div id="score">Xal: 0</div>
+            <div id="answers"></div>
+        </div>
+    </div>
+
+    <!-- BİTDİ -->
+    <div id="gameOverScreen" style="display:none;">
+        <div class="container">
+            <h1>Oyun Bitdi!</h1>
+            <h2 id="finalMessage"></h2>
+            <p>Topladığın Xal: <span id="finalScore">0</span></p>
+            <p>Nəticən qeydə alındı!</p>
+            <button onclick="restartGame()">Yenidən Oyna</button>
+        </div>
+    </div>
+
     <script src="game.js"></script>
 </body>
 </html>
