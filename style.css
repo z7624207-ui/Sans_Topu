@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a2a6c;
+}
+
+#app {
+    text-align: center;
+    background: #000;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid #ffd700;
+    width: 90%;
+    max-width: 600px;
+}
