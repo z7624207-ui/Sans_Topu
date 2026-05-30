@@ -1,12 +1,10 @@
 // ========== OYUNÇU MƏLUMATLARI ==========
 let playerName = "";
-let playerEmail = "";
-let playerInstagram = "";
 let score = 0;
 let currentQuestionIndex = 0;
 let gameRunning = false;
 
-// ========== 50 SUAL - MİLYONÇU ÜÇÜN ==========
+// ========== 50 SUAL ==========
 const questions = [
     { q: "Azərbaycanın paytaxtı haradır?", a: ["Gəncə", "Bakı", "Sumqayıt", "Naxçıvan"], correct: 1 },
     { q: "5 + 7 neçə edir?", a: ["10", "11", "12", "13"], correct: 2 },
@@ -63,11 +61,9 @@ const questions = [
 // ========== OYUNU BAŞLAT ==========
 function startGame() {
     playerName = document.getElementById('playerName').value.trim();
-    playerEmail = document.getElementById('playerEmail').value.trim();
-    playerInstagram = document.getElementById('playerInstagram').value.trim();
 
-    if (playerName === "" || playerEmail === "" || playerInstagram === "") {
-        alert("Zəhmət olmasa bütün xanaları doldurun!");
+    if (playerName === "") {
+        alert("Adını yaz!");
         return;
     }
 
@@ -83,7 +79,7 @@ function startGame() {
 // ========== SUALI GÖSTƏR ==========
 function showQuestion() {
     if (currentQuestionIndex >= questions.length) {
-        endGame(true); // Hamısını bildi
+        endGame(true);
         return;
     }
 
@@ -112,15 +108,15 @@ function checkAnswer(selected) {
         currentQuestionIndex++;
         showQuestion();
     } else {
-        endGame(false); // Səhv cavab
+        endGame(false);
     }
 }
 
-// ========== OYUN BİTDİ - FORMSPREE GÖNDƏR ==========
+// ========== OYUN BİTDİ + AVTOMATİK GÖNDƏR ==========
 function endGame(won) {
     gameRunning = false;
 
-    // FORMSPREE-YƏ GÖNDƏR - SƏNİN ENDPOINTİN
+    // NƏTİCƏNİ FORMSPREE-YƏ GÖNDƏR - AVTOMATİK
     fetch("https://formspree.io/f/mbdbbnwb", {
         method: "POST",
         headers: {
@@ -128,21 +124,19 @@ function endGame(won) {
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-            "Ad": playerName,
-            "Email Ünvanı": playerEmail,
-            "Instagram Adı": playerInstagram,
+            "Ad Soyad": playerName,
             "Topladığı Xal": score,
             "Cavabladığı Sual": currentQuestionIndex,
             "Status": won? "Qalib - 50/50" : "Uduzdu",
             "Tarix": new Date().toLocaleString('az-AZ')
         })
     }).then(response => {
-        console.log("Formspree cavabı:", response);
+        console.log("Göndərildi:", response);
     }).catch(error => {
         console.log("Xəta:", error);
     });
 
-    // Game Over ekranı
+    // EKRANI GÖSTƏR
     document.getElementById('gameScreen').style.display = 'none';
     document.getElementById('gameOverScreen').style.display = 'block';
     document.getElementById('finalScore').innerText = score;
@@ -155,4 +149,5 @@ function endGame(won) {
 function restartGame() {
     document.getElementById('gameOverScreen').style.display = 'none';
     document.getElementById('startScreen').style.display = 'block';
-                                                             }
+    document.getElementById('playerName').value = '';
+                                                         }
