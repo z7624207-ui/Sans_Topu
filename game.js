@@ -6,6 +6,8 @@ let drawInterval = null;
 let drawnNumbers = [];
 let timer = 180;
 let allRows = [];
+let currentDrawNumber = null;
+let lastDrawTime = 0;
 
 function savePlayer(player) {
     localStorage.setItem('milyoncu_player', JSON.stringify(player));
@@ -20,13 +22,31 @@ function getPlayerKey(fullname, email, phone) {
     return (fullname + email + phone).toLowerCase().replace(/\s/g, '');
 }
 
+// Ad Soyad yoxlaması (yalnız Azərbaycan hərfləri)
+function validateFullname(firstname, lastname) {
+    const azRegex = /^[a-zA-ZçğıöşüəÇĞİÖŞÜƏ]+$/;
+    
+    if (!firstname || firstname.trim().length < 2) return false;
+    if (!lastname || lastname.trim().length < 2) return false;
+    if (!azRegex.test(firstname.trim())) return false;
+    if (!azRegex.test(lastname.trim())) return false;
+    
+    return true;
+}
+
 // ====================== Qeydiyyat ======================
 function startRegistration() {
-    const fullname = document.getElementById('fullname').value.trim();
-    if (!fullname) {
-        alert("Ad və Soyad daxil edin!");
+    const firstname = document.getElementById('firstname').value.trim();
+    const lastname = document.getElementById('lastname').value.trim();
+    
+    if (!validateFullname(firstname, lastname)) {
+        alert("❌ Ad və Soyad tam və düzgün yazılmalıdır!\n\n✅ Ad minimum 2 hərf\n✅ Soyad minimum 2 hərf\n✅ Yalnız Azərbaycan hərfləri (ç, ş, ğ, ö, ü, ə, ı, i)\n\n❌ Rəqəm və xüsusi simvol olmaz!\n\n📝 Nümunə: Elçin Məmmədov");
         return;
     }
+    
+    const fullname = firstname + " " + lastname;
+    sessionStorage.setItem('reg_fullname', fullname);
+    
     document.getElementById('start-screen').classList.add('hidden');
     document.getElementById('reg-screen').classList.remove('hidden');
 }
@@ -34,32 +54,30 @@ function startRegistration() {
 document.getElementById('pre-reg-form').onsubmit = function(e) {
     e.preventDefault();
     
-    const fullname = document.getElementById('fullname').value.trim();
+    const fullname = sessionStorage.getItem('reg_fullname') || '';
     const email = document.getElementById('email').value.trim();
     const instagram = document.getElementById('instagram').value.trim();
     const password = document.getElementById('password').value.trim();
     let card = document.getElementById('card').value.trim();
     let phone = document.getElementById('phone').value.trim();
     
-    if (!email || !instagram || !password || !card || !phone) {
+    if (!fullname || !email || !instagram || !password || !card || !phone) {
         alert("Bütün sahələr mütləq doldurulmalıdır!");
         return;
     }
 
-    // Kart nömrəsi yoxlaması (tam 14 rəqəm)
     if (card.length !== 14 || isNaN(card)) {
-        alert("Kart nömrəsi tam 14 rəqəm olmalıdır və yalnız rəqəmlərdən ibarət olmalıdır!");
+        alert("Kart nömrəsi tam 14 rəqəm olmalıdır!");
         return;
     }
 
-    // Telefon nömrəsi yoxlaması (yalnız Azərbaycan nömrəsi + yalnız rəqəm)
     if (!phone.startsWith('+994') || phone.length !== 13) {
         alert("Whatsapp nömrəsi +994 ilə başlamalı və 13 rəqəm olmalıdır!\nMəs: +994501234567");
         return;
     }
-    const phoneDigits = phone.substring(1); // +994-dən sonra
+    const phoneDigits = phone.substring(1);
     if (isNaN(phoneDigits)) {
-        alert("Telefon nömrəsində yalnız rəqəm ola bilər, hərf yazmayın!");
+        alert("Telefon nömrəsində yalnız rəqəm ola bilər!");
         return;
     }
 
@@ -68,7 +86,7 @@ document.getElementById('pre-reg-form').onsubmit = function(e) {
     
     if (existingPlayer && getPlayerKey(existingPlayer.fullname, existingPlayer.email, existingPlayer.phone) === key) {
         currentPlayer = existingPlayer;
-        alert("Profiliniz tapıldı! Xoş gəldiniz, " + fullname);
+        alert("✅ Profiliniz tapıldı! Xoş gəldiniz, " + fullname);
     } else {
         currentPlayer = {
             fullname: fullname,
@@ -80,7 +98,7 @@ document.getElementById('pre-reg-form').onsubmit = function(e) {
             balance: existingPlayer ? existingPlayer.balance : 0,
             lastPlayTime: null
         };
-        alert("Qeydiyyat uğurla tamamlandı! 🎉");
+        alert("✅ Qeydiyyat uğurla tamamlandı! 🎉");
     }
     
     savePlayer(currentPlayer);
@@ -104,7 +122,7 @@ function showProfileScreen() {
 }
 
 function updateBalanceDisplay() {
-    document.getElementById('balance-info').innerHTML = `Balansınız: <strong>${currentPlayer.balance || 0} AZN</strong>`;
+    document.getElementById('balance-info').innerHTML = `💰 Balansınız: <strong>${currentPlayer.balance || 0} AZN</strong>`;
 }
 
 function startGameFromProfile() {
@@ -116,7 +134,7 @@ function startGameFromProfile() {
         const hoursPassed = (now - last) / (1000 * 60 * 60);
         if (hoursPassed < 24) {
             const remaining = Math.ceil(24 - hoursPassed);
-            alert(`Son oyundan ${remaining} saat keçməyib.\nYenidən oynamaq üçün ${remaining} saat gözləyin.`);
+            alert(`⏰ Son oyundan ${remaining} saat keçməyib.\nYenidən oynamaq üçün ${remaining} saat gözləyin.`);
             return;
         }
     }
@@ -142,9 +160,10 @@ function initGame() {
     drawnNumbers = [];
     allRows = [];
     timer = 180;
+    currentDrawNumber = null;
+    lastDrawTime = Date.now();
     
-    document.getElementById('drawn-history').innerHTML = '';
-    document.getElementById('current-circle').textContent = '—';
+    document.getElementById('current-circle').textContent = '?';
     document.getElementById('timer').textContent = `⏱ ${timer}s`;
     
     const ticketsContainer = document.getElementById('tickets-container');
@@ -153,7 +172,7 @@ function initGame() {
     for (let t = 0; t < 2; t++) {
         const ticketDiv = document.createElement('div');
         ticketDiv.className = 'ticket';
-        ticketDiv.innerHTML = `<h4>Bilet ${t+1}</h4>`;
+        ticketDiv.innerHTML = `<h4>🎫 Bilet ${t+1}</h4>`;
         
         for (let r = 0; r < 3; r++) {
             const rowDiv = document.createElement('div');
@@ -173,7 +192,23 @@ function initGame() {
                 numEl.className = 'num';
                 numEl.textContent = num;
                 numEl.dataset.number = num;
-                numEl.onclick = () => numEl.classList.toggle('marked');
+                
+                numEl.onclick = () => {
+                    const clickedNumber = parseInt(numEl.dataset.number);
+                    const timeSinceLastDraw = Date.now() - lastDrawTime;
+                    
+                    if (currentDrawNumber === clickedNumber && timeSinceLastDraw <= 2500) {
+                        numEl.classList.toggle('marked');
+                    } else {
+                        if (currentDrawNumber === null) {
+                            alert(`⏳ Hələ heç bir rəqəm çıxmayıb!`);
+                        } else if (timeSinceLastDraw > 2500) {
+                            alert(`⌛ Vaxt keçdi! "${clickedNumber}" rəqəminə basmaq üçün çox gecikdiniz.\nHər rəqəm 2.5 saniyə ərzində işarələnə bilər!`);
+                        } else {
+                            alert(`❌ Səhv rəqəm!\nHal-hazırda çıxan rəqəm: ${currentDrawNumber}\nYalnız cari çıxan rəqəmi işarələyə bilərsiniz!`);
+                        }
+                    }
+                };
                 
                 rowData.elements.push(numEl);
                 rowDiv.appendChild(numEl);
@@ -185,7 +220,6 @@ function initGame() {
         ticketsContainer.appendChild(ticketDiv);
     }
     
-    // Timer
     if (gameInterval) clearInterval(gameInterval);
     gameInterval = setInterval(() => {
         timer--;
@@ -193,7 +227,6 @@ function initGame() {
         if (timer <= 0) endGame();
     }, 1000);
     
-    // Rəqəm çıxarma (təkrarlanmır)
     if (drawInterval) clearInterval(drawInterval);
     drawInterval = setInterval(() => {
         if (timer <= 0) {
@@ -207,19 +240,17 @@ function initGame() {
         } while (drawnNumbers.includes(newNum));
         
         drawnNumbers.push(newNum);
+        currentDrawNumber = newNum;
+        lastDrawTime = Date.now();
+        
         document.getElementById('current-circle').textContent = newNum;
         
-        const history = document.getElementById('drawn-history');
-        history.innerHTML += (history.children.length > 0 ? ', ' : '') + newNum;
-        
-        // Avtomatik işarələmə
-        allRows.forEach(row => {
-            row.elements.forEach(el => {
-                if (parseInt(el.dataset.number) === newNum) {
-                    el.classList.add('marked');
-                }
-            });
-        });
+        setTimeout(() => {
+            if (currentDrawNumber === newNum) {
+                document.getElementById('current-circle').textContent = '?';
+                currentDrawNumber = null;
+            }
+        }, 2500);
         
     }, 3000);
 }
@@ -239,6 +270,9 @@ function endGame() {
     if (completedRows === 1) totalWinnings = 5;
     else if (completedRows === 2) totalWinnings = 10;
     else if (completedRows === 3) totalWinnings = 30;
+    else if (completedRows >= 4) totalWinnings = 50;
+    else if (completedRows >= 5) totalWinnings = 100;
+    else if (completedRows >= 6) totalWinnings = 200;
     
     if (totalWinnings > 0) {
         currentPlayer.balance = (currentPlayer.balance || 0) + totalWinnings;
@@ -248,13 +282,13 @@ function endGame() {
     document.getElementById('game-screen').classList.add('hidden');
     document.getElementById('end-screen').classList.remove('hidden');
     
-    let resultText = `Tamamlanan sıra sayı: <strong>${completedRows}</strong><br>`;
+    let resultText = `✅ Tamamlanan sıra sayı: <strong style="color:#f59e0b;">${completedRows}</strong><br>`;
     if (totalWinnings > 0) {
-        resultText += `Təbriklər! Qazandığınız: <strong>${totalWinnings} AZN</strong>`;
+        resultText += `🎉 Təbriklər! Qazandığınız: <strong style="color:#4ade80;">${totalWinnings} AZN</strong>`;
     } else {
-        resultText += `Təəssüf, bu dəfə heç bir sıra tamamlanmadı.`;
+        resultText += `😔 Təəssüf, bu dəfə heç bir sıra tamamlanmadı.`;
     }
-    resultText += `<br><br>Ümumi balansınız: <strong>${currentPlayer.balance || 0} AZN</strong>`;
+    resultText += `<br><br>💰 Ümumi balansınız: <strong style="color:#4ade80;">${currentPlayer.balance || 0} AZN</strong>`;
     
     document.getElementById('final-result').innerHTML = resultText;
 }
@@ -264,7 +298,6 @@ function showProfileAfterGame() {
     showProfileScreen();
 }
 
-// ====================== Səhifə yüklənəndə ======================
 window.onload = function() {
     const savedPlayer = loadPlayer();
     if (savedPlayer) {
