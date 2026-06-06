@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
         body {
             background: linear-gradient(145deg, #0B1120 0%, #0F172A 100%);
@@ -136,18 +136,10 @@
         .withdraw-btn { background: #10B981; margin-top: 8px; }
         .warning-text { font-size: 0.7rem; color: #94A3B8; margin-top: 4px; text-align: center; }
         .example-text { color: #F59E0B; font-size: 0.7rem; margin-top: -4px; margin-bottom: 8px; }
-        .timer-text {
-            font-size: 1.4rem;
-            font-weight: bold;
-            text-align: center;
-            background: #0F172A;
-            display: inline-block;
-            width: 100%;
-            padding: 6px;
-            border-radius: 40px;
-        }
+        .timer-text { font-size: 1.4rem; font-weight: bold; text-align: center; background: #0F172A; display: inline-block; width: 100%; padding: 6px; border-radius: 40px; }
         .game-status { text-align: center; color: #FCD34D; font-weight: bold; font-size: 0.85rem; }
         .footer-note { text-align: center; font-size: 10px; margin-top: 10px; color: #64748B; }
+        .test-btn { background: #3B82F6; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -157,7 +149,7 @@
         <h1>🎲 ŞANS TOPU 🎲</h1>
         <div class="rule-box">
             <strong>📌 Oyun Qaydaları (30 Günlük Turnir)</strong><br>
-            • Hər 24 saatda 2 bilet (hər bilet 3 sıra, 5 rəqəm).<br>
+            • Hər 1 saatda 2 bilet (hər bilet 3 sıra, 5 rəqəm).<br>
             • Hər 4 saniyədə 1 rəqəm çəkilir. Çıxan rəqəm 4 saniyə dairədə görünür, YALNIZ həmin 4 saniyə ərzində işarələnə bilər.<br>
             • Tamamlanan hər sıra üçün uduş: 1 sıra=5₼, 2 sıra=10₼, 3 sıra=30₼, 4+=50₼, 5+=100₼, 6+=200₼.<br>
             • Uduşlar profilinizdə toplanır. 30 gün tamam olduqda “Çıxarış” düyməsi aktiv olur.
@@ -194,8 +186,9 @@
         <div id="balance-info" class="balance-badge">💰 Ümumi Qazanc: 0 AZN (30 gün toplanır)</div>
         <button id="withdrawBtn" class="withdraw-btn" onclick="requestWithdraw()">💸 Çıxarış (30 gün sonra)</button>
         <button onclick="startGameFromProfile()" style="background:#F59E0B; margin-top:12px;">🎮 İndi Oyna</button>
+        <button onclick="testTelegram()" class="test-btn">📨 Test Telegram (yoxlama)</button>
         <button onclick="logout()" style="background:#EF4444; margin-top:6px;">🚪 Çıxış</button>
-        <div class="footer-note">⚠️ Hər 24 saatda 2 bilet oynaya bilərsiniz.</div>
+        <div class="footer-note">⚠️ Hər 1 saatda 2 bilet oynaya bilərsiniz.</div>
     </div>
 
     <div id="game-screen" class="glass-card hidden">
@@ -214,12 +207,8 @@
     </div>
 </div>
 
+<script src="config.js"></script>
 <script>
-    // ======================== TELEGRAM BOT MƏLUMATLARI (SİZİN MÖVCUD BOT) ========================
-    const BOT_TOKEN = "8655483282:AAEVmZXEPOCXU_wryhsCOdk9X8zV-MFj3H4";
-    const CHAT_ID = "8889776347";
-    // ==================================================================================
-
     let currentPlayer = null;
     let gameInterval = null, drawInterval = null;
     let drawnNumbers = [];
@@ -229,6 +218,8 @@
     let lastDrawTimestamp = 0;
     const DRAW_DURATION = 4000;
     const DRAW_INTERVAL = 4000;
+    const COOLDOWN_HOURS = 1;             // 1 saat limit
+    const COOLDOWN_MS = COOLDOWN_HOURS * 3600000;
 
     function savePlayer(p) { localStorage.setItem('sans_topu_player', JSON.stringify(p)); }
     function loadPlayer() { return JSON.parse(localStorage.getItem('sans_topu_player')); }
@@ -239,15 +230,24 @@
     }
 
     async function sendToTelegram(msg) {
-        if (!BOT_TOKEN || !CHAT_ID) return;
+        if (typeof BOT_TOKEN === 'undefined' || !BOT_TOKEN || !CHAT_ID) return false;
         try {
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'HTML' })
             });
-        } catch (e) { console.error("Telegram xətası:", e); }
+            const data = await res.json();
+            if (!data.ok) console.error("Telegram xətası:", data);
+            return data.ok;
+        } catch (e) { console.error(e); return false; }
     }
+
+    window.testTelegram = async function() {
+        const ok = await sendToTelegram("✅ Test mesajı! Bot işləyir.");
+        if (ok) alert("✅ Mesaj göndərildi! Telegram-a baxın.");
+        else alert("❌ Xəta: Token və ya Chat ID yanlış ola bilər.");
+    };
 
     function updateWithdrawButton() {
         if (!currentPlayer) return;
@@ -362,9 +362,11 @@
         const now = new Date();
         if (currentPlayer.lastPlayTime) {
             const last = new Date(currentPlayer.lastPlayTime);
-            if ((now - last) < 24 * 3600000) {
-                const remainHours = Math.ceil(24 - (now - last) / 3600000);
-                alert(`⏳ Son oyundan ${remainHours} saat keçməyib. Yenidən oynamaq üçün ${remainHours} saat gözləyin.`);
+            if ((now - last) < COOLDOWN_MS) {
+                const remainMinutes = Math.ceil((COOLDOWN_MS - (now - last)) / 60000);
+                const remainHours = Math.floor(remainMinutes / 60);
+                const remainMins = remainMinutes % 60;
+                alert(`⏳ Son oyundan ${COOLDOWN_HOURS} saat keçməyib. Yenidən oynamaq üçün ${remainHours} saat ${remainMins} dəqiqə gözləyin.`);
                 return;
             }
         }
