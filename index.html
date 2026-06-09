@@ -90,7 +90,11 @@
             margin: 10px 0;
             padding: 15px;
             font-size: 1.1rem;
+            border-radius: 1.2rem;
+            text-align: center;
+            transition: 0.2s;
         }
+        .game-select-btn:active { transform: scale(0.98); }
         .timer-circle {
             background: linear-gradient(135deg, #833AB4, #FD1D1D);
             width: 100px;
@@ -307,31 +311,68 @@
             font-weight: bold;
             color: #FD1D1D;
         }
-        .job-company {
-            font-size: 0.85rem;
-            color: #262626;
-            margin: 5px 0;
-        }
         .job-date {
             font-size: 0.7rem;
             color: #8e8e8e;
             margin: 3px 0;
         }
+        .job-company {
+            font-size: 0.85rem;
+            color: #262626;
+            margin: 5px 0;
+        }
         .job-link {
             font-size: 0.7rem;
             color: #0095f6;
             margin-top: 5px;
-            word-break: break-all;
         }
         .job-link a {
             color: #0095f6;
             text-decoration: none;
         }
-        .job-note {
-            font-size: 0.65rem;
-            color: #8e8e8e;
-            margin-top: 5px;
-            font-style: italic;
+        .jobs-section {
+            margin-top: 15px;
+        }
+        .jobs-header-btn {
+            background: linear-gradient(95deg, #833AB4, #FD1D1D);
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .jobs-header-btn:active { transform: scale(0.98); }
+        .jobs-toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+        .jobs-toggle-icon.open {
+            transform: rotate(180deg);
+        }
+        .jobs-content {
+            display: none;
+            margin-top: 10px;
+        }
+        .jobs-content.show {
+            display: block;
+        }
+        .error-text {
+            color: #FD1D1D;
+            font-size: 0.7rem;
+            margin-top: -3px;
+            margin-bottom: 5px;
+        }
+        .game-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
     </style>
 </head>
@@ -347,9 +388,51 @@
             Qeydiyyatsız oynayın, qazandığınız pulu qeydiyyatdan sonra saxlaya bilərsiniz.
         </div>
         
-        <button class="game-select-btn" onclick="selectGame('loto')">🎲 LOTO OYUNU<br><span style="font-size: 12px;">1 saatda 2 bilet, xüsusi rəqəmlər +3 AZN</span></button>
-        <button class="game-select-btn" onclick="selectGame('cards')">🃏 KART AÇ<br><span style="font-size: 12px;">6 kart, 3 seçim, 24 saat</span></button>
-        <button class="game-select-btn" onclick="selectGame('jobs')">💼 İŞ ELANLARI<br><span style="font-size: 12px;">Boş iş yerləri</span></button>
+        <div class="game-buttons-container">
+            <button class="game-select-btn" onclick="selectGame('loto')">🎲 LOTO OYUNU<br><span style="font-size: 12px;">1 saatda 2 bilet, xüsusi rəqəmlər +3 AZN</span></button>
+            <button class="game-select-btn" onclick="selectGame('cards')">🃏 KART AÇ<br><span style="font-size: 12px;">6 kart, 3 seçim, 24 saat</span></button>
+            
+            <!-- İŞ ELANLARI - kart şəklində, basanda açılan -->
+            <div class="jobs-section">
+                <div class="jobs-header-btn" onclick="toggleMainJobs()">
+                    <span>💼 İŞ ELANLARI</span>
+                    <span class="jobs-toggle-icon" id="mainJobsToggle">▼</span>
+                </div>
+                <div class="jobs-content" id="mainJobsContent">
+                    <div class="job-card">
+                        <div class="job-title">💼 Kiçik Satış Təmsilçisi (part time)</div>
+                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Satış</div>
+                        <div class="job-company">💰 Sinteks Şirkətlər Qrupu (SSI Retail)</div>
+                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/kicik-satis-temsilcisi-part-time-sinteks/" target="_blank">Müraciət et</a></div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">☕ Çayçı</div>
+                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                        <div class="job-company">💰 Siyəzən Broyler ASC</div>
+                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/cayci-siyezen-broyler/" target="_blank">Müraciət et</a></div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">🚛 Yükləyicinin sürücüsü</div>
+                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
+                        <div class="job-company">💰 SOCAR Azneft İB</div>
+                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/yukleyicinin-surucusu-socar-azneft-ib/" target="_blank">Müraciət et</a></div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">📦 Sifarişlər üzrə qəbuledici</div>
+                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
+                        <div class="job-company">💰 Bravo Supermarketlər şəbəkəsi</div>
+                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/sifarisler-uzre-qebuledici-bravo-logistika-distribusiya-merkezi/" target="_blank">Müraciət et</a></div>
+                    </div>
+                    <div class="job-card">
+                        <div class="job-title">🍽️ Ofisiant (bəy) - Gecə və Gündüz</div>
+                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                        <div class="job-company">💰 Days Hotel Baku</div>
+                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/ofisiant-bey-days-hotel-baku/" target="_blank">Müraciət et</a></div>
+                    </div>
+                    <div class="job-note" style="font-size:0.65rem; color:#8e8e8e; margin-top:8px;">⚠️ Daha çox elan üçün profilə daxil olun</div>
+                </div>
+            </div>
+        </div>
         
         <div style="margin-top: 20px; border-top: 1px solid #dbdbdb; padding-top: 15px;">
             <button onclick="showLoginScreen()" style="background:#8e8e8e;">🔐 Qeydiyyatdan keçmişəm (Daxil Ol)</button>
@@ -365,7 +448,8 @@
         <input type="email" id="reg-email" placeholder="Email (nümunə: elvin@mail.com)">
         <input type="text" id="reg-instagram" placeholder="Instagram adı (nümunə: elvin_m)">
         <input type="password" id="reg-password" placeholder="Şifrə (minimum 4 simvol)">
-        <input type="text" id="reg-card" placeholder="Kart nömrəsi (14 rəqəm, nümunə: 12345678901234)">
+        <input type="text" id="reg-card" placeholder="Kart nömrəsi (14 rəqəm, nümunə: 12345678901234)" maxlength="14">
+        <div id="card-error" class="error-text hidden">⚠️ Kart nömrəsi yalnız 14 rəqəmdən ibarət olmalıdır!</div>
         <input type="tel" id="reg-phone" placeholder="Telefon (nümunə: +994501234567)">
         <div class="privacy-note">⚠️ Məlumatlarınız qorunur. Yalnız uduş ödənişi üçün istifadə olunur. Heç bir üçüncü tərəflə paylaşılmır.</div>
         <button onclick="registerUser()">✅ Qeydiyyatdan keç</button>
@@ -419,299 +503,7 @@
         <button onclick="exitToGameSelect()" style="background:#8e8e8e; margin-top:15px;">🚪 Oyunu bitir</button>
     </div>
 
-    <!-- İŞ ELANLARI EKRANI (GERÇƏK ELANLAR) -->
-    <div id="jobs-game-screen" class="glass-card hidden">
-        <h2>💼 İŞ ELANLARI</h2>
-        <div class="rule-box">
-            <strong>📌 Aktiv vakansiyalar</strong><br>
-            Aşağıda iseqebul.az saytından toplanmış güncel iş elanları var.
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">💼 Kiçik Satış Təmsilçisi (part time)</div>
-            <div class="job-date">📅 Tarix: 01/06/2026 | 🏬 Bakı | 📑 Satış</div>
-            <div class="job-company">💰 İşəgötürən: Sinteks Şirkətlər Qrupu (SSI Retail)</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/kicik-satis-temsilcisi-part-time-sinteks/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">☕ Çayçı</div>
-            <div class="job-date">📅 Tarix: 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Siyəzən Broyler ASC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/cayci-siyezen-broyler/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🚛 Yükləyicinin sürücüsü</div>
-            <div class="job-date">📅 Tarix: 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-            <div class="job-company">💰 İşəgötürən: SOCAR Azneft İB</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/yukleyicinin-surucusu-socar-azneft-ib/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📦 Sifarişlər üzrə qəbuledici</div>
-            <div class="job-date">📅 Tarix: 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-            <div class="job-company">💰 İşəgötürən: Bravo Supermarketlər şəbəkəsi</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/sifarisler-uzre-qebuledici-bravo-logistika-distribusiya-merkezi/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🍽️ Ofisiant (bəy) - Gecə və Gündüz</div>
-            <div class="job-date">📅 Tarix: 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Days Hotel Baku</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/ofisiant-bey-days-hotel-baku/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">❄️ Soyuducu anbara fəhlə</div>
-            <div class="job-date">📅 Tarix: 02/06/2026 | 🏬 Bakı</div>
-            <div class="job-company">💰 İşəgötürən: Iceland dondurma zavodu</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/vakansiyalar" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🚚 Ekspeditor və Anbar işçisi</div>
-            <div class="job-date">📅 Tarix: 02/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika, Satış</div>
-            <div class="job-company">💰 İşəgötürən: İnci Group of Companies</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/satis-temsilcisi-ekspeditor-inci-group-of-companies/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">👩‍💼 Satıcı-kassir (xanım)</div>
-            <div class="job-date">📅 Tarix: 02/06/2026 | 🏬 Bakı | 📑 Satış</div>
-            <div class="job-company">💰 İşəgötürən: Superfon</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/satici-kassir-xanim-superfon/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🛒 Satıcı-Kassir</div>
-            <div class="job-date">📅 Tarix: 02/06/2026 | 🏬 Bakı | 📑 Satış</div>
-            <div class="job-company">💰 İşəgötürən: Tamstore marketlər şəbəkəsi</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/satici-kassir-tamstore/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🛡️ Mühafizəçi (Bakı Olimpiya Stadionu)</div>
-            <div class="job-date">📅 Tarix: 02/06/2026 | 🏬 Bakı | 📑 Mühafizə</div>
-            <div class="job-company">💰 İşəgötürən: Pro security MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/muhafize/muhafizeci-pro-security-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">👔 Baş satıcı (Qala Shopping Village)</div>
-            <div class="job-date">📅 Tarix: 02/06/2026 | 🏬 Bakı | 📑 Satış</div>
-            <div class="job-company">💰 İşəgötürən: Novco MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/bas-satici-qala-shopping-village-novco-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">💉 Tibb bacısı (kosmetologiya)</div>
-            <div class="job-date">📅 Tarix: 03/06/2026 | 🏬 Bakı | 📑 Tibb</div>
-            <div class="job-company">💰 İşəgötürən: Empire by Asthetik Lab</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/tibb/tibb-bacisi-kosmetologiya-empire-by-asthetik-lab-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📋 Növbə Rəisi</div>
-            <div class="job-date">📅 Tarix: 03/06/2026 | 🏬 Bakı | 📑 İnzibati heyət, Satış</div>
-            <div class="job-company">💰 İşəgötürən: Domino`s Pizza</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/novbe-reisi-domino-s-pizza/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🦽 Ortoped texnik assistenti (bəy)</div>
-            <div class="job-date">📅 Tarix: 03/06/2026 | 🏬 Bakı | 📑 Tibb</div>
-            <div class="job-company">💰 İşəgötürən: Dayaq Orthopedy</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/tibb/ortoped-texnik-assistenti-bey-dayaq-orthopedy/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📄 Sığorta üzrə satış nümayəndəsi</div>
-            <div class="job-date">📅 Tarix: 03/06/2026 | 🏬 Bakı | 📑 Satış, Maliyyə</div>
-            <div class="job-company">💰 İşəgötürən: Atəşgah Sığorta</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/sigorta-uzre-satis-numayendesi-atesgah-sigorta-asc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🏨 Resepşn (bəy və xanım)</div>
-            <div class="job-date">📅 Tarix: 03/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
-            <div class="job-company">💰 İşəgötürən: Marison Hotel Baku</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/resepsn-bey-xanim-marison-hotel-baku/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🚗 Avtoyuyucu</div>
-            <div class="job-date">📅 Tarix: 03/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Bravo Supermarketlər şəbəkəsi</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/avtoyuyucu-bravo-logistika-distribusiya-merkezi/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">👨‍💼 Supervayzer (bəy)</div>
-            <div class="job-date">📅 Tarix: 03/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Kolorit restoranlar şəbəkəsi</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/supervayzer-kolorit-torqoviy/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🚐 Sürücü</div>
-            <div class="job-date">📅 Tarix: 04/06/2026 | 🏬 Bakı</div>
-            <div class="job-company">💰 İşəgötürən: Rossman Azerbaijan</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📞 Telesatış üzrə operator</div>
-            <div class="job-date">📅 Tarix: 04/06/2026 | 🏬 Bakı | 📑 Satış</div>
-            <div class="job-company">💰 İşəgötürən: İnci Group of Companies</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/telesatis-uzre-operator-inci-group/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">👥 Müştəri xidmətləri üzrə koordinator</div>
-            <div class="job-date">📅 Tarix: 04/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
-            <div class="job-company">💰 İşəgötürən: ASE Express Logistics</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/musteri-xidmetleri-uzre-koordinator-ase-asiya-afrika-hizli-karqo-ve-dagitim-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🍞 Gecə növbəsinə Çörəkçi (bəy) və Ofisiant</div>
-            <div class="job-date">📅 Tarix: 04/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Wyndham Garden Baku Hotel</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/corekci-wyndham-garden-baku-hotel/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🧹 Təmizlik işçisi (Gənclik Mall)</div>
-            <div class="job-date">📅 Tarix: 04/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: CineMastercard</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/temizlik-iscisi-cinemastercard-genclik-mall/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🍽️ Gecə Növbəsinə Qabyuyan (bəy)</div>
-            <div class="job-date">📅 Tarix: 04/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Mövenpick Winter Park Baku</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/gece-novbesi-uzre-qabyuyan-bey-movenpick-hotel/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🛡️ Mühafizəçi</div>
-            <div class="job-date">📅 Tarix: 05/06/2026 | 🏬 Bakı</div>
-            <div class="job-company">💰 İşəgötürən: Az Protein Foods Group MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🚜 Yükləyici sürücüsü</div>
-            <div class="job-date">📅 Tarix: 05/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-            <div class="job-company">💰 İşəgötürən: Capital Construction MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/yukleyici-surucusu-capital-construction-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🌙 Gecə növbəsinə fəhlə</div>
-            <div class="job-date">📅 Tarix: 05/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika, Tikinti</div>
-            <div class="job-company">💰 İşəgötürən: Azcake MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/gece-novbesi-fehle-azcake/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🏭 İstehsalat işçisi (fəhlə), Soba operatoru, Çilingər</div>
-            <div class="job-date">📅 Tarix: 05/06/2026 | 🏬 Bakı | 📑 Tikinti və Təmir</div>
-            <div class="job-company">💰 İşəgötürən: Konfirom Biskivit fabriki</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/tikinti/istehsalat-iscisi-fehle-konfirom/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📦 Merçendayzer</div>
-            <div class="job-date">📅 Tarix: 05/06/2026 | 🏬 Bakı | 📑 Satış</div>
-            <div class="job-company">💰 İşəgötürən: Sirab Satış və Dağıtım MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/mercendayzer-sirab-satis-ve-dagitim-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">👩‍💼 Hostess</div>
-            <div class="job-date">📅 Tarix: 05/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
-            <div class="job-company">💰 İşəgötürən: AZERA Holding MMC (Hill restoran)</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/hostess-hill-restorani/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">👕 Ütücü</div>
-            <div class="job-date">📅 Tarix: 06/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Ağappaq quru təmizləmə</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/utucu-agappaq-quru-temizleme/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📋 Direktor köməkçisi</div>
-            <div class="job-date">📅 Tarix: 06/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
-            <div class="job-company">💰 İşəgötürən: Avant Group</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/direktor-komekcisi-avant-group/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🏭 Fəhlə (Istehsalat)</div>
-            <div class="job-date">📅 Tarix: 08/06/2026 | 🏬 Bakı | 📑 Tikinti və Təmir</div>
-            <div class="job-company">💰 İşəgötürən: ATS Soy Processing MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/tikinti/fehle-istehsalat-ats-soy-processing-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🧹 Xadimə</div>
-            <div class="job-date">📅 Tarix: 08/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-            <div class="job-company">💰 İşəgötürən: Marison Hotel Baku</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/xadime-marison-hotel-baku/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🚛 Sürücü (BC kateqoriya)</div>
-            <div class="job-date">📅 Tarix: 08/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-            <div class="job-company">💰 İşəgötürən: MADO Restoranlar şəbəkəsi</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-bc-kateqoriya-mado/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🛡️ Mühafizəçi (Növbəli qrafik)</div>
-            <div class="job-date">📅 Tarix: 08/06/2026 | 🏬 Bakı | 📑 Mühafizə</div>
-            <div class="job-company">💰 İşəgötürən: Bravo Supermarketlər şəbəkəsi</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/muhafize/muhafizeci-bravo-supermarketler-sebekesi/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">🚚 Sürücü (daxili yük daşıma)</div>
-            <div class="job-date">📅 Tarix: 08/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-            <div class="job-company">💰 İşəgötürən: Sahil Transport MMC</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-daxili-yuk-dasima-sahil-transport-mmc/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📦 Anbar işçisi</div>
-            <div class="job-date">📅 Tarix: 08/06/2026 | 🏬 Bakı | 📑 Loqistika</div>
-            <div class="job-company">💰 İşəgötürən: Qanun Nəşriyyatı</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/anbar-iscisi-qanun-nesriyyati/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📞 Çağrı mərkəzi üzrə agent</div>
-            <div class="job-date">📅 Tarix: 09/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
-            <div class="job-company">💰 İşəgötürən: Bravo Supermarketlər şəbəkəsi</div>
-            <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/cagri-merkezi-uzre-agent-bravo-supermarket/" target="_blank">Müraciət et</a></div>
-        </div>
-        
-        <div class="job-card">
-            <div class="job-title">📺 Video təlimat</div>
-            <div class="job-date">iseqebul.az saytında aktiv olan iş elanları və ən maraqlı vakansiyalar</div>
-            <div class="job-link">🔗 <a href="https://youtu.be/9B5AeT29scQ" target="_blank">VİDEO TƏLİMAT - Bax</a></div>
-        </div>
-        
-        <div class="job-note">⚠️ QEYD: Bəzi elanlarda təqdim olunmuş material süni intellektdən istifadə edilərək yaradılmışdır və real insanlarla hər hansı oxşarlıq təsadüfidir.</div>
-        
-        <button onclick="exitToGameSelect()" style="background:#8e8e8e; margin-top:15px;">🚪 Geri</button>
-    </div>
-
-    <!-- PROFİL EKRANI -->
+    <!-- PROFİL EKRANI (İş elanları kart şəklində) -->
     <div id="profile-screen" class="glass-card hidden">
         <div class="instagram-icons">
             <span>🏠</span>
@@ -740,7 +532,7 @@
             <div class="warning-text" style="color:#fff; opacity:0.8;" id="nextStreakReward">Növbəti mükafat: 3 gündə 2 AZN</div>
         </div>
         
-        <div id="balance-info" class="balance-badge">💰 Ümumi Qazanc: 0 AZN (30 gün toplanır)</div>
+        <div id="balance-info" class="balance-badge">💰 Ümumi Qazanc: <span id="totalWinnings">0</span> AZN (30 gün toplanır)</div>
         
         <div class="referral-box">
             <strong>🔗 Öz referal linkiniz:</strong><br>
@@ -757,6 +549,256 @@
         <button id="withdrawBtn" class="withdraw-btn" onclick="requestWithdraw()">💸 Çıxarış (30 gün sonra)</button>
         <button onclick="logout()" style="background:#8e8e8e; margin-top:6px;">🚪 Çıxış</button>
         <div class="footer-note">⚠️ Hər 1 saatda 2 bilet oynaya bilərsiniz.</div>
+        
+        <!-- İŞ ELANLARI - kart şəklində, basanda açılan -->
+        <div class="jobs-section" style="margin-top: 15px;">
+            <div class="jobs-header-btn" onclick="toggleProfileJobs()">
+                <span>💼 İŞ ELANLARI</span>
+                <span class="jobs-toggle-icon" id="profileJobsToggle">▼</span>
+            </div>
+            <div class="jobs-content" id="profileJobsContent">
+                <div class="job-card">
+                    <div class="job-title">💼 Kiçik Satış Təmsilçisi (part time)</div>
+                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Satış</div>
+                    <div class="job-company">💰 Sinteks Şirkətlər Qrupu (SSI Retail)</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/kicik-satis-temsilcisi-part-time-sinteks/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">☕ Çayçı</div>
+                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Siyəzən Broyler ASC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/cayci-siyezen-broyler/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🚛 Yükləyicinin sürücüsü</div>
+                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
+                    <div class="job-company">💰 SOCAR Azneft İB</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/yukleyicinin-surucusu-socar-azneft-ib/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📦 Sifarişlər üzrə qəbuledici</div>
+                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
+                    <div class="job-company">💰 Bravo Supermarketlər şəbəkəsi</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/sifarisler-uzre-qebuledici-bravo-logistika-distribusiya-merkezi/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🍽️ Ofisiant (bəy) - Gecə və Gündüz</div>
+                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Days Hotel Baku</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/ofisiant-bey-days-hotel-baku/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">❄️ Soyuducu anbara fəhlə</div>
+                    <div class="job-date">📅 02/06/2026 | 🏬 Bakı</div>
+                    <div class="job-company">💰 Iceland dondurma zavodu</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/vakansiyalar" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🚚 Ekspeditor və Anbar işçisi</div>
+                    <div class="job-date">📅 02/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika, Satış</div>
+                    <div class="job-company">💰 İnci Group of Companies</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/satis-temsilcisi-ekspeditor-inci-group-of-companies/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">👩‍💼 Satıcı-kassir (xanım)</div>
+                    <div class="job-date">📅 02/06/2026 | 🏬 Bakı | 📑 Satış</div>
+                    <div class="job-company">💰 Superfon</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/satici-kassir-xanim-superfon/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🛒 Satıcı-Kassir</div>
+                    <div class="job-date">📅 02/06/2026 | 🏬 Bakı | 📑 Satış</div>
+                    <div class="job-company">💰 Tamstore marketlər şəbəkəsi</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/satici-kassir-tamstore/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🛡️ Mühafizəçi (Bakı Olimpiya Stadionu)</div>
+                    <div class="job-date">📅 02/06/2026 | 🏬 Bakı | 📑 Mühafizə</div>
+                    <div class="job-company">💰 Pro security MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/muhafize/muhafizeci-pro-security-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">👔 Baş satıcı (Qala Shopping Village)</div>
+                    <div class="job-date">📅 02/06/2026 | 🏬 Bakı | 📑 Satış</div>
+                    <div class="job-company">💰 Novco MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/bas-satici-qala-shopping-village-novco-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">💉 Tibb bacısı (kosmetologiya)</div>
+                    <div class="job-date">📅 03/06/2026 | 🏬 Bakı | 📑 Tibb</div>
+                    <div class="job-company">💰 Empire by Asthetik Lab</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/tibb/tibb-bacisi-kosmetologiya-empire-by-asthetik-lab-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📋 Növbə Rəisi</div>
+                    <div class="job-date">📅 03/06/2026 | 🏬 Bakı | 📑 İnzibati heyət, Satış</div>
+                    <div class="job-company">💰 Domino`s Pizza</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/novbe-reisi-domino-s-pizza/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🦽 Ortoped texnik assistenti (bəy)</div>
+                    <div class="job-date">📅 03/06/2026 | 🏬 Bakı | 📑 Tibb</div>
+                    <div class="job-company">💰 Dayaq Orthopedy</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/tibb/ortoped-texnik-assistenti-bey-dayaq-orthopedy/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📄 Sığorta üzrə satış nümayəndəsi</div>
+                    <div class="job-date">📅 03/06/2026 | 🏬 Bakı | 📑 Satış, Maliyyə</div>
+                    <div class="job-company">💰 Atəşgah Sığorta</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/sigorta-uzre-satis-numayendesi-atesgah-sigorta-asc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🏨 Resepşn (bəy və xanım)</div>
+                    <div class="job-date">📅 03/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
+                    <div class="job-company">💰 Marison Hotel Baku</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/resepsn-bey-xanim-marison-hotel-baku/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🚗 Avtoyuyucu</div>
+                    <div class="job-date">📅 03/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Bravo Supermarketlər şəbəkəsi</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/avtoyuyucu-bravo-logistika-distribusiya-merkezi/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">👨‍💼 Supervayzer (bəy)</div>
+                    <div class="job-date">📅 03/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Kolorit restoranlar şəbəkəsi</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/supervayzer-kolorit-torqoviy/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🚐 Sürücü</div>
+                    <div class="job-date">📅 04/06/2026 | 🏬 Bakı</div>
+                    <div class="job-company">💰 Rossman Azerbaijan</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📞 Telesatış üzrə operator</div>
+                    <div class="job-date">📅 04/06/2026 | 🏬 Bakı | 📑 Satış</div>
+                    <div class="job-company">💰 İnci Group of Companies</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/telesatis-uzre-operator-inci-group/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">👥 Müştəri xidmətləri üzrə koordinator</div>
+                    <div class="job-date">📅 04/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
+                    <div class="job-company">💰 ASE Express Logistics</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/musteri-xidmetleri-uzre-koordinator-ase-asiya-afrika-hizli-karqo-ve-dagitim-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🍞 Gecə növbəsinə Çörəkçi (bəy) və Ofisiant</div>
+                    <div class="job-date">📅 04/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Wyndham Garden Baku Hotel</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/corekci-wyndham-garden-baku-hotel/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🧹 Təmizlik işçisi (Gənclik Mall)</div>
+                    <div class="job-date">📅 04/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 CineMastercard</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/temizlik-iscisi-cinemastercard-genclik-mall/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🍽️ Gecə Növbəsinə Qabyuyan (bəy)</div>
+                    <div class="job-date">📅 04/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Mövenpick Winter Park Baku</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/gece-novbesi-uzre-qabyuyan-bey-movenpick-hotel/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🛡️ Mühafizəçi</div>
+                    <div class="job-date">📅 05/06/2026 | 🏬 Bakı</div>
+                    <div class="job-company">💰 Az Protein Foods Group MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🚜 Yükləyici sürücüsü</div>
+                    <div class="job-date">📅 05/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
+                    <div class="job-company">💰 Capital Construction MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/yukleyici-surucusu-capital-construction-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🌙 Gecə növbəsinə fəhlə</div>
+                    <div class="job-date">📅 05/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika, Tikinti</div>
+                    <div class="job-company">💰 Azcake MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/gece-novbesi-fehle-azcake/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🏭 İstehsalat işçisi (fəhlə), Soba operatoru, Çilingər</div>
+                    <div class="job-date">📅 05/06/2026 | 🏬 Bakı | 📑 Tikinti və Təmir</div>
+                    <div class="job-company">💰 Konfirom Biskivit fabriki</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/tikinti/istehsalat-iscisi-fehle-konfirom/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📦 Merçendayzer</div>
+                    <div class="job-date">📅 05/06/2026 | 🏬 Bakı | 📑 Satış</div>
+                    <div class="job-company">💰 Sirab Satış və Dağıtım MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/mercendayzer-sirab-satis-ve-dagitim-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">👩‍💼 Hostess</div>
+                    <div class="job-date">📅 05/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
+                    <div class="job-company">💰 AZERA Holding MMC (Hill restoran)</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/hostess-hill-restorani/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">👕 Ütücü</div>
+                    <div class="job-date">📅 06/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Ağappaq quru təmizləmə</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/utucu-agappaq-quru-temizleme/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📋 Direktor köməkçisi</div>
+                    <div class="job-date">📅 06/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
+                    <div class="job-company">💰 Avant Group</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/direktor-komekcisi-avant-group/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🏭 Fəhlə (Istehsalat)</div>
+                    <div class="job-date">📅 08/06/2026 | 🏬 Bakı | 📑 Tikinti və Təmir</div>
+                    <div class="job-company">💰 ATS Soy Processing MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/tikinti/fehle-istehsalat-ats-soy-processing-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🧹 Xadimə</div>
+                    <div class="job-date">📅 08/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
+                    <div class="job-company">💰 Marison Hotel Baku</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/xadime-marison-hotel-baku/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🚛 Sürücü (BC kateqoriya)</div>
+                    <div class="job-date">📅 08/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
+                    <div class="job-company">💰 MADO Restoranlar şəbəkəsi</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-bc-kateqoriya-mado/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🛡️ Mühafizəçi (Növbəli qrafik)</div>
+                    <div class="job-date">📅 08/06/2026 | 🏬 Bakı | 📑 Mühafizə</div>
+                    <div class="job-company">💰 Bravo Supermarketlər şəbəkəsi</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/muhafize/muhafizeci-bravo-supermarketler-sebekesi/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">🚚 Sürücü (daxili yük daşıma)</div>
+                    <div class="job-date">📅 08/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
+                    <div class="job-company">💰 Sahil Transport MMC</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-daxili-yuk-dasima-sahil-transport-mmc/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📦 Anbar işçisi</div>
+                    <div class="job-date">📅 08/06/2026 | 🏬 Bakı | 📑 Loqistika</div>
+                    <div class="job-company">💰 Qanun Nəşriyyatı</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/anbar-iscisi-qanun-nesriyyati/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📞 Çağrı mərkəzi üzrə agent</div>
+                    <div class="job-date">📅 09/06/2026 | 🏬 Bakı | 📑 İnzibati heyət</div>
+                    <div class="job-company">💰 Bravo Supermarketlər şəbəkəsi</div>
+                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/cagri-merkezi-uzre-agent-bravo-supermarket/" target="_blank">Müraciət et</a></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-title">📺 Video təlimat</div>
+                    <div class="job-date">iseqebul.az saytında aktiv olan iş elanları</div>
+                    <div class="job-link">🔗 <a href="https://youtu.be/9B5AeT29scQ" target="_blank">VİDEO TƏLİMAT</a></div>
+                </div>
+                <div class="job-note" style="font-size:0.65rem; color:#8e8e8e; margin-top:8px;">⚠️ QEYD: Bəzi elanlarda təqdim olunmuş material süni intellektdən istifadə edilərək yaradılmışdır.</div>
+            </div>
+        </div>
     </div>
 
     <!-- PROFİLDƏ KART OYUNU -->
@@ -871,10 +913,6 @@
             document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
             document.getElementById('cards-game-screen').classList.remove('hidden');
             initGuestCardsGame();
-        } else if (game === 'jobs') {
-            stopAllGameIntervals();
-            document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
-            document.getElementById('jobs-game-screen').classList.remove('hidden');
         }
     }
 
@@ -901,16 +939,20 @@
         const card = document.getElementById('reg-card').value.trim();
         const phone = document.getElementById('reg-phone').value.trim();
         
+        const cardError = document.getElementById('card-error');
+        if (!/^\d{14}$/.test(card)) {
+            cardError.classList.remove('hidden');
+            alert("Kart nömrəsi tam 14 rəqəm olmalıdır! Hərif yazmaq olmaz!");
+            return;
+        }
+        cardError.classList.add('hidden');
+        
         if (!fullname || !email || !instagram || !password || !card || !phone) {
             alert("Bütün sahələr doldurulmalıdır!");
             return;
         }
         if (password.length < 4) {
             alert("Şifrə minimum 4 simvol olmalıdır!");
-            return;
-        }
-        if (!/^\d{14}$/.test(card)) {
-            alert("Kart nömrəsi tam 14 rəqəm olmalıdır!");
             return;
         }
         if (!phone.startsWith('+994') || phone.length !== 13) {
@@ -1088,7 +1130,11 @@
         checkAndUpdateStreak();
         
         document.getElementById('profileFullname').innerText = currentPlayer.fullname;
-        document.getElementById('profileUsername').innerText = `@${currentPlayer.instagram || currentPlayer.fullname.split(' ')[0]}`;
+        let insta = currentPlayer.instagram;
+        if (!insta.startsWith('@')) insta = '@' + insta;
+        document.getElementById('profileUsername').innerText = insta;
+        document.getElementById('totalWinnings').innerText = currentPlayer.totalWinnings || 0;
+        document.getElementById('streakDays').innerText = currentPlayer.streakDays || 0;
         
         updateBalanceDisplay();
         updateWithdrawButton();
@@ -1148,6 +1194,21 @@
             document.getElementById('profileAvatar').classList.add('hidden');
             document.getElementById('avatarPlaceholder').classList.remove('hidden');
         }
+    }
+
+    // İŞ ELANLARI AÇILMA/Bağlanma
+    function toggleMainJobs() {
+        const content = document.getElementById('mainJobsContent');
+        const toggle = document.getElementById('mainJobsToggle');
+        content.classList.toggle('show');
+        toggle.classList.toggle('open');
+    }
+    
+    function toggleProfileJobs() {
+        const content = document.getElementById('profileJobsContent');
+        const toggle = document.getElementById('profileJobsToggle');
+        content.classList.toggle('show');
+        toggle.classList.toggle('open');
     }
 
     // ============ LOTO OYUNU ============
