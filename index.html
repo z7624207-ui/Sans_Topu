@@ -1002,11 +1002,14 @@
             return;
         }
         
-        let existing = loadPlayer();
-        if (existing && (existing.email === email || existing.phone === phone || existing.card === card)) {
-            alert("Bu məlumatlarla artıq qeydiyyat var! Zəhmət olmasa daxil olun.");
-            showLoginScreen();
-            return;
+        // Yoxla: bütün istifadəçilər içində eyni email/telefon/kart var?
+        let all = getAllPlayers();
+        for (let id in all) {
+            if (all[id].email === email || all[id].phone === phone || all[id].card === card) {
+                alert("Bu məlumatlarla artıq qeydiyyat var! Zəhmət olmasa daxil olun.");
+                showLoginScreen();
+                return;
+            }
         }
         
         const userId = Date.now() + '-' + Math.random().toString(36).substr(2, 6);
@@ -1031,7 +1034,7 @@
         };
         savePlayer();
         
-        let all = getAllPlayers();
+        all = getAllPlayers();
         all[userId] = currentPlayer;
         localStorage.setItem('all_players', JSON.stringify(all));
         
@@ -1067,7 +1070,7 @@
             console.error('Formspree xətası:', error);
         }
         
-        alert("✅ Qeydiyyat tamamlandı!\n\n📋 Məlumatlarınız admin tərəfindən yoxlanılır.\nTəsdiq olunduqdan sonra hesabınıza daxil ola bilərsiniz.");
+        alert("✅ Qeydiyyat tamamlandı!\n\n📋 Sistem verdiyiniz məlumatları yoxlayır, admin təsdiq edəcək.\nTəsdiq olunduqdan sonra hesabınıza daxil ola bilərsiniz.");
         guestWinAmount = 0;
         showLoginScreen();
     });
@@ -1099,7 +1102,7 @@
             }
             if (found.approved !== true) {
                 document.getElementById('pending-login-msg').classList.remove('hidden');
-                document.getElementById('pending-login-msg').innerHTML = '⏳ Hesabınız hələ təsdiq edilməyib. Admin təsdiq etdikdən sonra daxil ola bilərsiniz.';
+                document.getElementById('pending-login-msg').innerHTML = '⏳ Sistem məlumatlarınızı yoxlayır, admin təsdiq edəcək. Gözləmədəsiniz...';
                 return;
             }
             currentPlayer = found;
@@ -1430,7 +1433,6 @@
             if (gameTimer <= 1) {
                 clearInterval(timerIntervalId);
                 clearInterval(drawIntervalId);
-                // Oyunu avtomatik bitir
                 if (timerElementId === 'loto-timer') {
                     endGuestLotoGame();
                 } else {
@@ -1445,7 +1447,6 @@
         return { drawInterval: drawIntervalId, timerInterval: timerIntervalId };
     }
     
-    // Qonaq Loto
     function initGuestLotoGame() {
         stopAllGameIntervals();
         createLotoTickets();
@@ -1483,10 +1484,8 @@
         alert(`🎉 Oyun bitdi!\n📊 Tam sıra: ${completedRows}\n✨ Xüsusi bonus: +${specialBonusThisGame} AZN\n💰 Qazancınız: ${guestWinAmount} AZN\n\nQeydiyyatdan keçərək pulunuzu saxlaya bilərsiniz!\n\n🔄 İstədiyiniz qədər yenidən oynaya bilərsiniz!`);
     }
     
-    // Profil Loto
     function startGameFromProfile() {
         if (!currentPlayer) return;
-        // LIMITSIZ - HƏR ZAMAN OYNAYA BİLƏR
         currentPlayer.lastPlayTime = new Date().toISOString();
         savePlayer();
         document.getElementById('profile-screen').classList.add('hidden');
@@ -1751,4 +1750,4 @@
     };
 </script>
 </body>
-  </html>
+                            </html>
