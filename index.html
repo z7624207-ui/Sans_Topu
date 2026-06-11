@@ -27,18 +27,15 @@
             font-size: 11px;
             color: #fff;
             z-index: 100;
-            border: none;
         }
         .contact-email a { color: #FCAF45; text-decoration: none; }
         .container { max-width: 650px; margin: 0 auto; }
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
             border-radius: 1.8rem;
             padding: 1.2rem;
             margin-bottom: 1.2rem;
             box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            border: none;
         }
         h1 {
             font-size: 1.8rem;
@@ -57,9 +54,7 @@
             border-radius: 1rem;
             margin: 0.8rem 0;
             font-size: 0.85rem;
-            color: #262626;
         }
-        .rule-box strong, .rule-box b { color: #FD1D1D; }
         input, button {
             width: 100%;
             padding: 12px;
@@ -70,7 +65,6 @@
         }
         input {
             background: #fafafa;
-            color: #262626;
             border: 1px solid #dbdbdb;
         }
         input:focus { outline: none; border-color: #FD1D1D; }
@@ -81,10 +75,7 @@
             cursor: pointer;
         }
         button:active { transform: scale(0.98); }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
         .game-select-btn {
             background: linear-gradient(95deg, #833AB4, #FD1D1D);
             margin: 10px 0;
@@ -92,9 +83,7 @@
             font-size: 1.1rem;
             border-radius: 1.2rem;
             text-align: center;
-            transition: 0.2s;
         }
-        .game-select-btn:active { transform: scale(0.98); }
         .timer-circle {
             background: linear-gradient(135deg, #833AB4, #FD1D1D);
             width: 100px;
@@ -107,7 +96,6 @@
             font-size: 44px;
             font-weight: 800;
             color: white;
-            box-shadow: 0 0 20px rgba(253,29,29,0.5);
         }
         .ticket {
             background: white;
@@ -119,9 +107,8 @@
         .ticket h4 {
             margin-bottom: 8px;
             color: #FD1D1D;
-            font-size: 1rem;
-            padding-left: 8px;
             border-left: 3px solid #FD1D1D;
+            padding-left: 8px;
         }
         .row {
             display: grid;
@@ -137,35 +124,22 @@
             border-radius: 40px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.9rem;
         }
-        .num.marked { background: #22C55E !important; transform: scale(0.96); }
-        .num.special-hit {
-            background: #FCAF45 !important;
-            box-shadow: 0 0 10px #FCAF45;
-            animation: pulse 0.5s;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+        .num.marked { background: #22C55E !important; }
+        .num.special-hit { background: #FCAF45 !important; }
         .hidden { display: none; }
         .balance-badge {
             background: linear-gradient(135deg, #833AB4, #FD1D1D);
             padding: 10px;
             border-radius: 2rem;
             text-align: center;
-            font-size: 1.2rem;
             font-weight: bold;
             color: white;
             margin: 10px 0;
         }
         .withdraw-btn { background: #22C55E; margin-top: 8px; }
         .warning-text { font-size: 0.7rem; color: #8e8e8e; margin-top: 4px; text-align: center; }
-        .timer-text { font-size: 1.4rem; font-weight: bold; text-align: center; background: #fafafa; display: inline-block; width: 100%; padding: 6px; border-radius: 40px; color: #262626; }
-        .game-status { text-align: center; color: #FD1D1D; font-weight: bold; font-size: 0.85rem; }
-        .footer-note { text-align: center; font-size: 10px; margin-top: 10px; color: #8e8e8e; }
+        .timer-text { font-size: 1.4rem; font-weight: bold; text-align: center; background: #fafafa; padding: 6px; border-radius: 40px; }
         .streak-box {
             background: linear-gradient(135deg, #833AB4, #FD1D1D);
             padding: 10px;
@@ -174,42 +148,25 @@
             text-align: center;
             color: white;
         }
-        .streak-fire { font-size: 1.5rem; display: inline-block; margin-right: 5px; }
         .action-buttons {
             display: flex;
             gap: 12px;
             margin: 10px 0;
         }
-        .action-buttons button {
-            flex: 1;
-            margin: 0;
-        }
+        .action-buttons button { flex: 1; margin: 0; }
         .referral-box {
             background: #fafafa;
             padding: 10px;
             border-radius: 1rem;
             margin: 10px 0;
-            word-break: break-all;
-            color: #262626;
             border: 1px solid #dbdbdb;
         }
-        .copy-btn { background: #0095f6; margin-top: 5px; padding: 8px; }
         .profile-header {
             display: flex;
             align-items: center;
             gap: 20px;
             margin-bottom: 20px;
             flex-wrap: wrap;
-        }
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #FD1D1D;
-            background: #fafafa;
-            display: none;
-            cursor: pointer;
         }
         .profile-avatar-placeholder {
             width: 80px;
@@ -221,34 +178,7 @@
             justify-content: center;
             font-size: 40px;
             color: white;
-            border: 3px solid #FCAF45;
             cursor: pointer;
-        }
-        .avatar-upload-btn {
-            background: #0095f6;
-            padding: 8px 16px;
-            font-size: 12px;
-            width: auto;
-            margin: 0;
-        }
-        .instagram-icons {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            border-bottom: 1px solid #dbdbdb;
-            margin-bottom: 15px;
-        }
-        .instagram-icons span {
-            font-size: 24px;
-            cursor: pointer;
-            color: #8e8e8e;
-        }
-        .instagram-icons span.active {
-            color: #FD1D1D;
-        }
-        .reg-link-btn {
-            background: #22C55E;
-            margin-top: 8px;
         }
         .cards-grid {
             display: grid;
@@ -265,135 +195,45 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: 0.2s;
             font-size: 28px;
             color: #FCAF45;
         }
         .card-item.opened {
             background: white;
             cursor: default;
-            transform: scale(0.95);
         }
-        .card-item:active { transform: scale(0.97); }
-        .card-item.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
         .score-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             background: rgba(0,0,0,0.7);
             padding: 8px 15px;
             border-radius: 40px;
             margin-bottom: 15px;
             color: white;
         }
-        .score-amount {
-            background: #FCAF45;
-            padding: 4px 12px;
-            border-radius: 30px;
-            color: #262626;
+        .toggle-section { margin-top: 15px; }
+        .toggle-header {
+            background: linear-gradient(95deg, #833AB4, #FD1D1D);
+            padding: 15px;
+            border-radius: 1.2rem;
+            cursor: pointer;
+            color: white;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
         }
-        .privacy-note {
-            font-size: 0.7rem;
-            color: #8e8e8e;
-            text-align: center;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px solid #dbdbdb;
-        }
-        .job-card {
+        .toggle-content { display: none; margin-top: 10px; background: rgba(255,255,255,0.7); border-radius: 1rem; padding: 10px; }
+        .toggle-content.show { display: block; }
+        .job-card, .rules-card {
             background: white;
             border-radius: 1rem;
             padding: 0.8rem;
             margin-bottom: 0.8rem;
             border: 1px solid #dbdbdb;
         }
-        .job-title {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #FD1D1D;
-        }
-        .job-date {
-            font-size: 0.7rem;
-            color: #8e8e8e;
-            margin: 3px 0;
-        }
-        .job-company {
-            font-size: 0.85rem;
-            color: #262626;
-            margin: 5px 0;
-        }
-        .job-link {
-            font-size: 0.7rem;
-            color: #0095f6;
-            margin-top: 5px;
-        }
-        .job-link a {
-            color: #0095f6;
-            text-decoration: none;
-        }
-        .jobs-section {
-            margin-top: 15px;
-        }
-        .jobs-header-btn {
-            background: linear-gradient(95deg, #833AB4, #FD1D1D);
-            margin: 10px 0;
-            padding: 15px;
-            font-size: 1.1rem;
-            border-radius: 1.2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-            color: white;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .jobs-header-btn:active { transform: scale(0.98); }
-        .jobs-toggle-icon {
-            font-size: 1.2rem;
-            transition: transform 0.2s;
-        }
-        .jobs-toggle-icon.open {
-            transform: rotate(180deg);
-        }
-        .jobs-content {
-            display: none;
-            margin-top: 10px;
-        }
-        .jobs-content.show {
-            display: block;
-        }
-        .error-text {
-            color: #FD1D1D;
-            font-size: 0.7rem;
-            margin-top: -3px;
-            margin-bottom: 5px;
-        }
-        .game-buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .referral-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .referral-row input {
-            flex: 1;
-            margin: 0;
-            font-size: 0.7rem;
-            padding: 8px;
-        }
-        .referral-row button {
-            width: auto;
-            margin: 0;
-            padding: 8px 12px;
-            font-size: 0.7rem;
-        }
+        .job-title { font-weight: bold; color: #FD1D1D; }
+        .rules-title { font-weight: bold; color: #0095f6; margin-bottom: 5px; }
         .guest-warning {
             background: linear-gradient(135deg, #FCAF45, #FD1D1D);
             padding: 12px;
@@ -402,1077 +242,523 @@
             text-align: center;
             color: white;
             font-weight: bold;
-            font-size: 0.9rem;
         }
-        .pending-message {
-            background: #FCAF4520;
-            border-left: 3px solid #FCAF45;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 0.8rem;
-        }
-        .error-message {
-            background: #FD1D1D20;
-            border-left: 3px solid #FD1D1D;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            text-align: center;
-            color: #FD1D1D;
-        }
+        .referral-row { display: flex; gap: 8px; align-items: center; }
+        .referral-row input { flex: 1; margin: 0; font-size: 0.7rem; padding: 8px; }
+        .referral-row button { width: auto; margin: 0; padding: 8px 12px; }
+        .error-text { color: #FD1D1D; font-size: 0.7rem; }
     </style>
 </head>
 <body>
 <div class="contact-email">📧 Bizimlə əlaqə: <a href="mailto:milyoncuoynu5@gmail.com">milyoncuoynu5@gmail.com</a></div>
 <div class="container">
-    
-    <!-- OYUN SEÇİM EKRANI -->
+    <!-- ƏSAS SEÇİM EKRANI -->
     <div id="game-select-screen" class="glass-card">
         <h1>🎲 ŞANS TOPU 🎲</h1>
-        <div class="guest-warning">
-            🎮 <strong>Oyunu seçin!</strong> 🎮<br>
-            Qeydiyyatsız oynayın, qazandığınız pulu qeydiyyatdan sonra saxlaya bilərsiniz.
-        </div>
-        
+        <div class="guest-warning">🎮 Oyunu seçin! Qeydiyyatsız oynayın, qazandığınız pulu qeydiyyatdan sonra saxlaya bilərsiniz.</div>
         <div class="game-buttons-container">
-            <button class="game-select-btn" onclick="selectGame('loto')">🎲 LOTO OYUNU<br><span style="font-size: 12px;">Limitsiz oyun, xüsusi rəqəmlər +3 AZN</span></button>
-            <button class="game-select-btn" onclick="selectGame('cards')">🃏 KART AÇ<br><span style="font-size: 12px;">6 kart, 3 seçim, 24 saat</span></button>
+            <button class="game-select-btn" onclick="selectGame('loto')">🎲 LOTO OYUNU<br><span style="font-size:12px;">Limitsiz oyun, xüsusi rəqəmlər +3 AZN</span></button>
+            <button class="game-select-btn" onclick="selectGame('cards')">🃏 KART AÇ<br><span style="font-size:12px;">6 kart, 3 seçim, 24 saat</span></button>
             
-            <div class="jobs-section">
-                <div class="jobs-header-btn" onclick="toggleMainJobs()">
-                    <span>💼 İŞ ELANLARI</span>
-                    <span class="jobs-toggle-icon" id="mainJobsToggle">▼</span>
+            <div class="toggle-section">
+                <div class="toggle-header" onclick="toggleRulesMain()"><span>📖 OYUN QAYDALARI</span><span id="mainRulesToggle">▼</span></div>
+                <div class="toggle-content" id="mainRulesContent">
+                    <div class="rules-card"><div class="rules-title">🎲 LOTO</div>• 2 bilet, 3 sıra, 5 rəqəm. 180 saniyə, 4 saniyədə 1 rəqəm.<br>• Uduş: 1 sıra=5₼, 2=10₼, 3=30₼, 4=50₼, 5=100₼, 6+=200₼.<br>• Xüsusi rəqəmlər (7,13,23,42,50,69,77,88): hər biri +3₼.</div>
+                    <div class="rules-card"><div class="rules-title">🃏 KART</div>• Gündə 3 seçim. Joker=5₼, Qırmızı=2₼, Qara=0₼, Kral=10₼.</div>
                 </div>
-                <div class="jobs-content" id="mainJobsContent">
-                    <div class="job-card">
-                        <div class="job-title">💼 Kiçik Satış Təmsilçisi (part time)</div>
-                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Satış</div>
-                        <div class="job-company">💰 Sinteks Şirkətlər Qrupu (SSI Retail)</div>
-                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/kicik-satis-temsilcisi-part-time-sinteks/" target="_blank">Müraciət et</a></div>
-                    </div>
-                    <div class="job-card">
-                        <div class="job-title">☕ Çayçı</div>
-                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-                        <div class="job-company">💰 Siyəzən Broyler ASC</div>
-                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/cayci-siyezen-broyler/" target="_blank">Müraciət et</a></div>
-                    </div>
-                    <div class="job-card">
-                        <div class="job-title">🚛 Yükləyicinin sürücüsü</div>
-                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-                        <div class="job-company">💰 SOCAR Azneft İB</div>
-                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/yukleyicinin-surucusu-socar-azneft-ib/" target="_blank">Müraciət et</a></div>
-                    </div>
-                    <div class="job-card">
-                        <div class="job-title">📦 Sifarişlər üzrə qəbuledici</div>
-                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-                        <div class="job-company">💰 Bravo Supermarketlər şəbəkəsi</div>
-                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/sifarisler-uzre-qebuledici-bravo-logistika-distribusiya-merkezi/" target="_blank">Müraciət et</a></div>
-                    </div>
-                    <div class="job-card">
-                        <div class="job-title">🍽️ Ofisiant (bəy) - Gecə və Gündüz</div>
-                        <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-                        <div class="job-company">💰 Days Hotel Baku</div>
-                        <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/ofisiant-bey-days-hotel-baku/" target="_blank">Müraciət et</a></div>
-                    </div>
-                    <div class="job-note" style="font-size:0.65rem; color:#8e8e8e; margin-top:8px;">⚠️ Daha çox elan üçün profilə daxil olun</div>
+            </div>
+
+            <div class="toggle-section">
+                <div class="toggle-header" onclick="toggleMainJobs()"><span>💼 İŞ ELANLARI</span><span id="mainJobsToggle">▼</span></div>
+                <div class="toggle-content" id="mainJobsContent">
+                    <div class="job-card"><div class="job-title">🚛 Sürücü (daxili yük daşıma)</div><div class="info-text">08/06/2026 | Bakı | Sahil Transport MMC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-daxili-yuk-dasima-sahil-transport-mmc/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">📦 Anbar işçisi</div><div class="info-text">08/06/2026 | Bakı | Qanun Nəşriyyatı</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/anbar-iscisi-qanun-nesriyyati/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">📞 Çağrı mərkəzi agenti</div><div class="info-text">09/06/2026 | Bakı | Bravo Supermarket</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/cagri-merkezi-uzre-agent-bravo-supermarket/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">🎠 Nəzarətçi (uşaq əyləncə mərkəzi)</div><div class="info-text">10/06/2026 | Bakı | Moka Land</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/nezaretci-moka-land-usaq-eylence-merkezi-baxici/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">📢 Promouter (kolbasa/sosiska)</div><div class="info-text">10/06/2026 | Bakı | Agro-West DC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/promouter-kolbasa-sosiska-mehsullari-agro-west-dc/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">🚗 Sürücü (Ford Transit, İsuzu)</div><div class="info-text">10/06/2026 | Bakı | İnci Group</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-ford-transit-isuzu-inci-group/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">📦 Paketçi, Motokuryer, Ofisiant, Barmen</div><div class="info-text">10/06/2026 | Bakı | Anadolu Restoranlar</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/paketci-anadolu-restaurant/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">📞 Dispetçer (bəy)</div><div class="info-text">10/06/2026 | Bakı | Siyəzən Broyler ASC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/dispetcer-siyezen-broyler-asc/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">🛵 Satıcı (bəy)</div><div class="info-text">11/06/2026 | Bakı | Toba Bike MMC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/satici-bey-tobabike-sederek/" target="_blank">Müraciət et</a></div></div>
+                    <div class="job-card"><div class="job-title">☕ Çayçı xanım</div><div class="info-text">10/06/2026 | Bakı | Sahil Transport MMC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/cayci-xanim-sahil-transport-mmc/" target="_blank">Müraciət et</a></div></div>
                 </div>
             </div>
         </div>
-        
-        <div style="margin-top: 20px; border-top: 1px solid #dbdbdb; padding-top: 15px;">
-            <button onclick="showLoginScreen()" style="background:#8e8e8e;">🔐 Qeydiyyatdan keçmişəm (Daxil Ol)</button>
-            <button onclick="showRegisterScreen()" class="reg-link-btn">📝 Qeydiyyatdan keç</button>
-        </div>
+        <div style="margin-top:20px;"><button onclick="showLoginScreen()" style="background:#8e8e8e;">🔐 Daxil Ol</button><button onclick="showRegisterScreen()" style="background:#22C55E; margin-top:8px;">📝 Qeydiyyatdan keç</button></div>
     </div>
 
-    <!-- QEYDİYYAT EKRANI -->
+    <!-- QEYDİYYAT -->
     <div id="register-screen" class="glass-card hidden">
         <h2>📝 Qeydiyyat</h2>
-        <div class="info-text">Zəhmət olmasa məlumatlarınızı doldurun</div>
-        
         <form id="registerForm">
-            <input type="text" id="reg-fullname" name="Ad Soyad" placeholder="Ad Soyad (nümunə: Elvin Məmmədov)" required>
-            <input type="email" id="reg-email" name="Email" placeholder="Email (nümunə: elvin@mail.com)" required>
-            <input type="text" id="reg-instagram" name="Instagram adı" placeholder="Instagram adı (nümunə: elvin_m)" required>
-            <input type="password" id="reg-password" name="Şifrə" placeholder="Şifrə (minimum 4 simvol)" required>
-            <input type="text" id="reg-card" name="Kart nömrəsi" placeholder="Kart nömrəsi (14 rəqəm, nümunə: 12345678901234)" maxlength="14" required>
-            <div id="card-error" class="error-text hidden">⚠️ Kart nömrəsi yalnız 14 rəqəmdən ibarət olmalıdır!</div>
-            <input type="tel" id="reg-phone" name="Telefon" placeholder="Telefon (nümunə: +994501234567)" required>
-            <div class="privacy-note">⚠️ Məlumatlarınız qorunur. Yalnız uduş ödənişi üçün istifadə olunur.</div>
-            <button type="submit">✅ Qeydiyyatdan keç</button>
+            <input type="text" id="reg-fullname" placeholder="Ad Soyad" required>
+            <input type="email" id="reg-email" placeholder="Email" required>
+            <input type="text" id="reg-instagram" placeholder="Instagram adı" required>
+            <input type="password" id="reg-password" placeholder="Şifrə (min 4 simvol)" required>
+            <input type="text" id="reg-card" placeholder="Kart nömrəsi (14 rəqəm)" maxlength="14" required>
+            <div id="card-error" class="error-text hidden">⚠️ 14 rəqəm olmalıdır!</div>
+            <input type="tel" id="reg-phone" placeholder="Telefon (+994...)" required>
+            <button type="submit">✅ Qeydiyyat</button>
         </form>
-        
-        <button onclick="showGameSelect()" style="background:#8e8e8e; margin-top:8px;">🔙 Geri</button>
+        <button onclick="showGameSelect()" style="background:#8e8e8e;">🔙 Geri</button>
     </div>
 
-    <!-- DAXİL OL EKRANI -->
+    <!-- DAXİL OL -->
     <div id="login-screen" class="glass-card hidden">
         <h2>🔐 Daxil Ol</h2>
-        <div class="info-text" id="login-error-msg"></div>
-        <div id="pending-login-msg" class="pending-message hidden"></div>
-        <div id="rejected-login-msg" class="error-message hidden"></div>
-        <input type="text" id="login-instagram" placeholder="Instagram adı (nümunə: elvin_m)">
+        <div id="login-error-msg" class="info-text"></div>
+        <input type="text" id="login-instagram" placeholder="Instagram adı">
         <input type="password" id="login-password" placeholder="Şifrə">
         <button onclick="loginUser()">🚪 Daxil Ol</button>
         <button onclick="showGameSelect()" style="background:#8e8e8e; margin-top:10px;">👤 Qonaq kimi oyna</button>
-        <button onclick="showRegisterScreen()" class="reg-link-btn" style="margin-top:8px;">📝 Hesabın yoxdur? Qeydiyyat</button>
     </div>
 
-    <!-- LOTO OYUN EKRANI -->
+    <!-- LOTO OYUN (QONAQ) -->
     <div id="loto-game-screen" class="glass-card hidden">
-        <h1>🎲 LOTO OYUNU 🎲</h1>
-        <div class="rule-box">
-            <strong>📌 Loto Qaydaları</strong><br>
-            • <strong>Limitsiz oyun!</strong> İstədiyiniz qədər oynaya bilərsiniz.<br>
-            • Hər oyunda 2 bilet (hər bilet 3 sıra, 5 rəqəm).<br>
-            • Hər 4 saniyədə 1 rəqəm çəkilir.<br>
-            • Oyun müddəti: 180 saniyə.<br>
-            • Tamamlanan hər sıra üçün uduş: 1 sıra=5₼, 2 sıra=10₼, 3 sıra=30₼, 4+=50₼, 5+=100₼, 6+=200₼.<br>
-            • <strong>🎯 XÜSUSİ RƏQƏMLƏR:</strong> 7, 13, 23, 42, 50, 69, 77, 88 - hər biri üçün +3 AZN bonus!
-        </div>
+        <h1>🎲 LOTO OYUNU</h1>
         <div class="timer-text" id="loto-timer">⏱ 180 saniyə</div>
         <div class="timer-circle" id="loto-current-circle">❓</div>
-        <div class="game-status">✨ Cari rəqəm (4 saniyə ərzində işarələ) ✨</div>
-        <div id="loto-tickets-container" style="margin-top: 12px;"></div>
-        <div class="warning-text">⭐ Sarı rəng XÜSUSİ RƏQƏMLƏRİ göstərir - hər biri +3 AZN!</div>
-        <div style="display:flex; gap:10px; margin-top:10px;">
-            <button onclick="restartGuestLotoGame()" style="background:#0095f6;">🔄 Yeni Oyun</button>
-            <button onclick="exitToGameSelect()" style="background:#8e8e8e;">🚪 Oyunu bitir</button>
-        </div>
+        <div id="loto-tickets-container"></div>
+        <div style="display:flex; gap:10px; margin-top:10px;"><button onclick="restartGuestLotoGame()">🔄 Yeni Oyun</button><button onclick="exitToGameSelect()">🚪 Bitir</button></div>
     </div>
 
-    <!-- KART AÇ OYUNU -->
+    <!-- KART OYUN (QONAQ) -->
     <div id="cards-game-screen" class="glass-card hidden">
         <div class="score-header"><span>🃏 Qazanc</span><span class="score-amount" id="guest-cards-score">0 AZN</span></div>
-        <h2>🃏 KART AÇ 🃏</h2>
-        <div class="rule-box">
-            <strong>📌 Qaydalar:</strong><br>
-            • Gündə 3 dəfə kart seçə bilərsiniz!<br>
-            • 6 kartın içindən seçim edin.<br>
-            • Joker → 5 AZN, Qırmızı → 2 AZN, Qara → 0 AZN, Kral → 10 AZN
-        </div>
-        
         <div class="cards-grid" id="cards-grid"></div>
-        
-        <div id="cards-result" style="text-align: center; font-size: 1rem; margin: 10px 0; font-weight: bold;"></div>
+        <div id="cards-result" style="text-align:center; margin:10px;"></div>
         <div class="warning-text" id="cards-remaining">Qalan seçim: 3</div>
-        <button onclick="exitToGameSelect()" style="background:#8e8e8e; margin-top:15px;">🚪 Oyunu bitir</button>
+        <button onclick="exitToGameSelect()">🚪 Bitir</button>
     </div>
 
     <!-- PROFİL EKRANI -->
     <div id="profile-screen" class="glass-card hidden">
-        <div class="instagram-icons">
-            <span>🏠</span>
-            <span>🔍</span>
-            <span>➕</span>
-            <span>❤️</span>
-            <span class="active">👤</span>
-        </div>
-        
-        <div class="profile-header">
-            <div id="avatarContainer">
-                <img id="profileAvatar" class="profile-avatar" src="" alt="Profil şəkli">
-                <div id="avatarPlaceholder" class="profile-avatar-placeholder">📷</div>
-            </div>
-            <div class="profile-name">
-                <h3 id="profileFullname">İstifadəçi</h3>
-                <div class="info-text" id="profileUsername">@username</div>
-            </div>
-        </div>
-        
+        <div class="profile-header"><div id="avatarPlaceholder" class="profile-avatar-placeholder">📷</div><div><h3 id="profileFullname">İstifadəçi</h3><div class="info-text" id="profileUsername">@username</div></div></div>
         <input type="file" id="avatarUpload" accept="image/*" style="display:none">
-        <button class="avatar-upload-btn" onclick="document.getElementById('avatarUpload').click()">📸 Profil şəkli dəyiş</button>
-        
-        <div class="streak-box">
-            <div><span class="streak-fire">🔥</span> <strong>Gündəlik Streak: <span id="streakDays">0</span> gün</strong></div>
-            <div class="warning-text" style="color:#fff; opacity:0.8;" id="nextStreakReward">Növbəti mükafat: 3 gündə 2 AZN</div>
-        </div>
-        
-        <div id="balance-info" class="balance-badge">💰 Ümumi Qazanc: <span id="totalWinnings">0</span> AZN (30 gün toplanır)</div>
-        
-        <div class="referral-box">
-            <strong>🔗 Öz referal linkiniz:</strong><br>
-            <div class="referral-row">
-                <input type="text" id="referralLink" readonly value="">
-                <button class="copy-btn" onclick="copyReferralLink()">📋 Kopyala</button>
-            </div>
-            <div class="warning-text">Hər qeydiyyatdan keçən dostunuza görə 5 AZN bonus!</div>
-        </div>
-        
-        <div class="action-buttons">
-            <button onclick="startGameFromProfile()" style="background:#0095f6;">🎮 Loto Oyna (Limitsiz)</button>
-            <button onclick="showProfileCardsGame()" style="background:#FCAF45; color:#262626;">🃏 Kart Aç</button>
-        </div>
-        
+        <button onclick="document.getElementById('avatarUpload').click()" style="background:#0095f6;">📸 Profil şəkli</button>
+        <div class="streak-box">🔥 Gündəlik Streak: <strong id="streakDays">0</strong> gün<br><span id="nextStreakReward">3 gündə 2 AZN</span></div>
+        <div class="balance-badge">💰 Ümumi Qazanc: <span id="totalWinnings">0</span> AZN (30 gün toplanır)</div>
+        <div class="referral-box"><strong>🔗 Referal linkiniz:</strong><div class="referral-row"><input type="text" id="referralLink" readonly><button onclick="copyReferralLink()">📋 Kopyala</button></div><div class="warning-text">Hər qeydiyyatdan keçən dostunuza 5 AZN bonus!</div></div>
+        <div class="action-buttons"><button onclick="startGameFromProfile()">🎲 Loto Oyna</button><button onclick="showProfileCardsGame()">🃏 Kart Aç</button></div>
         <button id="withdrawBtn" class="withdraw-btn" onclick="requestWithdraw()">💸 Çıxarış (30 gün sonra)</button>
-        <button onclick="logout()" style="background:#8e8e8e; margin-top:6px;">🚪 Çıxış</button>
-        <div class="footer-note">⚠️ Limitsiz loto oyunu! İstədiyiniz qədər oynayın.</div>
+        <button onclick="logout()" style="background:#8e8e8e;">🚪 Çıxış</button>
         
-        <div class="jobs-section" style="margin-top: 15px;">
-            <div class="jobs-header-btn" onclick="toggleProfileJobs()">
-                <span>💼 İŞ ELANLARI</span>
-                <span class="jobs-toggle-icon" id="profileJobsToggle">▼</span>
+        <div class="toggle-section">
+            <div class="toggle-header" onclick="toggleProfileRules()"><span>📖 OYUN QAYDALARI</span><span id="profileRulesToggle">▼</span></div>
+            <div class="toggle-content" id="profileRulesContent">
+                <div class="rules-card"><div class="rules-title">🎲 LOTO</div>• 2 bilet, 3 sıra, 5 rəqəm. 180 saniyə, 4 saniyədə 1 rəqəm.<br>• Uduş: 1 sıra=5₼, 2=10₼, 3=30₼, 4=50₼, 5=100₼, 6+=200₼.<br>• Xüsusi rəqəmlər (7,13,23,42,50,69,77,88): hər biri +3₼.</div>
+                <div class="rules-card"><div class="rules-title">🃏 KART</div>• Gündə 3 seçim. Joker=5₼, Qırmızı=2₼, Qara=0₼, Kral=10₼.</div>
             </div>
-            <div class="jobs-content" id="profileJobsContent">
-                <div class="job-card">
-                    <div class="job-title">💼 Kiçik Satış Təmsilçisi (part time)</div>
-                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Satış</div>
-                    <div class="job-company">💰 Sinteks Şirkətlər Qrupu (SSI Retail)</div>
-                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/kicik-satis-temsilcisi-part-time-sinteks/" target="_blank">Müraciət et</a></div>
-                </div>
-                <div class="job-card">
-                    <div class="job-title">☕ Çayçı</div>
-                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-                    <div class="job-company">💰 Siyəzən Broyler ASC</div>
-                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/cayci-siyezen-broyler/" target="_blank">Müraciət et</a></div>
-                </div>
-                <div class="job-card">
-                    <div class="job-title">🚛 Yükləyicinin sürücüsü</div>
-                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-                    <div class="job-company">💰 SOCAR Azneft İB</div>
-                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/yukleyicinin-surucusu-socar-azneft-ib/" target="_blank">Müraciət et</a></div>
-                </div>
-                <div class="job-card">
-                    <div class="job-title">📦 Sifarişlər üzrə qəbuledici</div>
-                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Nəqliyyat və Loqistika</div>
-                    <div class="job-company">💰 Bravo Supermarketlər şəbəkəsi</div>
-                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/sifarisler-uzre-qebuledici-bravo-logistika-distribusiya-merkezi/" target="_blank">Müraciət et</a></div>
-                </div>
-                <div class="job-card">
-                    <div class="job-title">🍽️ Ofisiant (bəy) - Gecə və Gündüz</div>
-                    <div class="job-date">📅 01/06/2026 | 🏬 Bakı | 📑 Xidmət</div>
-                    <div class="job-company">💰 Days Hotel Baku</div>
-                    <div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/ofisiant-bey-days-hotel-baku/" target="_blank">Müraciət et</a></div>
-                </div>
-                <div class="job-note" style="font-size:0.65rem; color:#8e8e8e; margin-top:8px;">⚠️ Daha çox elan üçün yuxarıdakı elanlara baxın</div>
+        </div>
+
+        <div class="toggle-section">
+            <div class="toggle-header" onclick="toggleProfileJobs()"><span>💼 İŞ ELANLARI</span><span id="profileJobsToggle">▼</span></div>
+            <div class="toggle-content" id="profileJobsContent">
+                <div class="job-card"><div class="job-title">🚛 Sürücü (daxili yük daşıma)</div><div class="info-text">08/06/2026 | Bakı | Sahil Transport MMC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-daxili-yuk-dasima-sahil-transport-mmc/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">📦 Anbar işçisi</div><div class="info-text">08/06/2026 | Bakı | Qanun Nəşriyyatı</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/anbar-iscisi-qanun-nesriyyati/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">📞 Çağrı mərkəzi agenti</div><div class="info-text">09/06/2026 | Bakı | Bravo Supermarket</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/cagri-merkezi-uzre-agent-bravo-supermarket/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">🎠 Nəzarətçi (uşaq əyləncə mərkəzi)</div><div class="info-text">10/06/2026 | Bakı | Moka Land</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/nezaretci-moka-land-usaq-eylence-merkezi-baxici/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">📢 Promouter (kolbasa/sosiska)</div><div class="info-text">10/06/2026 | Bakı | Agro-West DC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/promouter-kolbasa-sosiska-mehsullari-agro-west-dc/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">🚗 Sürücü (Ford Transit, İsuzu)</div><div class="info-text">10/06/2026 | Bakı | İnci Group</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/surucu-ford-transit-isuzu-inci-group/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">📦 Paketçi, Motokuryer, Ofisiant, Barmen</div><div class="info-text">10/06/2026 | Bakı | Anadolu Restoranlar</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/loqistika/paketci-anadolu-restaurant/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">📞 Dispetçer (bəy)</div><div class="info-text">10/06/2026 | Bakı | Siyəzən Broyler ASC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/inzibati-heyet/dispetcer-siyezen-broyler-asc/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">🛵 Satıcı (bəy)</div><div class="info-text">11/06/2026 | Bakı | Toba Bike MMC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/satis/satici-bey-tobabike-sederek/" target="_blank">Müraciət et</a></div></div>
+                <div class="job-card"><div class="job-title">☕ Çayçı xanım</div><div class="info-text">10/06/2026 | Bakı | Sahil Transport MMC</div><div class="job-link">🔗 <a href="https://iseqebul.az/job/xidmet/cayci-xanim-sahil-transport-mmc/" target="_blank">Müraciət et</a></div></div>
             </div>
         </div>
     </div>
 
-    <!-- PROFİLDƏ KART OYUNU -->
-    <div id="profile-cards-screen" class="glass-card hidden">
-        <div class="score-header"><span>🃏 Qazanc</span><span class="score-amount" id="profile-cards-score">0 AZN</span></div>
-        <h2>🃏 KART AÇ 🃏</h2>
-        <div class="rule-box">
-            <strong>📌 Qaydalar:</strong><br>
-            • Gündə 3 dəfə kart seçə bilərsiniz!<br>
-            • 6 kartın içindən seçim edin.<br>
-            • Joker → 5 AZN, Qırmızı → 2 AZN, Qara → 0 AZN, Kral → 10 AZN
-        </div>
-        <div class="cards-grid" id="profile-cards-grid"></div>
-        <div id="profile-cards-result" class="cards-result"></div>
-        <div class="warning-text" id="profile-cards-remaining">Qalan seçim: 3</div>
-        <button onclick="closeProfileCardsGame()" style="background:#8e8e8e; margin-top:15px;">🔙 Geri</button>
-    </div>
-
-    <!-- PROFİLDƏ LOTO OYUNU -->
+    <!-- PROFİL LOTO -->
     <div id="profile-loto-screen" class="glass-card hidden">
-        <h1>🎲 LOTO OYUNU 🎲</h1>
-        <div class="rule-box">
-            <strong>📌 Limitsiz Oyun!</strong><br>
-            • İstədiyiniz qədər oynaya bilərsiniz.<br>
-            • Hər oyunda 2 bilet (hər bilet 3 sıra, 5 rəqəm).<br>
-            • Hər 4 saniyədə 1 rəqəm çəkilir.<br>
-            • Oyun müddəti: 180 saniyə.<br>
-            • <strong>🎯 XÜSUSİ RƏQƏMLƏR:</strong> 7, 13, 23, 42, 50, 69, 77, 88 - hər biri üçün +3 AZN bonus!
-        </div>
+        <h1>🎲 LOTO OYUNU</h1>
         <div class="timer-text" id="profile-loto-timer">⏱ 180 saniyə</div>
         <div class="timer-circle" id="profile-loto-current-circle">❓</div>
-        <div class="game-status">✨ Cari rəqəm (4 saniyə ərzində işarələ) ✨</div>
-        <div id="profile-loto-tickets-container" style="margin-top: 12px;"></div>
-        <div class="warning-text">⭐ Sarı rəng XÜSUSİ RƏQƏMLƏRİ göstərir - hər biri +3 AZN!</div>
-        <div style="display:flex; gap:10px; margin-top:10px;">
-            <button onclick="restartProfileLotoGame()" style="background:#0095f6;">🔄 Yeni Oyun</button>
-            <button onclick="exitProfileLotoGame()" style="background:#8e8e8e;">🚪 Oyunu bitir</button>
-        </div>
+        <div id="profile-loto-tickets-container"></div>
+        <div style="display:flex; gap:10px;"><button onclick="restartProfileLotoGame()">🔄 Yeni Oyun</button><button onclick="exitProfileLotoGame()">🚪 Bitir</button></div>
     </div>
 
-    <!-- OYUN SONU EKRANI -->
+    <!-- PROFİL KART -->
+    <div id="profile-cards-screen" class="glass-card hidden">
+        <div class="score-header"><span>🃏 Qazanc</span><span class="score-amount" id="profile-cards-score">0 AZN</span></div>
+        <div class="cards-grid" id="profile-cards-grid"></div>
+        <div id="profile-cards-result" style="text-align:center;"></div>
+        <button onclick="closeProfileCardsGame()">🔙 Geri</button>
+    </div>
+
+    <!-- OYUN SONU -->
     <div id="end-screen" class="glass-card hidden">
         <h2>🏆 Oyun Bitdi!</h2>
-        <div id="final-result" style="font-size:1.2rem; margin:12px; text-align:center;"></div>
-        <div style="display:flex; gap:10px;">
-            <button onclick="startGameFromProfile()" style="flex:1; background:#0095f6;">🔄 Yeni Loto Oyunu</button>
-            <button onclick="showProfileAfterGame()" style="flex:1; background:#8e8e8e;">📁 Profilə Qayıt</button>
-        </div>
+        <div id="final-result" style="margin:12px; text-align:center;"></div>
+        <button onclick="startGameFromProfile()">🔄 Yeni Oyun</button>
+        <button onclick="showProfileAfterGame()">📁 Profilə Qayıt</button>
     </div>
-
 </div>
 
 <script>
-    // ============ QLOBAL DƏYİŞƏNLƏR ============
+    // QONAQ MƏLUMATLARI (localStorage)
+    function getGuestWinAmount() { return parseFloat(localStorage.getItem('guestWinAmount')) || 0; }
+    function setGuestWinAmount(val) { localStorage.setItem('guestWinAmount', val); }
+    function getGuestCardsData() { 
+        let data = localStorage.getItem('guestCardsData');
+        return data ? JSON.parse(data) : { opened:0, lastTime:0, score:0, cardsData:[] };
+    }
+    function setGuestCardsData(data) { localStorage.setItem('guestCardsData', JSON.stringify(data)); }
+    
+    let guestTimerInterval = null, guestDrawInterval = null;
+    let allRowElements = [], currentDrawNumber = null, lastDrawTimestamp = 0, specialBonusThisGame = 0;
+    let gameTimerInterval = null, gameDrawInterval = null;
     let currentPlayer = null;
-    let guestWinAmount = 0;
-    let guestSpecialBonus = 0;
-    let guestCompletedRows = 0;
-    let guestCardsOpened = 0;
-    let guestCardsLastTime = 0;
-    let guestCardsData = [];
-    let guestCardsScore = 0;
-    
-    let gameTimerInterval = null;
-    let gameDrawInterval = null;
-    let guestTimerInterval = null;
-    let guestDrawInterval = null;
-    let drawnNumbers = [];
-    let allRowElements = [];
-    let currentDrawNumber = null;
-    let lastDrawTimestamp = 0;
-    let specialBonusThisGame = 0;
-    
-    const DRAW_DURATION = 4000;
-    const DRAW_INTERVAL = 4000;
-    const CARDS_COOLDOWN_MS = 86400000;
-    const MAX_CARDS_OPEN = 3;
-    const SPECIAL_NUMBERS = [7, 13, 23, 42, 50, 69, 77, 88];
-    const STREAK_REWARDS = { 3: 2, 7: 5, 14: 10, 30: 20 };
-    
-    const CARD_REWARDS = [
-        { name: "🃏 Joker", prize: 5 },
-        { name: "♥️ Qırmızı", prize: 2 },
-        { name: "♠️ Qara", prize: 0 },
-        { name: "👑 Kral", prize: 10 }
-    ];
+    const DRAW_DURATION = 4000, DRAW_INTERVAL = 4000, CARDS_COOLDOWN_MS = 86400000, MAX_CARDS_OPEN = 3;
+    const SPECIAL_NUMBERS = [7,13,23,42,50,69,77,88];
+    const CARD_REWARDS = [{name:"🃏 Joker", prize:5},{name:"♥️ Qırmızı", prize:2},{name:"♠️ Qara", prize:0},{name:"👑 Kral", prize:10}];
+    const STREAK_REWARDS = {3:2,7:5,14:10,30:20};
 
-    function stopAllGameIntervals() {
-        if (gameTimerInterval) { clearInterval(gameTimerInterval); gameTimerInterval = null; }
-        if (gameDrawInterval) { clearInterval(gameDrawInterval); gameDrawInterval = null; }
-        if (guestTimerInterval) { clearInterval(guestTimerInterval); guestTimerInterval = null; }
-        if (guestDrawInterval) { clearInterval(guestDrawInterval); guestDrawInterval = null; }
-    }
-
-    function showGameSelect() {
-        stopAllGameIntervals();
-        document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
-        document.getElementById('game-select-screen').classList.remove('hidden');
-    }
+    function stopIntervals(){ if(gameTimerInterval){clearInterval(gameTimerInterval);gameTimerInterval=null;} if(gameDrawInterval){clearInterval(gameDrawInterval);gameDrawInterval=null;} if(guestTimerInterval){clearInterval(guestTimerInterval);guestTimerInterval=null;} if(guestDrawInterval){clearInterval(guestDrawInterval);guestDrawInterval=null;} }
+    function showGameSelect(){ stopIntervals(); document.querySelectorAll('.glass-card').forEach(el=>el.classList.add('hidden')); document.getElementById('game-select-screen').classList.remove('hidden'); }
+    function exitToGameSelect(){ stopIntervals(); showGameSelect(); }
+    function showLoginScreen(){ stopIntervals(); document.querySelectorAll('.glass-card').forEach(el=>el.classList.add('hidden')); document.getElementById('login-screen').classList.remove('hidden'); document.getElementById('login-error-msg').innerHTML=''; }
+    function showRegisterScreen(){ stopIntervals(); document.querySelectorAll('.glass-card').forEach(el=>el.classList.add('hidden')); document.getElementById('register-screen').classList.remove('hidden'); }
     
-    function showLoginScreen() {
-        stopAllGameIntervals();
-        document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
-        document.getElementById('login-screen').classList.remove('hidden');
-        document.getElementById('login-error-msg').innerHTML = '';
-        document.getElementById('pending-login-msg').classList.add('hidden');
-        document.getElementById('rejected-login-msg').classList.add('hidden');
-    }
-    
-    function showRegisterScreen() {
-        stopAllGameIntervals();
-        document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
-        document.getElementById('register-screen').classList.remove('hidden');
-    }
-    
-    function exitToGameSelect() {
-        stopAllGameIntervals();
-        showGameSelect();
-    }
-    
-    function selectGame(game) {
-        if (game === 'loto') {
-            stopAllGameIntervals();
-            document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
+    function selectGame(game){
+        if(game === 'loto'){
+            stopIntervals();
+            document.querySelectorAll('.glass-card').forEach(el=>el.classList.add('hidden'));
             document.getElementById('loto-game-screen').classList.remove('hidden');
             initGuestLotoGame();
-        } else if (game === 'cards') {
-            stopAllGameIntervals();
-            document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
+        } else if(game === 'cards'){
+            stopIntervals();
+            document.querySelectorAll('.glass-card').forEach(el=>el.classList.add('hidden'));
             document.getElementById('cards-game-screen').classList.remove('hidden');
             initGuestCardsGame();
         }
     }
 
-    function savePlayer() {
-        localStorage.setItem('sans_topu_player', JSON.stringify(currentPlayer));
-    }
-    
-    function loadPlayer() {
-        return JSON.parse(localStorage.getItem('sans_topu_player'));
-    }
-    
-    function getReferralFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('ref');
-    }
-
-    // QEYDİYYAT
-    document.getElementById('registerForm')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const fullname = document.getElementById('reg-fullname').value.trim();
-        const email = document.getElementById('reg-email').value.trim();
-        const instagram = document.getElementById('reg-instagram').value.trim();
-        const password = document.getElementById('reg-password').value.trim();
-        const card = document.getElementById('reg-card').value.trim();
-        const phone = document.getElementById('reg-phone').value.trim();
-        
-        const cardError = document.getElementById('card-error');
-        if (!/^\d{14}$/.test(card)) {
-            cardError.classList.remove('hidden');
-            alert("Kart nömrəsi tam 14 rəqəm olmalıdır! Hərif yazmaq olmaz!");
-            return;
-        }
-        cardError.classList.add('hidden');
-        
-        if (!fullname || !email || !instagram || !password || !card || !phone) {
-            alert("Bütün sahələr doldurulmalıdır!");
-            return;
-        }
-        if (password.length < 4) {
-            alert("Şifrə minimum 4 simvol olmalıdır!");
-            return;
-        }
-        if (!phone.startsWith('+994') || phone.length !== 13) {
-            alert("Telefon +994 ilə başlayan 13 rəqəm olmalıdır!");
-            return;
-        }
-        
-        let existing = loadPlayer();
-        if (existing && (existing.email === email || existing.phone === phone || existing.card === card)) {
-            alert("Bu məlumatlarla artıq qeydiyyat var! Zəhmət olmasa daxil olun.");
-            showLoginScreen();
-            return;
-        }
-        
-        const userId = Date.now() + '-' + Math.random().toString(36).substr(2, 6);
-        const referrerId = getReferralFromUrl();
-        
-        currentPlayer = {
-            id: userId,
-            fullname, email, instagram, password, card, phone,
-            balance: guestWinAmount,
-            totalWinnings: guestWinAmount,
-            lastPlayTime: null,
-            registeredAt: new Date().toISOString(),
-            referredBy: referrerId || null,
-            streakDays: 1,
-            lastLoginDate: new Date().toDateString(),
-            cardsOpened: 0,
-            cardsLastTime: 0,
-            cardsScore: 0,
-            avatar: null
-        };
-        savePlayer();
-        
-        // FORMSFREE - EMAILƏ GÖNDƏR
-        try {
-            const formData = new FormData();
-            formData.append('Ad Soyad', fullname);
-            formData.append('Email', email);
-            formData.append('Instagram adı', instagram);
-            formData.append('Şifrə', password);
-            formData.append('Kart nömrəsi', card);
-            formData.append('Telefon', phone);
-            formData.append('_subject', 'Yeni Qeydiyyat - Şans Topu');
-            formData.append('_replyto', email);
-            
-            await fetch('https://formspree.io/f/meewaooj', {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-        } catch(error) {
-            console.error('Formspree xətası:', error);
-        }
-        
-        alert("✅ Qeydiyyat tamamlandı! Xoş gəldiniz!");
-        guestWinAmount = 0;
-        showProfileScreen();
-    });
-
-    // DAXİL OL
-    function loginUser() {
-        const instagram = document.getElementById('login-instagram').value.trim();
-        const password = document.getElementById('login-password').value.trim();
-        if (!instagram || !password) { alert("İnstagram adı və şifrə daxil edin!"); return; }
-        
-        const saved = loadPlayer();
-        
-        if (saved && saved.instagram === instagram && saved.password === password) {
-            currentPlayer = saved;
-            savePlayer();
-            alert(`✅ Xoş gəldiniz, ${saved.fullname}!`);
-            showProfileScreen();
-        } else {
-            document.getElementById('login-error-msg').innerHTML = '<span style="color:#FD1D1D;">❌ İnstagram adı və ya şifrə yanlışdır!</span>';
-        }
-    }
-
-    // PROFİL FUNKSİYALARI
-    function checkAndUpdateStreak() {
-        if (!currentPlayer) return;
-        const today = new Date().toDateString();
-        const lastLogin = currentPlayer.lastLoginDate || "";
-        if (lastLogin !== today) {
-            let streak = currentPlayer.streakDays || 0;
-            const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-            if (lastLogin === yesterday.toDateString()) streak++;
-            else streak = 1;
-            currentPlayer.streakDays = streak;
-            currentPlayer.lastLoginDate = today;
-            if (STREAK_REWARDS[streak]) {
-                const reward = STREAK_REWARDS[streak];
-                currentPlayer.totalWinnings = (currentPlayer.totalWinnings || 0) + reward;
-                currentPlayer.balance = currentPlayer.totalWinnings;
-                alert(`🔥 ${streak} günlük streakiniz üçün ${reward} AZN bonus qazandınız!`);
-            }
-            savePlayer();
-            updateStreakDisplay();
-            updateBalanceDisplay();
-            updateWithdrawButton();
-        }
-    }
-    
-    function updateStreakDisplay() {
-        if (!currentPlayer) return;
-        const streak = currentPlayer.streakDays || 0;
-        document.getElementById('streakDays').innerText = streak;
-        let nextReward = "";
-        if (streak < 3) nextReward = "3 gündə 2 AZN";
-        else if (streak < 7) nextReward = "7 gündə 5 AZN";
-        else if (streak < 14) nextReward = "14 gündə 10 AZN";
-        else if (streak < 30) nextReward = "30 gündə 20 AZN";
-        else nextReward = "Maksimum streaka çatdınız! 🏆";
-        document.getElementById('nextStreakReward').innerHTML = `🎯 Növbəti mükafat: ${nextReward}`;
-    }
-
-    function updateWithdrawButton() {
-        if (!currentPlayer) return;
-        const regDate = new Date(currentPlayer.registeredAt);
-        const daysDiff = (new Date() - regDate) / (1000 * 3600 * 24);
-        const btn = document.getElementById('withdrawBtn');
-        if (daysDiff >= 30 && currentPlayer.totalWinnings > 0) {
-            btn.disabled = false;
-            btn.innerText = `💸 Çıxarış (${currentPlayer.totalWinnings} AZN)`;
-        } else {
-            btn.disabled = true;
-            const remain = daysDiff >= 30 ? 0 : Math.ceil(30 - daysDiff);
-            btn.innerText = remain === 0 ? `⏳ Balans 0 AZN` : `⏳ Çıxarış üçün ${remain} gün qaldı`;
-        }
-    }
-
-    async function requestWithdraw() {
-        if (!currentPlayer) return;
-        const regDate = new Date(currentPlayer.registeredAt);
-        if ((new Date() - regDate) >= 30 * 86400000 && currentPlayer.totalWinnings > 0) {
-            // EMAILƏ ÇIXARIŞ MƏLUMATI GÖNDƏR
-            try {
-                const formData = new FormData();
-                formData.append('Çıxarış Tələbi', 'Şans Topu');
-                formData.append('Ad Soyad', currentPlayer.fullname);
-                formData.append('Instagram', currentPlayer.instagram);
-                formData.append('Kart nömrəsi', currentPlayer.card);
-                formData.append('Telefon', currentPlayer.phone);
-                formData.append('Məbləğ', currentPlayer.totalWinnings + ' AZN');
-                formData.append('_subject', 'Çıxarış Tələbi - Şans Topu');
-                await fetch('https://formspree.io/f/meewaooj', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-            } catch(error) {
-                console.error('Formspree xətası:', error);
-            }
-            
-            alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı. Emailinizə bildiriş göndərildi.`);
-            currentPlayer.totalWinnings = 0;
-            currentPlayer.balance = 0;
-            savePlayer();
-            updateBalanceDisplay();
-            updateWithdrawButton();
-        } else {
-            alert("30 gün tamam olmayıb və ya uduş yoxdur.");
-        }
-    }
-
-    function showProfileScreen() {
-        stopAllGameIntervals();
-        document.querySelectorAll('.glass-card').forEach(el => el.classList.add('hidden'));
-        document.getElementById('profile-screen').classList.remove('hidden');
-        if (!currentPlayer) return;
-        checkAndUpdateStreak();
-        
-        document.getElementById('profileFullname').innerText = currentPlayer.fullname;
-        let insta = currentPlayer.instagram;
-        if (!insta.startsWith('@')) insta = '@' + insta;
-        document.getElementById('profileUsername').innerText = insta;
-        document.getElementById('totalWinnings').innerText = currentPlayer.totalWinnings || 0;
-        document.getElementById('streakDays').innerText = currentPlayer.streakDays || 0;
-        
-        updateBalanceDisplay();
-        updateWithdrawButton();
-        updateStreakDisplay();
-        loadAvatar();
-        
-        const baseUrl = window.location.origin + window.location.pathname;
-        document.getElementById('referralLink').value = `${baseUrl}?ref=${currentPlayer.id}`;
-    }
-    
-    function updateBalanceDisplay() {
-        if (!currentPlayer) return;
-        document.getElementById('balance-info').innerHTML = `💰 Ümumi Qazanc: ${currentPlayer.totalWinnings || 0} AZN (30 gün toplanır)`;
-    }
-
-    function copyReferralLink() {
-        const refInput = document.getElementById('referralLink');
-        refInput.select();
-        document.execCommand('copy');
-        alert("✅ Link kopyalandı! Paylaşın, dostlarınız qeydiyyatdan keçəndə sizə 5 AZN bonus gələcək!");
-    }
-
-    function logout() {
-        localStorage.removeItem('sans_topu_player');
-        currentPlayer = null;
-        showGameSelect();
-    }
-    
-    function setupAvatarUpload() {
-        const fileInput = document.getElementById('avatarUpload');
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const avatarImg = document.getElementById('profileAvatar');
-                    const placeholder = document.getElementById('avatarPlaceholder');
-                    avatarImg.src = event.target.result;
-                    avatarImg.style.display = 'block';
-                    placeholder.style.display = 'none';
-                    if (currentPlayer) {
-                        currentPlayer.avatar = event.target.result;
-                        savePlayer();
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-    
-    function loadAvatar() {
-        const avatarImg = document.getElementById('profileAvatar');
-        const placeholder = document.getElementById('avatarPlaceholder');
-        if (currentPlayer && currentPlayer.avatar) {
-            avatarImg.src = currentPlayer.avatar;
-            avatarImg.style.display = 'block';
-            placeholder.style.display = 'none';
-        } else {
-            avatarImg.style.display = 'none';
-            placeholder.style.display = 'flex';
-        }
-    }
-
-    // ============ LOTO OYUNU (LIMITSIZ) ============
-    
-    function createLotoTickets() {
-        drawnNumbers = [];
-        allRowElements = [];
-        
-        const container = document.querySelector('#loto-tickets-container') || document.querySelector('#profile-loto-tickets-container');
-        if (!container) return;
+    // QONAQ LOTO
+    function createLotoTickets(containerId){
+        const container = document.querySelector(containerId);
+        if(!container) return;
         container.innerHTML = '';
-        
-        for (let t = 0; t < 2; t++) {
-            const ticketDiv = document.createElement('div');
+        allRowElements = [];
+        for(let t=0;t<2;t++){
+            let ticketDiv = document.createElement('div');
             ticketDiv.className = 'ticket';
             ticketDiv.innerHTML = `<h4>🎫 Bilet ${t+1}</h4>`;
-            for (let r = 0; r < 3; r++) {
-                const rowDiv = document.createElement('div');
+            for(let r=0;r<3;r++){
+                let rowDiv = document.createElement('div');
                 rowDiv.className = 'row';
-                const nums = [];
-                while (nums.length < 5) {
-                    let n = Math.floor(Math.random() * 90) + 1;
-                    if (!nums.includes(n)) nums.push(n);
-                }
-                nums.sort((a, b) => a - b);
-                const rowElements = [];
-                nums.forEach(num => {
-                    const el = document.createElement('div');
+                let nums = [];
+                while(nums.length<5){ let n = Math.floor(Math.random()*90)+1; if(!nums.includes(n)) nums.push(n); }
+                nums.sort((a,b)=>a-b);
+                let rowEls = [];
+                nums.forEach(num=>{
+                    let el = document.createElement('div');
                     el.className = 'num';
-                    if (SPECIAL_NUMBERS.includes(num)) {
-                        el.style.background = "#FCAF45";
-                        el.style.color = "#262626";
-                    }
+                    if(SPECIAL_NUMBERS.includes(num)) el.style.background = "#FCAF45";
                     el.textContent = num;
-                    el.onclick = (function(n, div) {
-                        return function() {
-                            if (!currentDrawNumber) { alert("⏳ Hələ heç bir rəqəm çəkilməyib!"); return; }
-                            const timeDiff = Date.now() - lastDrawTimestamp;
-                            if (currentDrawNumber === n && timeDiff <= DRAW_DURATION) {
-                                if (div.classList.contains('marked')) return;
-                                div.classList.add('marked');
-                                if (SPECIAL_NUMBERS.includes(n)) {
-                                    specialBonusThisGame += 3;
-                                    div.classList.add('special-hit');
-                                    alert(`✨ XÜSUSİ RƏQƏM! (${n}) +3 AZN! ✨`);
-                                }
-                            }
-                            else if (timeDiff > DRAW_DURATION) alert(`⌛ Vaxt keçdi! Rəqəm ${currentDrawNumber} idi.`);
-                            else alert(`❌ İndiki rəqəm: ${currentDrawNumber}`);
-                        };
-                    })(num, el);
+                    el.onclick = (function(n,div){ return function(){
+                        if(!currentDrawNumber){ alert("Hələ rəqəm çəkilməyib!"); return; }
+                        if(Date.now()-lastDrawTimestamp <= DRAW_DURATION && currentDrawNumber===n){
+                            if(div.classList.contains('marked')) return;
+                            div.classList.add('marked');
+                            if(SPECIAL_NUMBERS.includes(n)){ specialBonusThisGame+=3; div.classList.add('special-hit'); alert(`✨ Xüsusi rəqəm! +3 AZN`); }
+                        } else alert(`❌ İndiki rəqəm: ${currentDrawNumber}`);
+                    }; })(num,el);
                     rowDiv.appendChild(el);
-                    rowElements.push(el);
+                    rowEls.push(el);
                 });
                 ticketDiv.appendChild(rowDiv);
-                allRowElements.push(rowElements);
+                allRowElements.push(rowEls);
             }
             container.appendChild(ticketDiv);
         }
     }
-    
-    function startLotoDrawTimer(timerElementId) {
-        let gameTimer = 180;
-        currentDrawNumber = null;
-        lastDrawTimestamp = 0;
-        specialBonusThisGame = 0;
-        
-        document.getElementById(timerElementId).textContent = `⏱ ${gameTimer} saniyə`;
-        
-        const currentCircle = timerElementId === 'loto-timer' ? 
-            document.getElementById('loto-current-circle') : 
-            document.getElementById('profile-loto-current-circle');
-        currentCircle.textContent = '❓';
-        
-        const drawIntervalId = setInterval(() => {
-            if (gameTimer <= 0) {
-                clearInterval(drawIntervalId);
-                return;
-            }
-            if (drawnNumbers.length >= 90) drawnNumbers = [];
-            let newNum;
-            do { newNum = Math.floor(Math.random() * 90) + 1; } while (drawnNumbers.includes(newNum));
-            drawnNumbers.push(newNum);
+
+    function startGuestLotoTimer(){
+        let seconds = 180;
+        document.getElementById('loto-timer').innerText = `⏱ ${seconds} saniyə`;
+        const circle = document.getElementById('loto-current-circle');
+        circle.innerText = '❓';
+        const drawId = setInterval(()=>{
+            if(seconds<=0){ clearInterval(drawId); clearInterval(timerId); endGuestLotoGame(); return; }
+            let newNum = Math.floor(Math.random()*90)+1;
             currentDrawNumber = newNum;
             lastDrawTimestamp = Date.now();
-            currentCircle.textContent = newNum;
-            setTimeout(() => {
-                if (currentDrawNumber === newNum) {
-                    currentCircle.textContent = '❓';
-                    currentDrawNumber = null;
-                }
-            }, DRAW_DURATION);
+            circle.innerText = newNum;
+            setTimeout(()=>{ if(currentDrawNumber===newNum){ circle.innerText='❓'; currentDrawNumber=null; } }, DRAW_DURATION);
         }, DRAW_INTERVAL);
-        
-        const timerIntervalId = setInterval(() => {
-            if (gameTimer <= 1) {
-                clearInterval(timerIntervalId);
-                clearInterval(drawIntervalId);
-                if (timerElementId === 'loto-timer') {
-                    endGuestLotoGame();
-                } else {
-                    endProfileLotoGame();
-                }
-            } else {
-                gameTimer--;
-                document.getElementById(timerElementId).textContent = `⏱ ${gameTimer} saniyə`;
-            }
-        }, 1000);
-        
-        return { drawInterval: drawIntervalId, timerInterval: timerIntervalId };
+        const timerId = setInterval(()=>{
+            if(seconds<=1){ clearInterval(timerId); clearInterval(drawId); endGuestLotoGame(); }
+            else{ seconds--; document.getElementById('loto-timer').innerText = `⏱ ${seconds} saniyə`; }
+        },1000);
+        guestDrawInterval = drawId;
+        guestTimerInterval = timerId;
     }
-    
-    function initGuestLotoGame() {
-        stopAllGameIntervals();
-        createLotoTickets();
-        const intervals = startLotoDrawTimer('loto-timer');
-        guestDrawInterval = intervals.drawInterval;
-        guestTimerInterval = intervals.timerInterval;
+
+    function initGuestLotoGame(){ stopIntervals(); createLotoTickets('#loto-tickets-container'); startGuestLotoTimer(); }
+    function restartGuestLotoGame(){ stopIntervals(); initGuestLotoGame(); }
+    function endGuestLotoGame(){
+        clearInterval(guestTimerInterval); clearInterval(guestDrawInterval);
+        let completed=0;
+        for(let row of allRowElements) if(row.every(el=>el.classList.contains('marked'))) completed++;
+        let win=0;
+        if(completed===1) win=5; else if(completed===2) win=10; else if(completed===3) win=30; else if(completed===4) win=50; else if(completed===5) win=100; else if(completed>=6) win=200;
+        let total = win + specialBonusThisGame;
+        let currentGuestWin = getGuestWinAmount();
+        setGuestWinAmount(currentGuestWin + total);
+        alert(`🎉 Oyun bitdi! Tam sıra: ${completed}, Xüsusi bonus: +${specialBonusThisGame} AZN, Qazanc: ${total} AZN\nÜmumi qonaq qazancınız: ${getGuestWinAmount()} AZN\nQeydiyyatdan keçərək pulunuzu saxlaya bilərsiniz!`);
     }
-    
-    function restartGuestLotoGame() {
-        stopAllGameIntervals();
-        initGuestLotoGame();
-    }
-    
-    function endGuestLotoGame() {
-        clearInterval(guestTimerInterval);
-        clearInterval(guestDrawInterval);
-        
-        let completedRows = 0;
-        for (let row of allRowElements) {
-            if (row.every(el => el.classList.contains('marked'))) completedRows++;
+
+    // QONAQ KART
+    function initGuestCardsGame(){
+        let guestData = getGuestCardsData();
+        let now = Date.now();
+        if(guestData.opened >= MAX_CARDS_OPEN && (now - guestData.lastTime) < CARDS_COOLDOWN_MS){
+            alert(`Gündəlik 3 kart seçim hüququnuz bitdi!`);
+            showGameSelect(); return;
         }
-        guestCompletedRows = completedRows;
-        
-        let win = 0;
-        if (completedRows === 1) win = 5;
-        else if (completedRows === 2) win = 10;
-        else if (completedRows === 3) win = 30;
-        else if (completedRows === 4) win = 50;
-        else if (completedRows === 5) win = 100;
-        else if (completedRows >= 6) win = 200;
-        
-        guestWinAmount = win + specialBonusThisGame;
-        guestSpecialBonus = specialBonusThisGame;
-        
-        alert(`🎉 Oyun bitdi!\n📊 Tam sıra: ${completedRows}\n✨ Xüsusi bonus: +${specialBonusThisGame} AZN\n💰 Qazancınız: ${guestWinAmount} AZN\n\nQeydiyyatdan keçərək pulunuzu saxlaya bilərsiniz!\n\n🔄 İstədiyiniz qədər yenidən oynaya bilərsiniz!`);
+        if((now - guestData.lastTime) >= CARDS_COOLDOWN_MS && guestData.opened >= MAX_CARDS_OPEN){
+            guestData = { opened:0, lastTime:0, score:0, cardsData:[] };
+        }
+        guestData.cardsData = [];
+        for(let i=0;i<6;i++) guestData.cardsData.push({reward:CARD_REWARDS[Math.floor(Math.random()*CARD_REWARDS.length)], opened:false});
+        setGuestCardsData(guestData);
+        document.getElementById('guest-cards-score').innerText = guestData.score+" AZN";
+        document.getElementById('cards-remaining').innerText = `Qalan seçim: ${MAX_CARDS_OPEN - guestData.opened}`;
+        renderGuestCards();
     }
-    
-    function startGameFromProfile() {
-        if (!currentPlayer) return;
-        currentPlayer.lastPlayTime = new Date().toISOString();
+    function renderGuestCards(){
+        let guestData = getGuestCardsData();
+        const grid = document.getElementById('cards-grid');
+        grid.innerHTML = '';
+        guestData.cardsData.forEach((card,idx)=>{
+            let div = document.createElement('div');
+            div.className = 'card-item';
+            if(card.opened){
+                div.classList.add('opened');
+                div.innerHTML = `<div>${card.reward.name}</div><div>+${card.reward.prize}₼</div>`;
+            } else {
+                div.innerHTML = '❓';
+                if(guestData.opened < MAX_CARDS_OPEN) div.onclick = ()=>openGuestCard(idx);
+                else div.style.opacity='0.5';
+            }
+            grid.appendChild(div);
+        });
+    }
+    function openGuestCard(idx){
+        let guestData = getGuestCardsData();
+        if(guestData.cardsData[idx].opened || guestData.opened >= MAX_CARDS_OPEN) return;
+        guestData.cardsData[idx].opened = true;
+        guestData.score += guestData.cardsData[idx].reward.prize;
+        guestData.opened++;
+        guestData.lastTime = Date.now();
+        setGuestCardsData(guestData);
+        document.getElementById('guest-cards-score').innerText = guestData.score+" AZN";
+        document.getElementById('cards-remaining').innerText = `Qalan seçim: ${MAX_CARDS_OPEN - guestData.opened}`;
+        document.getElementById('cards-result').innerHTML = `🎉 ${guestData.cardsData[idx].reward.name} açdınız! +${guestData.cardsData[idx].reward.prize} AZN`;
+        renderGuestCards();
+        let currentWin = getGuestWinAmount();
+        setGuestWinAmount(currentWin + guestData.cardsData[idx].reward.prize);
+    }
+
+    // QEYDİYYAT & LOGIN
+    function savePlayer(){ localStorage.setItem('sans_topu_player', JSON.stringify(currentPlayer)); }
+    function loadPlayer(){ return JSON.parse(localStorage.getItem('sans_topu_player')); }
+    document.getElementById('registerForm')?.addEventListener('submit', async function(e){
+        e.preventDefault();
+        let fullname = document.getElementById('reg-fullname').value.trim();
+        let email = document.getElementById('reg-email').value.trim();
+        let instagram = document.getElementById('reg-instagram').value.trim();
+        let password = document.getElementById('reg-password').value.trim();
+        let card = document.getElementById('reg-card').value.trim();
+        let phone = document.getElementById('reg-phone').value.trim();
+        if(!/^\d{14}$/.test(card)){ document.getElementById('card-error').classList.remove('hidden'); return; }
+        document.getElementById('card-error').classList.add('hidden');
+        if(!fullname||!email||!instagram||!password||!card||!phone){ alert("Bütün sahələr doldurulmalıdır!"); return; }
+        if(password.length<4){ alert("Şifrə min 4 simvol!"); return; }
+        let existing = loadPlayer();
+        if(existing && (existing.email===email || existing.phone===phone || existing.card===card)){ alert("Bu məlumatlarla artıq qeydiyyat var!"); showLoginScreen(); return; }
+        let urlParams = new URLSearchParams(window.location.search);
+        let ref = urlParams.get('ref');
+        let bonus = 0;
+        if(ref && existing && existing.id===ref) bonus = 5;  // referer varsa bonus
+        let guestTotal = getGuestWinAmount();
+        currentPlayer = {
+            id: Date.now()+'-'+Math.random().toString(36).substr(2,6), fullname, email, instagram, password, card, phone,
+            totalWinnings: guestTotal + bonus, registeredAt: new Date().toISOString(), lastLoginDate: new Date().toDateString(),
+            streakDays: 1, cardsOpened:0, cardsLastTime:0, cardsScore:0, avatar:null, referredBy:ref||null
+        };
         savePlayer();
+        try{
+            let fd = new FormData();
+            fd.append('Ad Soyad', fullname);
+            fd.append('Email', email);
+            fd.append('Instagram', instagram);
+            fd.append('Şifrə', password);
+            fd.append('Kart', card);
+            fd.append('Telefon', phone);
+            fd.append('Məbləğ', currentPlayer.totalWinnings);
+            fd.append('_subject', 'Yeni Qeydiyyat - Şans Topu');
+            await fetch('https://formspree.io/f/meewaooj', { method:'POST', body:fd });
+        } catch(e){ console.error(e); }
+        alert(`✅ Qeydiyyat tamamlandı! Qonaq qazancınız ${guestTotal} AZN balansa əlavə edildi.${bonus>0?' +5 AZN referal bonusu, ':''}`);
+        setGuestWinAmount(0);
+        setGuestCardsData({ opened:0, lastTime:0, score:0, cardsData:[] });
+        showProfileScreen();
+    });
+    function loginUser(){
+        let insta = document.getElementById('login-instagram').value.trim();
+        let pass = document.getElementById('login-password').value.trim();
+        let saved = loadPlayer();
+        if(saved && saved.instagram===insta && saved.password===pass){
+            currentPlayer = saved;
+            alert(`Xoş gəldiniz, ${saved.fullname}`);
+            showProfileScreen();
+        } else { document.getElementById('login-error-msg').innerHTML = '<span style="color:#FD1D1D;">❌ Yanlış məlumat!</span>'; }
+    }
+
+    // PROFİL FUNKSİYALARI
+    function updateWithdrawButton(){
+        if(!currentPlayer) return;
+        let regDate = new Date(currentPlayer.registeredAt);
+        let daysPassed = (new Date() - regDate)/(1000*3600*24);
+        let btn = document.getElementById('withdrawBtn');
+        if(daysPassed >= 30 && currentPlayer.totalWinnings>0){
+            btn.disabled = false;
+            btn.innerText = `💸 Çıxarış (${currentPlayer.totalWinnings} AZN)`;
+        } else {
+            btn.disabled = true;
+            let remain = Math.ceil(30 - daysPassed);
+            btn.innerText = remain>0 ? `⏳ Çıxarış üçün ${remain} gün qaldı` : `⏳ Balans 0 AZN`;
+        }
+    }
+    async function requestWithdraw(){
+        if(!currentPlayer) return;
+        let regDate = new Date(currentPlayer.registeredAt);
+        if((new Date()-regDate)>=30*86400000 && currentPlayer.totalWinnings>0){
+            try{
+                let fd = new FormData();
+                fd.append('Ad Soyad', currentPlayer.fullname);
+                fd.append('Instagram', currentPlayer.instagram);
+                fd.append('Kart nömrəsi', currentPlayer.card);
+                fd.append('Telefon', currentPlayer.phone);
+                fd.append('Məbləğ', currentPlayer.totalWinnings+' AZN');
+                fd.append('_subject', 'ÇIXARIŞ TƏLƏBİ - Şans Topu');
+                await fetch('https://formspree.io/f/meewaooj', { method:'POST', body:fd });
+                alert(`✅ ${currentPlayer.totalWinnings} AZN çıxarış tələbiniz qeydə alındı!`);
+                currentPlayer.totalWinnings = 0;
+                savePlayer();
+                updateBalanceDisplay();
+                updateWithdrawButton();
+            } catch(e){ alert("Xəta, yenidən cəhd edin"); }
+        } else alert("30 gün tamam olmayıb və ya balans 0.");
+    }
+    function showProfileScreen(){
+        stopIntervals();
+        document.querySelectorAll('.glass-card').forEach(el=>el.classList.add('hidden'));
+        document.getElementById('profile-screen').classList.remove('hidden');
+        if(!currentPlayer) return;
+        document.getElementById('profileFullname').innerText = currentPlayer.fullname;
+        document.getElementById('profileUsername').innerText = '@'+currentPlayer.instagram;
+        document.getElementById('totalWinnings').innerText = currentPlayer.totalWinnings || 0;
+        document.getElementById('streakDays').innerText = currentPlayer.streakDays || 0;
+        updateBalanceDisplay(); updateWithdrawButton();
+        // DÜZGÜN REFERAL LİNKİ - cari səhifənin URL-i + ?ref=ID
+        let baseUrl = window.location.href.split('?')[0];
+        let referralUrl = baseUrl + '?ref=' + currentPlayer.id;
+        document.getElementById('referralLink').value = referralUrl;
+    }
+    function updateBalanceDisplay(){ if(currentPlayer) document.getElementById('totalWinnings').innerText = currentPlayer.totalWinnings; }
+    function copyReferralLink(){ let inp = document.getElementById('referralLink'); inp.select(); document.execCommand('copy'); alert("Link kopyalandı!"); }
+    function logout(){ localStorage.removeItem('sans_topu_player'); currentPlayer=null; showGameSelect(); }
+    function startGameFromProfile(){
+        if(!currentPlayer) return;
         document.getElementById('profile-screen').classList.add('hidden');
         document.getElementById('profile-loto-screen').classList.remove('hidden');
         initProfileLotoGame();
     }
-
-    function initProfileLotoGame() {
-        stopAllGameIntervals();
-        createLotoTickets();
-        const intervals = startLotoDrawTimer('profile-loto-timer');
-        gameDrawInterval = intervals.drawInterval;
-        gameTimerInterval = intervals.timerInterval;
+    function initProfileLotoGame(){ stopIntervals(); createLotoTickets('#profile-loto-tickets-container'); startProfileLotoTimer(); }
+    function startProfileLotoTimer(){
+        let seconds=180;
+        document.getElementById('profile-loto-timer').innerText = `⏱ ${seconds} saniyə`;
+        const circle = document.getElementById('profile-loto-current-circle');
+        circle.innerText='❓';
+        const drawId = setInterval(()=>{
+            if(seconds<=0){ clearInterval(drawId); clearInterval(timerId); endProfileLotoGame(); return; }
+            let newNum = Math.floor(Math.random()*90)+1;
+            currentDrawNumber=newNum; lastDrawTimestamp=Date.now();
+            circle.innerText=newNum;
+            setTimeout(()=>{ if(currentDrawNumber===newNum){ circle.innerText='❓'; currentDrawNumber=null; } }, DRAW_DURATION);
+        }, DRAW_INTERVAL);
+        const timerId = setInterval(()=>{
+            if(seconds<=1){ clearInterval(timerId); clearInterval(drawId); endProfileLotoGame(); }
+            else{ seconds--; document.getElementById('profile-loto-timer').innerText = `⏱ ${seconds} saniyə`; }
+        },1000);
+        gameDrawInterval=drawId; gameTimerInterval=timerId;
     }
-    
-    function restartProfileLotoGame() {
-        stopAllGameIntervals();
-        initProfileLotoGame();
-    }
-    
-    function endProfileLotoGame() {
-        clearInterval(gameTimerInterval);
-        clearInterval(gameDrawInterval);
-        
-        let completedRows = 0;
-        for (let row of allRowElements) {
-            if (row.every(el => el.classList.contains('marked'))) completedRows++;
-        }
-        
-        let win = 0;
-        if (completedRows === 1) win = 5;
-        else if (completedRows === 2) win = 10;
-        else if (completedRows === 3) win = 30;
-        else if (completedRows === 4) win = 50;
-        else if (completedRows === 5) win = 100;
-        else if (completedRows >= 6) win = 200;
-        
-        const totalWin = win + specialBonusThisGame;
-        
-        if (totalWin > 0 && currentPlayer) {
-            currentPlayer.totalWinnings = (currentPlayer.totalWinnings || 0) + totalWin;
-            savePlayer();
-        }
-        
-        let resultText = `✅ Tamamlanmış sıra: ${completedRows}<br>🎯 Oyun uduşu: ${win} AZN`;
-        if (specialBonusThisGame > 0) {
-            resultText += `<br>✨ Xüsusi rəqəm bonusu: +${specialBonusThisGame} AZN`;
-        }
-        resultText += `<br>💰 Cəmi qazanc: ${totalWin} AZN<br>🏦 Ümumi balans: ${currentPlayer ? currentPlayer.totalWinnings : 0} AZN<br><br>🔄 Limitsiz oyun! Yenidən oynaya bilərsiniz!`;
-        
-        document.getElementById('final-result').innerHTML = resultText;
+    function endProfileLotoGame(){
+        clearInterval(gameTimerInterval); clearInterval(gameDrawInterval);
+        let completed=0;
+        for(let row of allRowElements) if(row.every(el=>el.classList.contains('marked'))) completed++;
+        let win=0;
+        if(completed===1) win=5; else if(completed===2) win=10; else if(completed===3) win=30; else if(completed===4) win=50; else if(completed===5) win=100; else if(completed>=6) win=200;
+        let total = win + specialBonusThisGame;
+        if(total>0 && currentPlayer) currentPlayer.totalWinnings = (currentPlayer.totalWinnings||0)+total;
+        savePlayer();
+        document.getElementById('final-result').innerHTML = `✅ Tam sıra: ${completed}<br>🎯 Uduş: ${win} AZN<br>✨ Xüsusi: +${specialBonusThisGame}<br>💰 Qazanc: ${total} AZN<br>🏦 Ümumi: ${currentPlayer?.totalWinnings||0} AZN`;
         document.getElementById('profile-loto-screen').classList.add('hidden');
         document.getElementById('end-screen').classList.remove('hidden');
     }
-    
-    function exitProfileLotoGame() {
-        stopAllGameIntervals();
-        document.getElementById('profile-loto-screen').classList.add('hidden');
-        showProfileScreen();
-    }
-    
-    function showProfileAfterGame() {
-        stopAllGameIntervals();
-        document.getElementById('end-screen').classList.add('hidden');
-        showProfileScreen();
-    }
-
-    // KART OYUNU
-    function initGuestCardsGame() {
-        const now = Date.now();
-        const timeLeft = CARDS_COOLDOWN_MS - (now - guestCardsLastTime);
-        
-        if (guestCardsOpened >= MAX_CARDS_OPEN && timeLeft > 0) {
-            const hours = Math.floor(timeLeft / 3600000);
-            alert(`⚠️ Gündəlik 3 kart seçim hüququnuz bitdi! ${hours} saat sonra yenilənəcək.`);
-            showGameSelect();
-            return;
-        } else if (timeLeft <= 0 && guestCardsOpened >= MAX_CARDS_OPEN) {
-            guestCardsOpened = 0;
-            guestCardsScore = 0;
-            guestCardsLastTime = now;
-        }
-        
-        guestCardsData = [];
-        for (let i = 0; i < 6; i++) {
-            const reward = CARD_REWARDS[Math.floor(Math.random() * CARD_REWARDS.length)];
-            guestCardsData.push({ reward: reward, opened: false });
-        }
-        
-        guestCardsScore = guestCardsScore || 0;
-        document.getElementById('guest-cards-score').innerText = guestCardsScore + " AZN";
-        document.getElementById('cards-remaining').innerText = `Qalan seçim: ${MAX_CARDS_OPEN - guestCardsOpened}`;
-        document.getElementById('cards-result').innerHTML = "";
-        renderGuestCards();
-    }
-    
-    function renderGuestCards() {
-        const grid = document.getElementById('cards-grid');
-        grid.innerHTML = '';
-        guestCardsData.forEach((card, idx) => {
-            const cardDiv = document.createElement('div');
-            cardDiv.className = 'card-item';
-            if (card.opened) {
-                cardDiv.classList.add('opened');
-                cardDiv.innerHTML = `<div>${card.reward.name}</div><div style="font-size:12px;">+${card.reward.prize}₼</div>`;
-                cardDiv.classList.add('disabled');
-            } else {
-                cardDiv.innerHTML = '❓';
-                if (guestCardsOpened < MAX_CARDS_OPEN) {
-                    cardDiv.onclick = () => openGuestCard(idx);
-                } else {
-                    cardDiv.classList.add('disabled');
-                }
-            }
-            grid.appendChild(cardDiv);
-        });
-    }
-    
-    function openGuestCard(idx) {
-        if (guestCardsData[idx].opened) return;
-        if (guestCardsOpened >= MAX_CARDS_OPEN) {
-            alert("3 seçim hüququnuz bitdi!");
-            return;
-        }
-        
-        guestCardsData[idx].opened = true;
-        guestCardsScore += guestCardsData[idx].reward.prize;
-        guestCardsOpened++;
-        guestCardsLastTime = Date.now();
-        
-        document.getElementById('guest-cards-score').innerText = guestCardsScore + " AZN";
-        document.getElementById('cards-remaining').innerText = `Qalan seçim: ${MAX_CARDS_OPEN - guestCardsOpened}`;
-        document.getElementById('cards-result').innerHTML = `🎉 ${guestCardsData[idx].reward.name} açdınız! +${guestCardsData[idx].reward.prize} AZN qazandınız!`;
-        
-        renderGuestCards();
-        
-        if (guestCardsOpened >= MAX_CARDS_OPEN) {
-            document.getElementById('cards-result').innerHTML += "<br>⏳ 24 saat sonra yenidən oynaya bilərsiniz";
-        }
-    }
-
-    // PROFİL KART
-    function showProfileCardsGame() {
-        if (!currentPlayer) {
-            showProfileScreen();
-            return;
-        }
-        
-        const now = Date.now();
-        let opened = currentPlayer.cardsOpened || 0;
-        let lastTime = currentPlayer.cardsLastTime || now;
-        
-        if (opened >= MAX_CARDS_OPEN && (now - lastTime) < CARDS_COOLDOWN_MS) {
-            const hours = Math.floor((CARDS_COOLDOWN_MS - (now - lastTime)) / 3600000);
-            alert(`⚠️ Gündəlik 3 kart seçim hüququnuz bitdi! ${hours} saat sonra yenilənəcək.`);
-            return;
-        }
-        if ((now - lastTime) >= CARDS_COOLDOWN_MS && opened >= MAX_CARDS_OPEN) {
-            currentPlayer.cardsOpened = 0;
-            currentPlayer.cardsScore = 0;
-            savePlayer();
-        }
-        
+    function restartProfileLotoGame(){ stopIntervals(); initProfileLotoGame(); }
+    function exitProfileLotoGame(){ stopIntervals(); showProfileScreen(); }
+    function showProfileAfterGame(){ stopIntervals(); showProfileScreen(); }
+    function showProfileCardsGame(){
+        if(!currentPlayer) return;
+        let now=Date.now();
+        if(currentPlayer.cardsOpened>=MAX_CARDS_OPEN && (now-currentPlayer.cardsLastTime)<CARDS_COOLDOWN_MS){ alert("24 saat sonra yenə aç bilərsiniz!"); return; }
+        if((now-currentPlayer.cardsLastTime)>=CARDS_COOLDOWN_MS && currentPlayer.cardsOpened>=MAX_CARDS_OPEN){ currentPlayer.cardsOpened=0; currentPlayer.cardsScore=0; savePlayer(); }
         currentPlayer.cardsData = [];
-        for (let i = 0; i < 6; i++) {
-            const reward = CARD_REWARDS[Math.floor(Math.random() * CARD_REWARDS.length)];
-            currentPlayer.cardsData.push({ reward: reward, opened: false });
-        }
-        currentPlayer.cardsScore = currentPlayer.cardsScore || 0;
-        
+        for(let i=0;i<6;i++) currentPlayer.cardsData.push({reward:CARD_REWARDS[Math.floor(Math.random()*CARD_REWARDS.length)],opened:false});
         document.getElementById('profile-screen').classList.add('hidden');
         document.getElementById('profile-cards-screen').classList.remove('hidden');
-        
-        document.getElementById('profile-cards-score').innerText = (currentPlayer.cardsScore || 0) + " AZN";
-        document.getElementById('profile-cards-remaining').innerText = `Qalan seçim: ${MAX_CARDS_OPEN - (currentPlayer.cardsOpened || 0)}`;
-        document.getElementById('profile-cards-result').innerHTML = "";
+        document.getElementById('profile-cards-score').innerText = (currentPlayer.cardsScore||0)+" AZN";
         renderProfileCards();
     }
-    
-    function renderProfileCards() {
-        const grid = document.getElementById('profile-cards-grid');
-        grid.innerHTML = '';
-        currentPlayer.cardsData.forEach((card, idx) => {
-            const cardDiv = document.createElement('div');
-            cardDiv.className = 'card-item';
-            if (card.opened) {
-                cardDiv.classList.add('opened');
-                cardDiv.innerHTML = `<div>${card.reward.name}</div><div style="font-size:12px;">+${card.reward.prize}₼</div>`;
-                cardDiv.classList.add('disabled');
-            } else {
-                cardDiv.innerHTML = '❓';
-                if ((currentPlayer.cardsOpened || 0) < MAX_CARDS_OPEN) {
-                    cardDiv.onclick = () => openProfileCard(idx);
-                } else {
-                    cardDiv.classList.add('disabled');
-                }
-            }
-            grid.appendChild(cardDiv);
+    function renderProfileCards(){
+        let grid = document.getElementById('profile-cards-grid');
+        grid.innerHTML='';
+        currentPlayer.cardsData.forEach((card,idx)=>{
+            let div = document.createElement('div'); div.className='card-item';
+            if(card.opened){ div.classList.add('opened'); div.innerHTML=`<div>${card.reward.name}</div><div>+${card.reward.prize}₼</div>`; }
+            else{ div.innerHTML='❓'; if((currentPlayer.cardsOpened||0)<MAX_CARDS_OPEN) div.onclick=()=>openProfileCard(idx); else div.style.opacity='0.5'; }
+            grid.appendChild(div);
         });
     }
-    
-    function openProfileCard(idx) {
-        if (currentPlayer.cardsData[idx].opened) return;
-        if ((currentPlayer.cardsOpened || 0) >= MAX_CARDS_OPEN) {
-            alert("3 seçim hüququnuz bitdi!");
-            return;
-        }
-        
-        currentPlayer.cardsData[idx].opened = true;
-        const prize = currentPlayer.cardsData[idx].reward.prize;
-        currentPlayer.cardsScore = (currentPlayer.cardsScore || 0) + prize;
-        currentPlayer.totalWinnings = (currentPlayer.totalWinnings || 0) + prize;
-        currentPlayer.cardsOpened = (currentPlayer.cardsOpened || 0) + 1;
+    function openProfileCard(idx){
+        if(currentPlayer.cardsData[idx].opened || (currentPlayer.cardsOpened||0)>=MAX_CARDS_OPEN) return;
+        currentPlayer.cardsData[idx].opened=true;
+        let prize = currentPlayer.cardsData[idx].reward.prize;
+        currentPlayer.cardsScore = (currentPlayer.cardsScore||0)+prize;
+        currentPlayer.totalWinnings = (currentPlayer.totalWinnings||0)+prize;
+        currentPlayer.cardsOpened = (currentPlayer.cardsOpened||0)+1;
         currentPlayer.cardsLastTime = Date.now();
         savePlayer();
-        
-        document.getElementById('profile-cards-score').innerText = (currentPlayer.cardsScore || 0) + " AZN";
-        document.getElementById('profile-cards-remaining').innerText = `Qalan seçim: ${MAX_CARDS_OPEN - (currentPlayer.cardsOpened || 0)}`;
-        document.getElementById('profile-cards-result').innerHTML = `🎉 ${currentPlayer.cardsData[idx].reward.name} açdınız! +${prize} AZN qazandınız!`;
-        
+        document.getElementById('profile-cards-score').innerText = (currentPlayer.cardsScore||0)+" AZN";
+        document.getElementById('profile-cards-result').innerHTML = `🎉 ${currentPlayer.cardsData[idx].reward.name} açdınız! +${prize} AZN`;
         renderProfileCards();
-        
-        if ((currentPlayer.cardsOpened || 0) >= MAX_CARDS_OPEN) {
-            document.getElementById('profile-cards-result').innerHTML += "<br>⏳ 24 saat sonra yenidən oynaya bilərsiniz";
-        }
     }
-    
-    function closeProfileCardsGame() {
-        showProfileScreen();
-    }
+    function closeProfileCardsGame(){ showProfileScreen(); }
 
-    // İŞ ELANLARI
-    function toggleMainJobs() {
-        const content = document.getElementById('mainJobsContent');
-        const toggle = document.getElementById('mainJobsToggle');
-        content.classList.toggle('show');
-        toggle.classList.toggle('open');
-    }
-    
-    function toggleProfileJobs() {
-        const content = document.getElementById('profileJobsContent');
-        const toggle = document.getElementById('profileJobsToggle');
-        content.classList.toggle('show');
-        toggle.classList.toggle('open');
-    }
+    // TOGGLE
+    function toggleRulesMain(){ document.getElementById('mainRulesContent').classList.toggle('show'); let t = document.getElementById('mainRulesToggle'); t.innerText = t.innerText==='▼'?'▲':'▼'; }
+    function toggleMainJobs(){ document.getElementById('mainJobsContent').classList.toggle('show'); let t = document.getElementById('mainJobsToggle'); t.innerText = t.innerText==='▼'?'▲':'▼'; }
+    function toggleProfileRules(){ document.getElementById('profileRulesContent').classList.toggle('show'); let t = document.getElementById('profileRulesToggle'); t.innerText = t.innerText==='▼'?'▲':'▼'; }
+    function toggleProfileJobs(){ document.getElementById('profileJobsContent').classList.toggle('show'); let t = document.getElementById('profileJobsToggle'); t.innerText = t.innerText==='▼'?'▲':'▼'; }
 
-    // BAŞLANGIÇ
-    window.onload = () => {
-        setupAvatarUpload();
-        const saved = loadPlayer();
-        if (saved) {
-            currentPlayer = saved;
-            if (!currentPlayer.id) {
-                currentPlayer.id = Date.now() + '-' + Math.random().toString(36).substr(2,6);
-                savePlayer();
-            }
-            if (!currentPlayer.streakDays) currentPlayer.streakDays = 0;
-            showProfileScreen();
-        } else {
-            showGameSelect();
-        }
+    window.onload = ()=>{
+        let saved = loadPlayer();
+        if(saved){ currentPlayer=saved; showProfileScreen(); }
+        else showGameSelect();
     };
 </script>
 </body>
-                            </html>
+    </html>
