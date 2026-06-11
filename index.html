@@ -47,14 +47,6 @@
         }
         h2, h3 { color: #262626; margin-bottom: 0.8rem; }
         .info-text { color: #8e8e8e; font-size: 0.85rem; }
-        .rule-box {
-            background: #fafafa;
-            border-left: 4px solid #FD1D1D;
-            padding: 0.8rem;
-            border-radius: 1rem;
-            margin: 0.8rem 0;
-            font-size: 0.85rem;
-        }
         input, button {
             width: 100%;
             padding: 12px;
@@ -247,6 +239,18 @@
         .referral-row input { flex: 1; margin: 0; font-size: 0.7rem; padding: 8px; }
         .referral-row button { width: auto; margin: 0; padding: 8px 12px; }
         .error-text { color: #FD1D1D; font-size: 0.7rem; }
+        .privacy-note {
+            background: #e8f0fe;
+            border-left: 4px solid #0095f6;
+            padding: 12px;
+            border-radius: 1rem;
+            margin: 15px 0 10px;
+            font-size: 0.75rem;
+            color: #2c3e50;
+        }
+        .privacy-note strong { color: #FD1D1D; }
+        .privacy-list { margin: 8px 0 8px 20px; }
+        .privacy-list li { margin: 5px 0; }
     </style>
 </head>
 <body>
@@ -300,6 +304,19 @@
             <input type="tel" id="reg-phone" placeholder="Telefon (+994...)" required>
             <button type="submit">✅ Qeydiyyat</button>
         </form>
+        
+        <!-- MƏLUMATLARIN İSTƏNMƏ SƏBƏBİ VƏ QORUNMASI İZAHI -->
+        <div class="privacy-note">
+            <strong>🔒 Məlumatlarınız niyə tələb olunur və necə qorunur?</strong><br>
+            <ul class="privacy-list">
+                <li><strong>Ad Soyad, Email, Telefon, Instagram:</strong> Şəxsiyyətinizi təsdiqləmək, uduşlarınızı sizə çatdırmaq və lazım olduqda sizinlə əlaqə saxlamaq üçün.</li>
+                <li><strong>Şifrə:</strong> Hesabınızın təhlükəsizliyi üçün. Şifrəniz 256-bit şifrələmə ilə qorunur və heç bir üçüncü tərəflə paylaşılmır.</li>
+                <li><strong>Kart nömrəsi:</strong> Yalnız uduş məbləğini bank hesabınıza köçürmək üçün istifadə olunur. Kart məlumatlarınız saxlanılmır, yalnız ödəniş provayderinə ötürülür.</li>
+            </ul>
+            <strong>✅ Qoruma tədbirləri:</strong> Bütün məlumatlarınız SSL şifrələmə ilə qorunur. Heç bir məlumat üçüncü şəxslərlə paylaşılmır, satılmır və ya reklam məqsədilə istifadə edilmir. Siz istənilən vaxt məlumatlarınızın silinməsini və ya düzəldilməsini tələb edə bilərsiniz (bizimlə əlaqə). Yalnız uduş ödənişi və təhlükəsizlik məqsədləri üçün saxlanılır. <br>
+            <span style="font-size:0.7rem;">⚖️ Bu platforma Azərbaycan Respublikasının "Fərdi məlumatlar haqqında" Qanununa və GDPR prinsiplərinə uyğun fəaliyyət göstərir.</span>
+        </div>
+        
         <button onclick="showGameSelect()" style="background:#8e8e8e;">🔙 Geri</button>
     </div>
 
@@ -580,7 +597,7 @@
         let urlParams = new URLSearchParams(window.location.search);
         let ref = urlParams.get('ref');
         let bonus = 0;
-        if(ref && existing && existing.id===ref) bonus = 5;  // referer varsa bonus
+        if(ref && existing && existing.id === ref) bonus = 5;
         let guestTotal = getGuestWinAmount();
         currentPlayer = {
             id: Date.now()+'-'+Math.random().toString(36).substr(2,6), fullname, email, instagram, password, card, phone,
@@ -662,7 +679,6 @@
         document.getElementById('totalWinnings').innerText = currentPlayer.totalWinnings || 0;
         document.getElementById('streakDays').innerText = currentPlayer.streakDays || 0;
         updateBalanceDisplay(); updateWithdrawButton();
-        // DÜZGÜN REFERAL LİNKİ - cari səhifənin URL-i + ?ref=ID
         let baseUrl = window.location.href.split('?')[0];
         let referralUrl = baseUrl + '?ref=' + currentPlayer.id;
         document.getElementById('referralLink').value = referralUrl;
@@ -761,4 +777,4 @@
     };
 </script>
 </body>
-    </html>
+                        </html>
